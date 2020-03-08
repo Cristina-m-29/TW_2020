@@ -1,6 +1,8 @@
-body{
+html, body{
     margin: 0;
     padding: 0;
+    height: 100%;
+    overflow: hidden;
 }
 
 p{
@@ -8,19 +10,47 @@ p{
 }
 
 .container{
+    position: relative;
     display:grid;
     grid-template-columns: 50% 50%;
-    height: 400px;
     margin: 0;
     padding: 0;
-}
-
-.container > div{
+    height: 95%;
     border: solid 1px;
 }
 
-.footer{
-    border: solid 1px;
+.women, .men{
+    position: relative;
+    text-align: center;
+}
+
+img{
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+    padding:0;
+}
+
+.w_txt, .m_txt{
+    position: absolute;
+    top:50%;
+    left:50%;
+    letter-spacing: 0.6em;
+    font-weight: bold;
+    font-size: 3vw;
+    transform: translate(-50%, -50%);
+    text-decoration: none;
+    color: black;
+    font-style: normal;
+    font-variant: small-caps;
+    font-family: Georgia, serif;
+}
+
+
+footer{
     padding:0;
     margin:0;
+    background-color: black;
+    color:white;
+    height: 5%;
 }
