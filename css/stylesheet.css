@@ -2,7 +2,7 @@ html, body{
     margin: 0;
     padding: 0;
     height: 100%;
-    overflow: hidden;
+    
 }
 
 p{
@@ -16,12 +16,24 @@ p{
     margin: 0;
     padding: 0;
     height: 95%;
-    border: solid 1px;
 }
 
 .women, .men{
     position: relative;
     text-align: center;
+}
+
+.m_top, .m_bottom, .w_top, .w_bottom {
+    position: absolute;
+    left:0;
+}
+
+.m_top:hover{
+    opacity: 0;
+}
+
+.w_top:hover{
+    opacity: 0;
 }
 
 img{
@@ -47,10 +59,11 @@ img{
 }
 
 
-footer{
+.footer{
     padding:0;
     margin:0;
-    background-color: black;
-    color:white;
+    background-color: #000000;
+    color:#f3d4d4;
     height: 5%;
 }
+
