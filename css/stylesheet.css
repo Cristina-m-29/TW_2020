@@ -27,14 +27,14 @@ p{
     position: absolute;
     left:0;
 }
-
+/*
 .m_top:hover{
     opacity: 0;
 }
 
 .w_top:hover{
     opacity: 0;
-}
+}*/
 
 img{
     height: 100%;
@@ -56,6 +56,7 @@ img{
     font-style: normal;
     font-variant: small-caps;
     font-family: Georgia, serif;
+    align-items: center;
 }
 
 
