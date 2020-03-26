@@ -27,14 +27,6 @@ p{
     position: absolute;
     left:0;
 }
-/*
-.m_top:hover{
-    opacity: 0;
-}
-
-.w_top:hover{
-    opacity: 0;
-}*/
 
 img{
     height: 100%;
@@ -59,12 +51,48 @@ img{
     align-items: center;
 }
 
+.w_txt:hover, .m_txt:hover{
+    font-size: 3.2vw;
+}
 
 .footer{
+    position: relative;
     padding:0;
     margin:0;
     background-color: #000000;
     color:#f3d4d4;
     height: 5%;
+    display:grid;
+    grid-template-columns: 50% 50%;
 }
+
+.footer > div{
+    position: relative;
+    padding: 0.5em 0 ;
+    
+}
+
+.footer > div > a{
+    font-style: normal;
+    font-family: Georgia, serif;
+    text-decoration: none;
+    color:white;
+    align-items: center;
+}
+
+.left{
+    text-align:right;
+}
+
+.about{
+    padding: 0 0.5em ;
+    border-right: 0.02em solid white;
+    align-content: right;
+    align-content: right;
+}
+
+.contact{
+    padding: 0 0.5em ;
+}
+
 
