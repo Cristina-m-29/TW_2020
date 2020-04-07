@@ -2,97 +2,145 @@ html, body{
     margin: 0;
     padding: 0;
     height: 100%;
-    
+    width: 100%;
+    overflow: hidden;
 }
 
 p{
     margin:0;
 }
 
-.container{
-    position: relative;
-    display:grid;
-    grid-template-columns: 50% 50%;
-    margin: 0;
-    padding: 0;
-    height: 95%;
+/* NAVBAR_______________________________________________________________ */
+
+.navbar{
+    display: grid;
+    grid-template-columns: 13% 74% 13%;
+    align-items: center;
+    padding: 1.3em;
+    background-color: whitesmoke;
 }
 
-.women, .men{
-    position: relative;
+.sidemenu > a{
+    text-decoration: none;  
+    font-size: large;  
+    font-weight: bold;
+    color:black;
+}
+
+
+.logo{
+    align-items: center;
+    margin: auto;
+    width: 50%;
     text-align: center;
 }
 
-.m_top, .m_bottom, .w_top, .w_bottom {
-    position: absolute;
-    left:0;
+.logo > a{
+    text-decoration: none;  
+    font-size: large;  
+    font-weight: bold;
+    color:black;
 }
 
+.user_option{
+    display: flex;
+    align-items: center;
+    margin-left:auto;
+    margin-right:0;
+    color: black;
+}
+
+.user_option > div {
+    padding: 0 0.5em;
+}
+
+.user > a, .wishlist > a, .cart > a{
+    text-decoration: none;  
+    font-size: large;  
+    font-weight: bold;
+    color:black;
+}
+/* SLIDE-SHOW__________________________________________________________ */
+
+slider {
+    display: block;
+    width: 100%;
+    height: calc(100vh - 63px);
+    background: whitesmoke;
+    overflow: hidden;
+    position: absolute;
+}
+
+slider > * {
+    position: absolute;
+    display: block;
+    width: 100%;
+    height: calc(100vh - 63px);
+    background: whitesmoke;
+    animation: slide 12s infinite;
+    overflow: hidden;
+}
+
+slide:nth-child(1){
+    left: 0%;
+    animation-delay: -1s;
+    background-image: url("../images/slide1.jpg");
+    background-size: cover;
+    background-position: center;
+}
+
+slide:nth-child(2){
+    animation-delay: 3s;
+    background-image: url("../images/slide2.jpg");
+    background-size: cover;
+    background-position: center;
+}
+
+slide:nth-child(3){
+    left: 0%;
+    animation-delay: 7s;
+    background-image: url("../images/slide3.jpg");
+    background-size: cover;
+    background-position: center;
+}
+
+slide p{
+    position: absolute;
+    font-family: Georgia, serif;
+    font-size: 3vw;
+    text-align: center;
+    display: inline-block;
+    width: 100%;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    color: black;
+}
+
+slide button{
+    position: absolute;
+    top: 85%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    background-color: cadetblue;
+}
+
+@keyframes slide {
+    0% { left: 100%; width: 100%; }
+    5% { left: 0%; }
+    25% { left: 0%; }
+    30% { left: -100%; width: 100%; }
+    30.0001% { left: -100%; width: 0%; }
+    100% { left: 100%; width: 0%; }
+   }
+
+/* OTHER_______________________________________________________________ */
+
+/* 
 img{
     height: 100%;
     width: 100%;
-    object-fit: cover;
+    object-fit: contain;
+    object-position: center;
     padding:0;
-}
-
-.w_txt, .m_txt{
-    position: absolute;
-    top:50%;
-    left:50%;
-    letter-spacing: 0.6em;
-    font-weight: bold;
-    font-size: 3vw;
-    transform: translate(-50%, -50%);
-    text-decoration: none;
-    color: black;
-    font-style: normal;
-    font-variant: small-caps;
-    font-family: Georgia, serif;
-    align-items: center;
-}
-
-.w_txt:hover, .m_txt:hover{
-    font-size: 3.2vw;
-}
-
-.footer{
-    position: relative;
-    padding:0;
-    margin:0;
-    background-color: #000000;
-    color:#f3d4d4;
-    height: 5%;
-    display:grid;
-    grid-template-columns: 50% 50%;
-}
-
-.footer > div{
-    position: relative;
-    padding: 0.5em 0 ;
-    
-}
-
-.footer > div > a{
-    font-style: normal;
-    font-family: Georgia, serif;
-    text-decoration: none;
-    color:white;
-    align-items: center;
-}
-
-.left{
-    text-align:right;
-}
-
-.about{
-    padding: 0 0.5em ;
-    border-right: 0.02em solid white;
-    align-content: right;
-    align-content: right;
-}
-
-.contact{
-    padding: 0 0.5em ;
-}
-
-
+} */
