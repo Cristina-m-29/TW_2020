@@ -61,7 +61,7 @@ p{
     color:black;
 }
 /* SLIDE-SHOW__________________________________________________________ */
-
+/*
 slider {
     display: block;
     width: 100%;
@@ -77,7 +77,7 @@ slider > * {
     width: 100%;
     height: calc(100vh - 63px);
     background: whitesmoke;
-    animation: slide 12s infinite;
+    animation:  12s slide infinite;
     overflow: hidden;
 }
 
@@ -90,15 +90,15 @@ slide:nth-child(1){
 }
 
 slide:nth-child(2){
-    animation-delay: 3s;
+    animation-delay: 6s;
     background-image: url("../images/slide2.jpg");
     background-size: cover;
     background-position: center;
 }
 
 slide:nth-child(3){
-    left: 0%;
-    animation-delay: 7s;
+    left: 0%; 
+    animation-delay: 13s;
     background-image: url("../images/slide3.jpg");
     background-size: cover;
     background-position: center;
@@ -127,12 +127,69 @@ slide button{
 
 @keyframes slide {
     0% { left: 100%; width: 100%; }
-    5% { left: 0%; }
-    25% { left: 0%; }
-    30% { left: -100%; width: 100%; }
-    30.0001% { left: -100%; width: 0%; }
-    100% { left: 100%; width: 0%; }
-   }
+    5% { left: 80%; }
+    25% { left: 50%; }
+    30% { left: 30%; width: 100%; }
+    50% { left: 15%;}
+    100% { left: 0%; width: 100%; }
+}*/
+
+.slider {
+    overflow: hidden;
+}
+
+.slider figure{
+    position: relative;
+    width: 500%;
+    height: calc(100vh - 63px);
+    margin:0;
+    left:0;
+    animation: 40s slider infinite;
+}
+
+.slider figure div{
+    position: relative;
+    height: calc(100vh - 63px);
+}
+
+.slide img{
+    max-width: 100%;
+    object-fit: scale-down;
+}
+
+.slide button{
+    position: absolute;
+    top:95%;
+    left:50%;
+    transform: translate(-50%,-50%);
+}
+
+.slide p{
+    position: absolute;
+    top:50%;
+    left:50%;
+    transform: translate(-50%,-50%);
+    font-weight: bold;
+    font-size: 6vw;
+    color:whitesmoke;
+}
+
+.slider figure div{
+    width: 20%;
+    float: left;
+}
+
+@keyframes slider{
+    0%  { left:0%; }
+    20% { left:0%; }
+    25% { left:-100%; }
+    45% { left:-100%; }
+    50% { left:-200%; }
+    70% { left:-200%; } 
+    75% { left:-300%; }
+    95% { left:-300%; } 
+    100%{ left:-400%; }
+}
 
 /* OTHER_______________________________________________________________ */
 
