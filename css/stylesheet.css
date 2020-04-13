@@ -149,7 +149,9 @@ slide button{
 
 .slider figure div{
     position: relative;
-    height: calc(100vh - 63px);
+    /* height: calc(100vh - 63px); */
+    /* height: auto; */
+    height: calc(100vh -63px);
 }
 
 .slide img{
