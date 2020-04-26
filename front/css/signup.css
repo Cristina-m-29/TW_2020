@@ -1,0 +1,190 @@
+
+/*SIGN-UP________________________________________________________________*/
+.sign-up{
+    position: absolute;
+    opacity: 0;
+    z-index: 9;
+    width: 22%;
+    height: 60%;
+    top:47%;
+    left:50%;
+    transform: translate(-50%,-50%);
+    overflow: hidden;
+    background-color: whitesmoke;
+    border: solid 1px #585858;
+    border-radius: 5%;
+    display: grid;
+    grid-template-rows: 85% 15%;
+    font-family: Inter,sans-serif;
+    transition: 0.5s;
+}
+
+/*MAIN-SIGN-UP________________________________________________________*/
+
+#close-sign-up{
+    position: absolute;
+    top:7%;
+    left:7%;
+    transform: translate(-50%,-50%);
+    cursor: pointer;
+}
+
+
+.main-sign-up > p{
+    text-align: center;  
+    margin: 0;  
+}
+
+#msg-1-s{
+    font-weight: bold;
+    font-size: 2vw;   
+    padding-top:0.5em;     
+}
+
+#msg-2-s{
+    padding-bottom: 0.8em;
+    font-size: 0.9vw;
+    padding-top:0.5em;
+    color:#8c8c8c;
+}
+
+#sign-up-form{
+    margin: auto;
+    width: 90%;
+}
+
+.name{
+    display: inline-flex;
+}
+
+#lname{
+    margin-left:auto;
+}
+
+input[type=text]{
+    width: 47%;
+    padding: 15px 20px;
+    background-color: #f5f5f5;
+    box-sizing: border-box;
+    display: inline-block;
+    border: 1px solid #b3b3b3;
+    border-radius: 10px;
+    padding-left: 3em;
+    background-repeat: no-repeat;
+    margin: 15px 0;
+    background-image: url('../images/signup/user.svg');
+    background-position: 0.8em 0.9em; 
+    background-size: 1.2em;
+}
+
+input[type=email]{
+    width: 100%;
+    padding: 15px 20px;
+    background-color: #f5f5f5;
+    box-sizing: border-box;
+    display: inline-block;
+    border: 1px solid #b3b3b3;
+    border-radius: 10px;
+    margin: 15px 0;
+    background-image: url('../images/login/envelope-light.svg');
+    background-position: 0.8em 0.9em; 
+    background-repeat: no-repeat;
+    background-size: 1.5em;
+    padding-left: 3em;
+}
+
+.sign-up-pass-input{
+    position: relative;
+}
+
+.sign-up-view-pass{
+    position: absolute;
+    top:43%;
+    left:87%;
+    transform: translate(-50%,-50%);
+    background-color: #f5f5f5;
+    border: 1px solid #b3b3b3;
+    border-radius: 5px;
+    width: 15%;
+    padding: 8px 10px;
+    text-align: center;    
+    color: #000000;
+    font-weight: bold;
+    font-size: 0.9em;
+    font-family: Inter,sans-serif;;
+}
+
+input[type=password]{
+    width: 100%;
+    padding: 15px 20px;
+    background-color: whitesmoke;
+    box-sizing: border-box;
+    display: inline-block;
+    border: 1px solid #b3b3b3;
+    border-radius: 10px;
+    margin: 15px 0;
+    background-image: url('../images/login/lock-light.svg');
+    background-position: 0.8em 0.9em; 
+    background-repeat: no-repeat;
+    /* fill: rgb(124, 121, 121); */
+    background-size: 1.3em;
+    padding-left: 3em;
+}
+
+input[type=submit]{
+    width: 100%;
+    color:#fff;
+    background-color:#0066ff;
+    padding: 14px 20px;
+    margin: 15px 0;
+    border: none;
+    border-radius: 10px;
+    font-weight: bold;
+}
+
+input[type=submit]:hover {
+    background-color: #005ce6;
+}
+
+input[type="text"]:hover{
+    border: 1px solid #8c8c8c;
+}
+
+input[type="email"]:hover{
+    border: 1px solid #8c8c8c;
+}
+
+input[type="password"]:hover{
+    border: 1px solid #8c8c8c;
+}
+
+.sign-up-view-pass:hover{
+    border: 1px solid #8c8c8c;
+}
+
+/*OTHER-SIGN-UP________________________________________________________*/
+
+.sign-up-a{
+    color:#06f;
+    padding-left: 0.25em;
+    cursor: pointer;
+}
+
+.other-sign-up{
+    position: relative;
+    border-top: solid 0.02em #b3b3b3;    
+}
+
+.other-sign-up-options{
+    color: black;
+    text-align: center;
+    margin:0;
+    display: flex;   
+    align-items: center;
+    justify-content: center;
+}
+
+.other-sign-up-options > p{
+    padding-top: 1.8em;
+    font-size: 0.8vw;
+}

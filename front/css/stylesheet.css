@@ -5,129 +5,18 @@ html, body{
     width: 100%;
     overflow: hidden;
     background: whitesmoke;
+    transition: 0.5s;
 }
 
 p{
     margin:0;
 }
 
-/* SIDEMENU_______________________________________________________________ */
-
-.sidemenu_img{
-    z-index: 9; 
-    height: 0;
-    width: 50%;
-    right: 0;
-    position: absolute;
-    background:red;
-    display: grid;
-    grid-template-rows: 50% 50%;
-}
-
-.sidemenu_img img{
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    border: 1px whitesmoke solid;
-}
-
-.sidemenu_container{
-    width: 100%;
-    height:0;   
-    position: absolute;
-    background: whitesmoke;
-    z-index: 9;
-    align-content: center;    
-    align-items: center;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-}
-
-.side_width{
-    transition: width 0.5s ease-in-out;    
-}
-
-.side_height{
-    transition: height 0.5s ease-in-out;
-}
-
-
-.sidemenu_opt {
-    align-items: center;
-    color: black;
-    font-family: "Segoe UI";
-    padding:1em;
-    font-size: 1.2vw;
-}
-/* 
-#first_option{ 
-    display: flex;
-    align-items: flex-end;
-    margin-bottom: 4em;
-} */
-
-/* NAVBAR_______________________________________________________________ */
-
-.navbar{
-    display: grid;
-    grid-template-columns: 20% 60% 20%;
-    align-items: center;
-    width: 100%;
-    padding: 1.3em 0 ;
-    background-color: whitesmoke;
-    transition: width 0.5s ease-in-out;
-    z-index:13;
-    position: absolute;
-}
-
-.sidemenu_btn{
-    margin-left: 1em;
-}
-
-#close{
-    display: none;
-}
-
-.logo{
-    align-items: center;
-    margin: auto;
-    width: 50%;
-    text-align: center;
-    font-family: "Segoe UI", Roboto;
-}
-
-.logo > a{
-    text-decoration: none;  
-    font-size: large;  
-    font-weight: bold;
-    color:black;
-}
-
-.user_option{
-    display: flex;
-    align-items: center;
-    margin-left:auto;
-    margin-right:1em;
-    color: black;
-}
-
-.user_option > div {
-    padding: 0 0.5em;
-}
-
-.user > a, .wishlist > a, .cart > a{
-    text-decoration: none;  
-    font-size: large;  
-    font-weight: bold;
-    color:black;
-}
-
 /* SLIDE-SHOW__________________________________________________________ */
 
-.slider_container{
+.main_container{
     position: relative;    
-    width: 500%;
+    width: 600%;
     margin: auto;
     margin-top: 63px;
     height: calc(100vh - 63px);
@@ -188,7 +77,7 @@ p{
 }
 
 #k_btn{
-    background-color: red;
+    background-color: #ff0000;
     color:whitesmoke
 }
 
