@@ -1,4 +1,3 @@
-const body = document.querySelector('body');
 const navBar = document.querySelector('.navbar');
 const sideMenuOpen = document.querySelector('#open');
 const sideMenuClose = document.querySelector('#close');
@@ -18,8 +17,7 @@ sideMenuClose.addEventListener('click',navBarUndoWidth);
 
 function navBarReduceWidth(){
     if((contorSideMenu < 2 )){      
-      console.log('Open nav bar');
-      body.style.overflow = "hidden";
+      console.log('Open nav bar');      
       userBtn.style.display="none";    
       sideMenuOpen.style.display ="none";
       sideMenuClose.style.display="block";
@@ -79,8 +77,7 @@ function navBarUndoWidth(){
     sideMenuOpen.style.display = "block";
     console.log('Close nav bar');
     navBar.style.width="100%";
-    userBtn.style.display ="block";
-    body.style.overflow = "visible";
+    userBtn.style.display ="block";    
 }
 
 
