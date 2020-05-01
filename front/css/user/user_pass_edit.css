@@ -1,0 +1,64 @@
+/* --> Password edit___________________________________________________*/
+
+.main_data_pass_edit{
+    border: solid 0.02em #b3b3b3;
+    margin: 1em 0;
+    position: relative;
+    clear: both;
+    overflow: hidden;
+    display:none;
+}
+
+.pass_edit_form{
+    margin: 1em 3em;
+    border-bottom: solid 0.02em #b3b3b3;
+    font-size: 0.9vw;
+    font-weight: bold;
+    display: grid;
+    grid-template-columns: 50% 50%;
+}
+
+#pass_edit_form_oldPass{
+    margin-right: 1em;
+}
+
+#pass_edit_form_oldpass, #pass_edit_form_newpass{
+    width: 100%;
+    padding: 15px 20px;
+    background-color: whitesmoke;
+    box-sizing: border-box;
+    display: inline-block;
+    border: 1px solid #b3b3b3;
+    margin: 5px 0 15px 0;
+    background-image: url(../../images/login/lock-light.svg);
+    background-position: 0.8em 0.9em;
+    background-repeat: no-repeat;
+    background-size: 1.5em;
+    padding-left: 3em;
+}
+
+#pass_edit_view_oldpass{
+    font-weight: normal;
+    position: absolute;
+    top: 52%;
+    left: 45.5%;
+    transform: translate(-50%,-50%);
+    padding: 0.5em 1em;
+    border: solid 0.05em #b3b3b3;
+    border-radius: 5%;
+    font-weight: bold;
+    font-size: 0.8em;
+}
+
+#pass_edit_view_newpass{
+    font-weight: normal;
+    position: absolute;
+    top: 52%;
+    left: 93%;
+    transform: translate(-50%,-50%);
+    padding: 0.5em 1em;
+    border: solid 0.05em #b3b3b3;
+    border-radius: 5%;
+    font-weight: bold;
+    font-size: 0.8em;
+}

@@ -8,7 +8,6 @@
   <link rel="stylesheet" type="text/css" href="../css/signup.css"/>
   <link rel="stylesheet" type="text/css" href="../css/pass.css"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"/>
 </head>
 <body>
   <!--SIDEMENU_________________________________________________-->
@@ -29,21 +28,29 @@
   <!--NAVBAR___________________________________________________-->
   <div class="navbar">
     <div class="sidemenu_btn">
-      <div id="open"><i class="fa">&#xf0c9;</i> </div>
-      <div id="close"><i class="fa">&#xf00d;</i></div>
+      <div id="open"><img src = "../images/navbar/menu.png"></div>
+      <div id="close"><img src = "../images/navbar/close.png"></div>
     </div>
     <div class="logo">
-      <p class="logo_txt"> ATARA </p>
+      <a href=""><p class="logo_txt"> ATARA </p></a>
     </div>
     <div class="user_option">
+      <div class="admin">
+        <a href="user/admin.html">
+        <img src = "../images/navbar/user.png"></a>
+      </div>
+      <div class="logged_user">
+        <a href="user/user.html">
+        <img src = "../images/navbar/user.png"></a>
+      </div>
       <div class="user">
-        <i class="fa">&#xf2bd; </i>
+        <img src = "../images/navbar/user.png">
       </div>
       <div class="wishlist">
-        <i class="fa">&#xf004; </i>
+        <img src = "../images/navbar/favorite.png">
       </div>
       <div class="cart">
-        <i class="fa">&#xf291;</i>
+        <img src = "../images/navbar/cart.png">
       </div>
     </div>
   </div> 
@@ -51,18 +58,18 @@
   <!--SIGN IN-->
   <div class="sign-in">
     <div class="main-sign-in">
-      <div id="close-sign-in"><i class="fa">&#xf00d;</i></div>
+      <div id="close-sign-in"><img src="../images/navbar/smallclose.png"></div>
       <p id="msg-1-s">Hello!</h1>
       <p id="msg-2-s">Sign into your account here.</p>
-      <form id="sign-in-form">    
+      <form id="sign-in-form" onsubmit="submitSignIn(event.preventDefault())">    
         <div class="email-input">
-          <input type="email" name="email" placeholder="Email / Username">
+          <input id="email-si" type="email" name="email" placeholder="Email / Username">
         </div>
         <div class="sign-in-pass-input">
-          <div class="sign-in-view-pass">Show</div>
-          <input type="password" name="password" placeholder="Password">
+          <div class="sign-in-view-pass"><p id="p_si">Show</p></div>
+          <input id="pass-si" type="password" name="password" placeholder="Password" >
         </div>
-        <input type="submit" value="Sign in">
+        <input id="sign-in-btn" type="submit" value="Sign in">
       </form>
     </div>
     <div class="other-sign-in">
@@ -82,7 +89,7 @@
   <!--SIGN UP-->
   <div class="sign-up">
     <div class="main-sign-up">
-      <div id="close-sign-up"><i class="fa">&#xf00d;</i></div>
+      <div id="close-sign-up"><img src="../images/navbar/smallclose.png"></div>
       <p id="msg-1-s">Join Atara!</h1>
       <p id="msg-2-s">Sign up to get more power.</p>
       <form id="sign-up-form"> 
@@ -91,11 +98,11 @@
           <input id="lname" type="text" name="lname" placeholder="Last name">
         </div>
         <div class="email-input">
-          <input type="email" name="email" placeholder="Email / Username">
+          <input id="email-su" type="email" name="email" placeholder="Email / Username">
         </div>
         <div class="sign-up-pass-input">
-          <div class="sign-up-view-pass">Show</div>
-          <input type="password" name="password" placeholder="Password">
+          <div class="sign-up-view-pass"><p id="p_su">Show</p></div>
+          <input id="pass-su" type="password" name="password" placeholder="Password">
         </div>
         <input type="submit" value="Sign up">
       </form>
@@ -111,19 +118,19 @@
   <!--RESET PASSWORD-->
   <div class="reset-pass">
     <div class="header-reset-pass">
-      <div id="close-reset-pass"><i class="fa">&#xf00d;</i></div>
+      <div id="close-reset-pass"><img src="../images/navbar/smallclose.png"></div>
       <p>Reset password</p>
     </div>
     <div class="main-reset-pass"> 
       <form id="reset-pass-form"> 
         <div class="email-input">
           <p class="rp">Email</p>
-          <input type="email" name="email" placeholder="Email / Username">
+          <input id="email-r" type="email" name="email" placeholder="Email / Username">
         </div>
         <div class="reset-pass-input">
           <p class="rp">Choose a new password</p>
-          <div class="reset-view-pass">Show</div>
-          <input type="password" name="password" placeholder="Password">
+          <div class="reset-view-pass"><p id="p_r">Show</p></div>
+          <input id="pass-r" type="password" name="password" placeholder="Password">
         </div>
         <input type="submit" value="Reset password">
       </form>

@@ -98,7 +98,7 @@ input[type=email]{
     font-family: Inter,sans-serif;;
 }
 
-input[type=password]{
+#pass-r{
     width: 100%;
     padding: 15px 20px;
     background-color: whitesmoke;
@@ -113,6 +113,7 @@ input[type=password]{
     /* fill: rgb(124, 121, 121); */
     background-size: 1.3em;
     padding-left: 3em;
+    cursor: pointer;
 }
 
 input[type=submit]{

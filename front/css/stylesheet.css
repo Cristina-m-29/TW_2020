@@ -6,6 +6,7 @@ html, body{
     overflow: hidden;
     background: whitesmoke;
     transition: 0.5s;
+    cursor: pointer;
 }
 
 p{
@@ -18,8 +19,8 @@ p{
     position: relative;    
     width: 600%;
     margin: auto;
-    margin-top: 63px;
-    height: calc(100vh - 63px);
+    margin-top: 76px;
+    height: calc(100vh - 76px);
     overflow: hidden;
     z-index: 10;
 }
@@ -31,7 +32,7 @@ p{
 .slide{
     position: relative;    
     max-width: 100%;
-    height: calc(100vh - 63px);
+    height: calc(100vh - 76px);
     border-bottom: solid 6px black;
     overflow: hidden;
 }

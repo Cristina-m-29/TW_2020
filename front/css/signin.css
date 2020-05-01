@@ -74,7 +74,7 @@ input[type=email]{
 
 .sign-in-view-pass{
     position: absolute;
-    top:43%;
+    top:50%;
     left:87%;
     transform: translate(-50%,-50%);
     background-color: #f5f5f5;
@@ -86,10 +86,11 @@ input[type=email]{
     color: #000000;
     font-weight: bold;
     font-size: 0.9em;
-    font-family: Inter,sans-serif;;
+    font-family: Inter,sans-serif;
+    cursor: pointer;
 }
 
-input[type=password]{
+#pass-si{
     width: 100%;
     padding: 15px 20px;
     background-color: whitesmoke;
@@ -101,7 +102,6 @@ input[type=password]{
     background-image: url('../images/login/lock-light.svg');
     background-position: 0.8em 0.9em; 
     background-repeat: no-repeat;
-    /* fill: rgb(124, 121, 121); */
     background-size: 1.3em;
     padding-left: 3em;
 }
