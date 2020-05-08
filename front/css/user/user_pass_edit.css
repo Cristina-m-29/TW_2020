@@ -50,6 +50,10 @@
     font-size: 0.8em;
 }
 
+#pass_edit_form_newPass{
+    position: relative;
+}
+
 #pass_edit_view_newpass{
     font-weight: normal;
     position: absolute;

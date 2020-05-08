@@ -1,0 +1,14 @@
+/*ADMIN ADD PRODUCTSCONTAINER___________________________________________________*/
+
+.main_add_products{    
+    display:none;
+    width: 95%;
+    margin: auto;
+}
+
+.main_add_products > p{
+    font-size: 1.1em;
+    padding-bottom: 0.5em;
+}
+
+/* --> Admin orders main_________________________________________________*/

@@ -8,6 +8,8 @@ const sideMenuImg = document.querySelector('.sidemenu_img');
 const userBtn = document.querySelector('.user');
 
 let contorSideMenu = 0;
+var popUp = 0;
+var windowWidth;
 
 sideMenuOpen.addEventListener('click',navBarReduceWidth);
 sideMenuOpen.addEventListener('click',sideMenuChangeHeight);
@@ -16,7 +18,10 @@ sideMenuClose.addEventListener('click',navBarUndoWidth);
 
 
 function navBarReduceWidth(){
-    if((contorSideMenu < 2 )){      
+  windowWidth = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
+  console.log(windowWidth);
+  if((contorSideMenu < 2 )){      
+    if(windowWidth > 930){
       console.log('Open nav bar');      
       userBtn.style.display="none";    
       sideMenuOpen.style.display ="none";
@@ -26,21 +31,44 @@ function navBarReduceWidth(){
           navBar.style.width = "50%";
           contorSideMenu++;
       });
-    }    
+    }
+    if(windowWidth > 830){
+      userBtn.style.display="none";    
+      sideMenuOpen.style.display ="none";
+      sideMenuClose.style.display="block";
+      // sleep(1000).then(()=>{
+          sideMenuOpt.style.display="block";
+          navBar.style.width = "60%";
+          contorSideMenu++;
+      // });
+    }
+  }    
 }
 
 function sideMenuChangeHeight(){
+  windowWidth = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
   if(contorSideMenu < 2){
+    if(windowWidth > 930){
       sideMenu.classList.add('side_height');  
       sideMenuImg.classList.add('side_height'); 
       sideMenu.style.zIndex="13";
       sideMenuImg.style.height = "100%";
       sideMenu.style.height = "100%";
       sideMenuReduceWidth();  
+    }
+    else{
+      // sideMenu.classList.add('side_height');  
+      sideMenu.style.zIndex="13";
+      sideMenu.style.height = "100%";
+      sideMenu.style.width = "0";
+      sideMenuReduceWidth(); 
+    }
   }
 }
 
 function sideMenuReduceWidth(){
+  windowWidth = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
+  if(windowWidth >930){
   sleep(1000).then(()=>{
     sideMenuImg.style.zIndex="12";
     sideMenu.classList.remove('side_height');
@@ -48,6 +76,13 @@ function sideMenuReduceWidth(){
     sideMenu.style.width="50%";
     contorSideMenu++;    
   });  
+  }
+  if(windowWidth >830){
+    sideMenuImg.style.zIndex="12";
+      sideMenu.classList.add('side_width');
+      sideMenu.style.width="60%";
+      contorSideMenu++; 
+  }
 }
 
 function sideMenuUndoHeight(){

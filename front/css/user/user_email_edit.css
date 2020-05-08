@@ -26,17 +26,21 @@
     border-radius: 0;
 }
 
+#email_edit_current_pass{
+    position: relative;
+}
+
 #email_edit_view_pass{
     font-weight: normal;
     position: absolute;
     top: 52%;
-    left: 93%;
+    left: 92%;
     transform: translate(-50%,-50%);
     padding: 0.5em 1em;
     border: solid 0.05em #b3b3b3;
     border-radius: 5%;
     font-weight: bold;
-    font-size: 0.8em;
+    font-size: 0.8vw;
 }
 
 #email_edit_view_pass:hover{

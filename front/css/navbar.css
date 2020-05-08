@@ -81,6 +81,10 @@ a{
     display: none;
 }
 
+#open_mobile{
+    display:none;
+}
+
 .logo{
     align-items: center;
     margin: auto;
@@ -116,3 +120,21 @@ a{
     /* position: absolute; */
     display:none;
 }
+
+/*MEDIA QUERIES______________________________________________________*/
+
+
+/* 
+@media screen and (max-width: 930px){ */
+/*--> Navbar */
+
+/*-->Sidemenu*/
+/*
+.sidemenu_img{
+    width: 30%;
+}
+
+.sidemenu_container{
+    width: 70%;
+}
+} */

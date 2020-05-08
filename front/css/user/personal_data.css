@@ -1,6 +1,11 @@
 
 /* PERSONAL-DATA CONTAINER_______________________________________________*/
 
+.main_data{
+    width: 95%;
+    margin: auto;
+}
+
 .main_data > p{
     font-size: 1.1em;
     padding-bottom: 0.5em;
