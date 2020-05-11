@@ -60,8 +60,8 @@
   <div class="sign-in">
     <div class="main-sign-in">
       <div id="close-sign-in"><img src="../images/navbar/smallclose.png"></div>
-      <p id="msg-1-s">Hello!</h1>
-      <p id="msg-2-s">Sign into your account here.</p>
+      <p id="msg-1-si">Hello!</h1>
+      <p id="msg-2-si">Sign into your account here.</p>
       <form id="sign-in-form" onsubmit="submitSignIn(event.preventDefault())">    
         <div class="email-input">
           <input id="email-si" type="email" name="email" placeholder="Email / Username">
@@ -90,31 +90,33 @@
   <!--SIGN UP-->
   <div class="sign-up">
     <div class="main-sign-up">
-      <div id="close-sign-up"><img src="../images/navbar/smallclose.png"></div>
-      <p id="msg-1-s">Join Atara!</h1>
-      <p id="msg-2-s">Sign up to get more power.</p>
-      <form id="sign-up-form"> 
+    <div id="close-sign-up"><img src="../../images/navbar/smallclose.png"></div>
+    <p id="msg-1-su">Join Atara!</h1>
+        <p id="msg-2-su">Sign up to get more power.</p>
+        <form id="sign-up-form">
         <div class="name">
-          <input id="fname" type="text" name="fname" placeholder="First name">
-          <input id="lname" type="text" name="lname" placeholder="Last name">
+            <input id="fname" type="text" name="fname" placeholder="First name">
+            <input id="lname" type="text" name="lname" placeholder="Last name">
         </div>
         <div class="email-input">
-          <input id="email-su" type="email" name="email" placeholder="Email / Username">
+            <input id="email-su" type="email" name="email" placeholder="Email / Username">
         </div>
         <div class="sign-up-pass-input">
-          <div class="sign-up-view-pass"><p id="p_su">Show</p></div>
-          <input id="pass-su" type="password" name="password" placeholder="Password">
+            <div class="sign-up-view-pass">
+            <p id="p_su">Show</p>
+            </div>
+            <input id="pass-su" type="password" name="password" placeholder="Password">
         </div>
         <input type="submit" value="Sign up">
-      </form>
+        </form>
     </div>
     <div class="other-sign-up">
-      <div class="other-sign-up-options">
+    <div class="other-sign-up-options">
         <p>Already registered? </p>
         <p class="sign-up-a sign-in-su">Sign in</p>
-      </div>
     </div>
-  </div>
+    </div>
+</div>
 
   <!--RESET PASSWORD-->
   <div class="reset-pass">
@@ -130,8 +132,10 @@
         </div>
         <div class="reset-pass-input">
           <p class="rp">Choose a new password</p>
-          <div class="reset-view-pass"><p id="p_r">Show</p></div>
-          <input id="pass-r" type="password" name="password" placeholder="Password">
+          <div class="reset-pass-pass-field">
+            <div class="reset-view-pass"><p id="p_r">Show</p></div>
+            <input id="pass-r" type="password" name="password" placeholder="Password">
+          </div>          
         </div>
         <input type="submit" value="Reset password">
       </form>

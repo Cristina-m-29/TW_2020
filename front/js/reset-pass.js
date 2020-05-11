@@ -15,6 +15,8 @@ close_r.addEventListener('click', () => {
     r.style.top="47%";
     nav_r.style.filter="blur(0px)";
     cont_r.style.filter="blur(0px)";
+    popUp = 0;
+    document.querySelector('.wishlist').style.display="block";
 });
 
 show_pass_r.addEventListener('click', () => {

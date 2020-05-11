@@ -25,6 +25,9 @@ close_su.addEventListener('click', () => {
     lname.value = "";
     email_su.value = "";
     pass_su.value = "";
+
+    popUp = 0;
+    document.querySelector('.wishlist').style.display="block";
 });
 
 show_pass_su.addEventListener('click', () => {

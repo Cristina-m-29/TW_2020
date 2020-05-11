@@ -1,11 +1,11 @@
 
 /*SIGN-UP________________________________________________________________*/
 .sign-up{
-    position: absolute;
+    position: fixed;
     opacity: 0;
     z-index: 9;
     width: 22%;
-    height: 60%;
+    height: 55%;
     top:47%;
     left:50%;
     transform: translate(-50%,-50%);
@@ -35,13 +35,13 @@
     margin: 0;  
 }
 
-#msg-1-s{
+#msg-1-su{
     font-weight: bold;
     font-size: 2vw;   
     padding-top:0.5em;     
 }
 
-#msg-2-s{
+#msg-2-su{
     padding-bottom: 0.8em;
     font-size: 0.9vw;
     padding-top:0.5em;
@@ -57,8 +57,13 @@
     display: inline-flex;
 }
 
+#fname{
+    font-size: 0.7vw;
+}
+
 #lname{
     margin-left:auto;
+    font-size: 0.7vw;
 }
 
 input[type=text]{
@@ -188,4 +193,192 @@ input[type="password"]:hover{
 .other-sign-up-options > p{
     padding-top: 1.8em;
     font-size: 0.8vw;
+}
+
+/*MEDIA QUERIES______________________________________________________*/
+
+@media screen and (min-width: 1800px) and (max-width: 1960px){
+    .other-sign-up-options > p, #msg-2-su{
+        font-size: 0.85vw;
+    } 
+    
+    #email-su, #pass-su, #fname, #lname, .sign-up-view-pass{
+        font-size: 0.65vw;
+    }
+}
+
+@media screen and (min-width: 1600px) and (max-width: 1800px){
+    .sign-up{
+        width: 25%;
+        height: 55%;
+        top:50%;
+        left:50%;
+        grid-template-rows: 80% 20%;
+    }
+
+    .other-sign-up-options > p, #msg-2-su{
+        font-size: 0.9vw;
+    }
+
+    #email-su, #pass-su, #fname, #lname, .sign-up-view-pass{
+        font-size: 0.7vw;
+    }
+
+    #msg-1-su{
+        font-size: 2.3vw;    
+    }
+}
+
+@media screen and (min-width: 1450px) and (max-width: 1600px){
+    .other-sign-up-options > p, #msg-2-su{
+        font-size: 1vw;
+    }
+
+    #email-su, #pass-su, #fname, #lname, .sign-up-view-pass{
+        font-size: 0.8vw;
+    }
+}
+
+@media screen and (min-width: 1300px) and (max-width: 1450px){
+    .other-sign-up-options > p, #msg-2-su{
+        font-size: 1.1vw;
+    }
+
+    #email-su, #pass-su, #fname, #lname, .sign-up-view-pass{
+        font-size: 0.9vw;
+    }
+}
+
+@media screen and (min-width: 1300px) and (max-width: 1600px){
+    .sign-up{
+        top:50%;
+        width: 30%;
+        height: 50%;
+    }
+
+    #msg-1-su{
+        font-size: 2.4vw;    
+    }
+}
+
+@media screen and (min-width: 1100px) and (max-width: 1300px){
+    .other-sign-up-options > p, #msg-2-su{
+        font-size: 1.20vw;
+    }
+
+    #email-su, #pass-su, #fname, #lname, .sign-up-view-pass{
+        font-size: 1vw;
+    }
+    
+    #msg-1-su{
+        font-size: 2.55vw;    
+    }
+}
+
+@media screen and (min-width: 950px) and (max-width: 1100px){
+    .other-sign-up-options > p, #msg-2-su{
+        font-size: 1.35vw;
+    }
+
+    #email-su, #pass-su, #fname, #lname, .sign-up-view-pass{
+        font-size: 1.15vw;
+    }
+
+    #msg-1-su{
+        font-size: 2.65vw;    
+    }
+}
+
+@media screen and (min-width: 1000px) and (max-width: 1300px){
+    .sign-up{
+        top:50%;
+        width: 35%;
+        height: 50%;
+    }
+}
+
+@media screen and (min-width: 800px) and (max-width: 950px){
+    .other-sign-up-options > p, #msg-2-su{
+        font-size: 1.45vw;
+    }
+
+    #email-su, #pass-su, #fname, #lname, .sign-up-view-pass{
+        font-size: 1.25vw;
+    }
+
+    #msg-1-su{
+        font-size: 2.75vw;    
+    }
+}
+
+@media screen and (min-width: 700px) and (max-width: 800px){
+    .other-sign-up-options > p, #msg-2-su{
+        font-size: 1.65vw;
+    }
+
+    #email-su, #pass-su, #fname, #lname, .sign-up-view-pass{
+        font-size: 1.45vw;
+    }
+
+    #msg-1-su{
+        font-size: 2.9vw;    
+    }
+}
+
+@media screen and (min-width: 700px) and (max-width: 1000px){
+    .sign-up{
+        top:50%;
+        width: 50%;
+        height: 50%;
+    }
+}
+
+@media screen and (min-width: 600px) and (max-width: 700px){
+    .other-sign-up-options > p, #msg-2-su{
+        font-size: 1.7vw;
+    }
+
+    #email-su, #pass-su, #fname, #lname, .sign-up-view-pass{
+        font-size: 1.5vw;
+    }
+
+    #msg-1-su{
+        font-size: 3vw;    
+    }
+}
+
+@media screen and (min-width: 500px) and (max-width: 600px){
+    .other-sign-up-options > p, #msg-2-su{
+        font-size: 1.8vw;
+    }
+
+    #email-su, #pass-su, #fname, #lname, .sign-up-view-pass{
+        font-size: 1.6vw;
+    }
+
+    #msg-1-su{
+        font-size: 3.2vw;    
+    }
+}
+
+@media screen and (min-width: 400px) and (max-width: 500px){
+    .other-sign-up-options > p, #msg-2-su{
+        font-size: 1.9vw;
+    }
+
+    #email-su, #pass-su, #fname, #lname, .sign-up-view-pass{
+        font-size: 1.7vw;
+    }
+
+    #msg-1-su{
+        font-size: 3.3vw;    
+    }
+}
+
+@media screen and (min-width: 400px) and (max-width: 700px){
+    .sign-up{
+        top:50%;
+        width: 50%;
+        height: 50%;
+    }
 }

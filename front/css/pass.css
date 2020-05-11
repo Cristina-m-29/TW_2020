@@ -1,11 +1,11 @@
 
 /*RESET-PASSWORD__________________________________________________________*/
 .reset-pass{
-    position: absolute;
+    position: fixed;
     opacity: 0;
     z-index: 9;
     width: 22%;
-    height: 55%;
+    height: 45%;
     top:47%;
     left:50%;
     transform: translate(-50%,-50%);
@@ -39,8 +39,9 @@
     color: black;
     text-align: center;
     font-weight: bold;
-    padding-top: 1.2em;
+    padding-top: 1em;
     font-size: 1vw;
+    margin: 0;
 }
 
 
@@ -69,21 +70,27 @@ input[type=email]{
     display: inline-block;
     border: 1px solid #b3b3b3;
     border-radius: 10px;
-    margin: 5px 0 15px 0;
+    margin: 15px 0;
     background-image: url('../images/login/envelope-light.svg');
     background-position: 0.8em 0.9em; 
     background-repeat: no-repeat;
     background-size: 1.5em;
     padding-left: 3em;
+    font-size: 0.7vw;
 }
 
 .reset-pass-input{
     position: relative;
 }
 
+.reset-pass-pass-field{
+    position: relative;
+    margin: 0;
+}
+
 .reset-view-pass{
     position: absolute;
-    top:55%;
+    top:50%;
     left:87%;
     transform: translate(-50%,-50%);
     background-color: #f5f5f5;
@@ -106,7 +113,7 @@ input[type=email]{
     display: inline-block;
     border: 1px solid #b3b3b3;
     border-radius: 10px;
-    margin: 5px 0 15px 0;
+    margin: 15px 0;
     background-image: url('../images/login/lock-light.svg');
     background-position: 0.8em 0.9em; 
     background-repeat: no-repeat;
@@ -168,4 +175,201 @@ input[type="password"]:hover{
 .other-reset-options > p{
     font-size: 0.8vw;
     padding-top: 1.5em;
+}
+
+/*MEDIA QUERIES______________________________________________________*/
+
+@media screen and (min-width: 1800px) and (max-width: 1960px){
+   .other-reset-options > p {
+        font-size: 0.85vw;
+    } 
+    
+    #email-r, #pass-r, .reset-view-pass{
+        font-size: 0.65vw;
+    }   
+}
+
+@media screen and (min-width: 1600px) and (max-width: 1800px){
+    .reset-pass{
+        width: 25%;
+        height: 45%;
+        top:50%;
+        left:50%;
+    }
+
+   .other-reset-options > p, .rp{
+        font-size: 0.9vw;
+    }
+
+    #email-r, #pass-r, .reset-view-pass{
+        font-size: 0.7vw;
+    }
+
+    .header-reset-pass > p{
+        font-size: 1.15vw;
+        padding-top: 1em;
+    }
+}
+
+@media screen and (min-width: 1450px) and (max-width: 1600px){
+   .other-reset-options > p, .rp {
+        font-size: 1vw;
+    }
+
+    #email-r, #pass-r, .reset-view-pass{
+        font-size: 0.8vw;
+    }
+}
+
+@media screen and (min-width: 1300px) and (max-width: 1450px){
+   .other-reset-options > p, .rp {
+        font-size: 1.1vw;
+    }
+
+    #email-r, #pass-r, .reset-pass-view-pass{
+        font-size: 0.9vw;
+    }
+}
+
+@media screen and (min-width: 1300px) and (max-width: 1600px){
+    .reset-pass{
+        top:50%;
+        width: 30%;
+        height: 42%;
+    }
+
+    .header-reset-pass > p{
+        font-size: 1.2vw;
+        padding-top: 1em;
+    }
+}
+
+@media screen and (min-width: 1100px) and (max-width: 1300px){
+   .other-reset-options > p, .rp {
+        font-size: 1.20vw;
+    }
+
+    #email-r, #pass-r, .reset-view-pass{
+        font-size: 1vw;
+    }
+
+    .header-reset-pass > p{
+        font-size: 1.3vw;
+        padding-top: 1.1em;
+    }
+}
+
+@media screen and (min-width: 950px) and (max-width: 1100px){
+   .other-reset-options > p, .rp {
+        font-size: 1.35vw;
+    }
+
+    #email-r, #pass-r, .reset-view-pass{
+        font-size: 1.15vw;
+    }
+
+    .header-reset-pass > p{
+        font-size: 1.4vw;
+        padding-top: 1.1em;
+    }
+    
+}
+
+@media screen and (min-width: 1000px) and (max-width: 1300px){
+    .reset-pass{
+        top:50%;
+        width: 35%;
+        height: 40%;
+    }
+}
+
+@media screen and (min-width: 800px) and (max-width: 950px){
+   .other-reset-options > , .rp {
+        font-size: 1.45vw;
+    }
+
+    #email-r, #pass-r, .reset-view-pass{
+        font-size: 1.25vw;
+    }
+
+    .header-reset-pass > p{
+        font-size: 1.45vw;
+        padding-top: 1.4em;
+    }
+}
+
+@media screen and (min-width: 700px) and (max-width: 800px){
+   .other-reset-options > p, .rp {
+        font-size: 1.65vw;
+    }
+
+    #email-r, #pass-r, .reset-view-pass{
+        font-size: 1.45vw;
+    }
+
+    .header-reset-pass > p{
+        font-size: 1.65vw;
+        padding-top: 1.45em;
+    }
+}
+
+@media screen and (min-width: 700px) and (max-width: 1000px){
+    .reset-pass{
+        top:50%;
+        width: 40%;
+        height: 37%;
+    }
+}
+
+@media screen and (min-width: 600px) and (max-width: 700px){
+   .other-reset-options > p, .rp {
+        font-size: 1.7vw;
+    }
+
+    #email-r, #pass-r, .reset-view-pass{
+        font-size: 1.5vw;
+    }
+
+    .header-reset-pass > p{
+        font-size: 1.7vw;
+        padding-top: 1.5em;
+    }
+}
+
+@media screen and (min-width: 500px) and (max-width: 600px){
+   .other-reset-options > p, .rp {
+        font-size: 1.8vw;
+    }
+
+    #email-r, #pass-r, .reset-view-pass{
+        font-size: 1.6vw;
+    }
+
+    .header-reset-pass > p{
+        font-size: 1.8vw;
+        padding-top: 1.6em;
+    }
+}
+
+@media screen and (min-width: 400px) and (max-width: 500px){
+   .other-reset-options > p, .rp {
+        font-size: 1.9vw;
+    }
+
+    #email-r, #pass-r, .reset-view-pass{
+        font-size: 1.7vw;
+    }
+
+    .header-reset-pass > p{
+        font-size: 1.85vw;
+        padding-top: 1.65em;
+    }
+}
+
+@media screen and (min-width: 400px) and (max-width: 700px){
+    .reset-pass{
+        top:50%;
+        width: 50%;
+        height: 35%;
+    }
 }

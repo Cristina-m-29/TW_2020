@@ -249,6 +249,23 @@
     text-align: center;
 }
 
+.adm_prod_set_sColor{
+    display: grid;
+    grid-template-columns: 40% 60%;
+    padding: 0.5em;
+}
+
+.add_prod_add_string > input[type="text"]{
+    width: 95%;
+    padding:0.5em;
+    margin: 0 0.5em;
+    margin-top: 0;
+    margin-bottom: 0;
+    border-radius: 0;
+    background-image: none;
+    text-align: center;
+}
+
 .adm_prod_set_sizes{
     display: grid;
     grid-template-columns: 40% 60%;
@@ -284,6 +301,10 @@
     /* display:none; */
 }
 
-.x_color{
-    background-image: url(../../images/navbar/close.png);
+.hex_string{
+    font-size: 0.8vw;
+    font-weight: bold;
+    color: red;
+    text-align: center;
+    display: none;
 }

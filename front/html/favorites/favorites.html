@@ -43,7 +43,7 @@
         </div>
         <div class="user_option">
         <div class="admin">
-            <a href="user/admin.html">
+            <a href="../user/admin.html">
             <img src="../../images/navbar/user.png"></a>
         </div>
         <div class="logged_user">
@@ -67,8 +67,8 @@
     <div class="sign-in">
         <div class="main-sign-in">
         <div id="close-sign-in"><img src="../../images/navbar/smallclose.png"></div>
-        <p id="msg-1-s">Hello!</h1>
-            <p id="msg-2-s">Sign into your account here.</p>
+        <p id="msg-1-si">Hello!</h1>
+            <p id="msg-2-si">Sign into your account here.</p>
             <form id="sign-in-form" onsubmit="submitSignIn(event.preventDefault())">
             <div class="email-input">
                 <input id="email-si" type="email" name="email" placeholder="Email / Username">
@@ -100,8 +100,8 @@
     <div class="sign-up">
         <div class="main-sign-up">
         <div id="close-sign-up"><img src="../../images/navbar/smallclose.png"></div>
-        <p id="msg-1-s">Join Atara!</h1>
-            <p id="msg-2-s">Sign up to get more power.</p>
+        <p id="msg-1-su">Join Atara!</h1>
+            <p id="msg-2-su">Sign up to get more power.</p>
             <form id="sign-up-form">
             <div class="name">
                 <input id="fname" type="text" name="fname" placeholder="First name">
@@ -128,34 +128,34 @@
     </div>
 
     <!--RESET PASSWORD-->
-    <div class="reset-pass">
-        <div class="header-reset-pass">
-        <div id="close-reset-pass"><img src="../../images/navbar/smallclose.png"></div>
-        <p>Reset password</p>
-        </div>
-        <div class="main-reset-pass">
-        <form id="reset-pass-form">
-            <div class="email-input">
-            <p class="rp">Email</p>
-            <input id="email-r" type="email" name="email" placeholder="Email / Username">
-            </div>
-            <div class="reset-pass-input">
-            <p class="rp">Choose a new password</p>
-            <div class="reset-view-pass">
-                <p id="p_r">Show</p>
-            </div>
-            <input id="pass-r" type="password" name="password" placeholder="Password">
-            </div>
-            <input type="submit" value="Reset password">
-        </form>
-        </div>
-        <div class="other-reset-pass">
-        <div class="other-reset-options">
-            <p>Back to </p>
-            <p class="reset-a sign-in-r"> Sign in</p>
-        </div>
-        </div>
+  <div class="reset-pass">
+    <div class="header-reset-pass">
+      <div id="close-reset-pass"><img src="../images/navbar/smallclose.png"></div>
+      <p>Reset password</p>
     </div>
+    <div class="main-reset-pass"> 
+      <form id="reset-pass-form"> 
+        <div class="email-input">
+          <p class="rp">Email</p>
+          <input id="email-r" type="email" name="email" placeholder="Email / Username">
+        </div>
+        <div class="reset-pass-input">
+          <p class="rp">Choose a new password</p>
+          <div class="reset-pass-pass-field">
+            <div class="reset-view-pass"><p id="p_r">Show</p></div>
+            <input id="pass-r" type="password" name="password" placeholder="Password">
+          </div>          
+        </div>
+        <input type="submit" value="Reset password">
+      </form>
+    </div>
+    <div class="other-reset-pass">
+      <div class="other-reset-options">
+        <p>Back to </p>
+        <p class="reset-a sign-in-r"> Sign in</p>
+      </div>
+    </div>
+  </div>
 
     <!--MAIN-CONTAINER-->
     <div class="main_container">

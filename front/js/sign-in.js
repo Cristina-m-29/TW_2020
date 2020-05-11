@@ -14,6 +14,7 @@ const logged_user_si = document.querySelector('.logged_user');
 
 const email_si = document.querySelector('#email-si');
 const pass_si = document.querySelector('#pass-si');
+var user_state = "not logged";
 
 /* SIGN IN ______________________________________________________*/
 
@@ -26,6 +27,8 @@ close_si.addEventListener('click', () => {
     cont_si.style.filter="blur(0px)";    
     email_si.value= "";
     pass_si.value="";
+    popUp = 0;
+    document.querySelector('.wishlist').style.display="block";
 });
 
 show_pass_si.addEventListener('click', () => {
@@ -52,15 +55,21 @@ function submitSignIn(event){
     cont_si.style.filter="blur(0px)";
 
     //change user icon 
-    user_si.style.display="none";
-    console.log(email_si.value); 
-    //verificare in baza de date - evident
-    if(email_si.value == "admin_cristina@mail.ro"){
-        admin_si.style.display="block";
+    if(user_state == "not logged"){
+        user_state = "logged";
+        user_si.style.display="none";
+        console.log(email_si.value); 
+        //verificare in baza de date - evident
+        if(email_si.value == "admin_cristina@mail.ro"){
+            admin_si.style.display="block";
+        }
+        else{
+            logged_user_si.style.display="block";
+        }    
     }
-    else{
-        logged_user_si.style.display="block";
-    }    
+    
+    popUp = 0;
+    document.querySelector('.wishlist').style.display="block";
 };
 
 reset_si.addEventListener('click', () =>{
