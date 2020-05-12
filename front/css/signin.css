@@ -1,0 +1,373 @@
+
+/*SIGN-IN________________________________________________________________*/
+.sign-in{
+    position: fixed;
+    opacity: 0;
+    z-index: 9;
+    width: 22%;
+    height: 45%;
+    top:47%;
+    left:50%;
+    transform: translate(-50%,-50%);
+    overflow: hidden;
+    background-color: whitesmoke;
+    border: solid 1px #585858;
+    border-radius: 5%;
+    display: grid;
+    grid-template-rows: 80% 20%;
+    font-family: Inter,sans-serif;
+    transition: 0.5s;
+}
+
+/*MAIN-SIGN-IN________________________________________________________*/
+
+#close-sign-in{
+    position: absolute;
+    top:7%;
+    left:7%;
+    transform: translate(-50%,-50%);
+    cursor: pointer;
+}
+
+.main-sign-in > p{
+    text-align: center;
+    padding-top:0.5em;    
+}
+
+#msg-1-si{
+    font-weight: bold;
+    font-size: 2vw;   
+    margin:0; 
+}
+
+#msg-2-si{
+    margin: 0;
+    padding-bottom: 0.8em;
+    font-size: 0.9vw;
+    color:#8c8c8c;
+}
+
+#sign-in-form{
+    margin: auto;
+    width: 90%;
+}
+
+#email-si{
+    width: 100%;
+    padding: 15px 20px;
+    background-color: whitesmoke;
+    box-sizing: border-box;
+    display: inline-block;
+    border: 1px solid #b3b3b3;
+    border-radius: 10px;
+    margin: 5px 0 15px 0;
+    background-image: url('../images/login/envelope-light.svg');
+    background-position: 0.8em 0.9em; 
+    background-repeat: no-repeat;
+    background-size: 1.5em;
+    padding-left: 3em;
+    font-size: 0.7vw;
+}
+
+.sign-in-pass-input{
+    position: relative;
+}
+
+.sign-in-view-pass{
+    position: absolute;
+    top:50%;
+    left:87%;
+    transform: translate(-50%,-50%);
+    background-color: #f5f5f5;
+    border: 1px solid #b3b3b3;
+    border-radius: 5px;
+    width: 15%;
+    padding: 8px 10px;
+    text-align: center;    
+    color: #000000;
+    font-weight: bold;
+    font-size: 0.7vw;
+    font-family: Inter,sans-serif;
+    cursor: pointer;
+}
+
+#pass-si{
+    width: 100%;
+    padding: 15px 20px;
+    background-color: whitesmoke;
+    box-sizing: border-box;
+    display: inline-block;
+    border: 1px solid #b3b3b3;
+    border-radius: 10px;
+    margin: 15px 0;
+    background-image: url('../images/login/lock-light.svg');
+    background-position: 0.8em 0.9em; 
+    background-repeat: no-repeat;
+    background-size: 1.3em;
+    padding-left: 3em;
+    font-size: 0.7vw;
+}
+
+input[type=submit]{
+    width: 100%;
+    color:#fff;
+    background-color:#0066ff;
+    padding: 14px 20px;
+    margin: 15px 0;
+    border: none;
+    border-radius: 10px;
+    font-weight: bold;
+}
+
+input[type=submit]:hover {
+    background-color: #005ce6;
+}
+
+input[type="email"]:hover{
+    border: 1px solid #8c8c8c;
+}
+
+input[type="password"]:hover{
+    border: 1px solid #8c8c8c;
+}
+
+.sign-in-view-pass:hover{
+    border: 1px solid #8c8c8c;
+}
+
+/*OTHER-SIGN-IN________________________________________________________*/
+
+.sign-in-a{
+    color:#06f;
+    padding-left: 0.25em;
+    cursor: pointer;
+}
+
+.other-sign-in{
+    position: relative;
+    border-top: solid 0.02em #b3b3b3;    
+}
+
+.other-sign-options{
+    color: black;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+}
+
+.in-opt-1{
+    display: flex;
+    margin: 0;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+.in-opt-2{
+    display: flex;
+    margin: 0;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+
+.in-opt-1 > p{
+    padding-top: 1em;
+    font-size: 0.8vw;
+    margin: 0;
+}
+
+.in-opt-2 > p{
+    padding-top: 1em;
+    font-size: 0.8vw;
+    margin: 0;
+}
+
+/*MEDIA QUERIES______________________________________________________*/
+
+@media screen and (min-width: 1800px) and (max-width: 1960px){
+    .in-opt-1 > p, .in-opt-2 > p, #msg-2-si{
+        font-size: 0.85vw;
+    } 
+    
+    #email-si, #pass-si, .sign-in-view-pass{
+        font-size: 0.65vw;
+    }
+}
+
+@media screen and (min-width: 1600px) and (max-width: 1800px){
+    .sign-in{
+        width: 25%;
+        height: 45%;
+        top:50%;
+        left:50%;
+        grid-template-rows: 80% 20%;
+    }
+
+    .in-opt-1 > p, .in-opt-2 > p, #msg-2-si{
+        font-size: 0.9vw;
+    }
+
+    #email-si, #pass-si, .sign-in-view-pass{
+        font-size: 0.7vw;
+    }
+
+    #msg-1-si{
+        font-size: 2.3vw;    
+    }
+}
+
+@media screen and (min-width: 1450px) and (max-width: 1600px){
+    .in-opt-1 > p, .in-opt-2 > p, #msg-2-si{
+        font-size: 1vw;
+    }
+
+    #email-si, #pass-si, .sign-in-view-pass{
+        font-size: 0.8vw;
+    }
+}
+
+@media screen and (min-width: 1300px) and (max-width: 1450px){
+    .in-opt-1 > p, .in-opt-2 > p, #msg-2-si{
+        font-size: 1.1vw;
+    }
+
+    #email-si, #pass-si, .sign-in-view-pass{
+        font-size: 0.9vw;
+    }
+}
+
+@media screen and (min-width: 1300px) and (max-width: 1600px){
+    .sign-in{
+        top:50%;
+        width: 30%;
+        height: 42%;
+    }
+
+    #msg-1-si{
+        font-size: 2.4vw;    
+    }
+}
+
+@media screen and (min-width: 1100px) and (max-width: 1300px){
+    .in-opt-1 > p, .in-opt-2 > p, #msg-2-si{
+        font-size: 1.20vw;
+    }
+
+    #email-si, #pass-si, .sign-in-view-pass{
+        font-size: 1vw;
+    }
+    
+    #msg-1-si{
+        font-size: 2.55vw;    
+    }
+}
+
+@media screen and (min-width: 950px) and (max-width: 1100px){
+    .in-opt-1 > p, .in-opt-2 > p, #msg-2-si{
+        font-size: 1.35vw;
+    }
+
+    #email-si, #pass-si, .sign-in-view-pass{
+        font-size: 1.15vw;
+    }
+
+    #msg-1-si{
+        font-size: 2.65vw;    
+    }
+}
+
+@media screen and (min-width: 1000px) and (max-width: 1300px){
+    .sign-in{
+        top:50%;
+        width: 35%;
+        height: 40%;
+    }
+}
+
+@media screen and (min-width: 800px) and (max-width: 950px){
+    .in-opt-1 > p, .in-opt-2 > p, #msg-2-si{
+        font-size: 1.45vw;
+    }
+
+    #email-si, #pass-si, .sign-in-view-pass{
+        font-size: 1.25vw;
+    }
+
+    #msg-1-si{
+        font-size: 2.75vw;    
+    }
+}
+
+@media screen and (min-width: 700px) and (max-width: 800px){
+    .in-opt-1 > p, .in-opt-2 > p, #msg-2-si{
+        font-size: 1.65vw;
+    }
+
+    #email-si, #pass-si, .sign-in-view-pass{
+        font-size: 1.45vw;
+    }
+
+    #msg-1-si{
+        font-size: 2.9vw;    
+    }
+}
+
+@media screen and (min-width: 700px) and (max-width: 1000px){
+    .sign-in{
+        top:50%;
+        width: 40%;
+        height: 37%;
+    }
+}
+
+@media screen and (min-width: 600px) and (max-width: 700px){
+    .in-opt-1 > p, .in-opt-2 > p, #msg-2-si{
+        font-size: 1.7vw;
+    }
+
+    #email-si, #pass-si, .sign-in-view-pass{
+        font-size: 1.5vw;
+    }
+
+    #msg-1-si{
+        font-size: 3vw;    
+    }
+}
+
+@media screen and (min-width: 500px) and (max-width: 600px){
+    .in-opt-1 > p, .in-opt-2 > p, #msg-2-si{
+        font-size: 1.8vw;
+    }
+
+    #email-si, #pass-si, .sign-in-view-pass{
+        font-size: 1.6vw;
+    }
+
+    #msg-1-si{
+        font-size: 3.2vw;    
+    }
+}
+
+@media screen and (min-width: 400px) and (max-width: 500px){
+    .in-opt-1 > p, .in-opt-2 > p, #msg-2-si{
+        font-size: 1.9vw;
+    }
+
+    #email-si, #pass-si, .sign-in-view-pass{
+        font-size: 1.7vw;
+    }
+
+    #msg-1-si{
+        font-size: 3.3vw;    
+    }
+}
+
+@media screen and (min-width: 400px) and (max-width: 700px){
+    .sign-in{
+        top:50%;
+        width: 50%;
+        height: 35%;
+    }
+}
