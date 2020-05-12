@@ -1,9 +1,0 @@
-https://codepen.io/mushroom23/pen/NLjXqM     								      - slideshow loading page
-https://www.pexels.com/ 		    								      - images
-https://stackoverflow.com/questions/32915005/want-a-smooth-animation-when-resizing-div-javascript/32915045    - navbar animation resize
-https://www.sitepoint.com/delay-sleep-pause-wait/							      - sleep function
-https://developer.mozilla.org/en-US/docs/Learn/Server-side/Node_server_without_framework	              - node.js server
-
-
-
-

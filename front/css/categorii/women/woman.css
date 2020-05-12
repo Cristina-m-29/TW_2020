@@ -1,0 +1,167 @@
+body,html{
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+}
+
+p{
+    margin:0;
+}
+
+.header{
+    border: solid 1px;
+}
+
+.main-container{
+    background-color: white;
+}
+
+.women-categories{
+
+     display: inline-grid;
+     grid-template-columns: 44% 44%;
+     grid-template-rows: 42%;
+     grid-row-gap: 3em;
+     grid-column-gap: 4em;
+     border-style: hidden;
+     align-items: center;
+     
+     margin: 10em 3em 1em 7em;
+}
+
+.wc-product{
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    align-items: center;
+}
+
+.wc-img{
+    display: block;
+    height: auto;
+    width: 100%;
+    overflow: hidden;
+    object-fit: cover;
+    background-size: cover; 
+
+}
+.wc-name{
+        position: absolute;
+        
+        text-align: center;
+        color: white;
+        letter-spacing: 0.8em;
+        font-weight: bold;
+        font-size: 2.3vw;
+        font-family: "Segoe UI", Roboto;
+        left: 20%;
+        top:50%;       
+        text-decoration: none;
+}
+a:link {
+    text-decoration: none;
+  }
+  
+  a:visited {
+    text-decoration: none;
+  }
+  
+  a:hover {
+    text-decoration: none;
+  }
+  
+  a:active {
+    text-decoration: none;
+  }
+/*
+.jeans_txt, .dress_txt, .jac_txt, .tshirts_txt{
+    
+    letter-spacing: 0.6em;
+    font-weight: bold;
+    font-size: 1.5vw;
+    transform: translate(-50%, -50%);
+    text-decoration: none;
+    color: black;
+    font-style: normal;
+    font-variant: small-caps;
+    font-family: Arial, sans-serif;
+    align-items: center;
+    
+}
+
+.jeans_txt{ 
+
+    grid-row: 2/4;
+    grid-column: 1/2;
+    text-align: center;
+    
+}
+
+.img1{
+    
+    grid-row: 2/4 ;
+    grid-column: 2/3 ;
+    
+    width: 100%;
+    height: 100%;
+    object-fit: cover;}
+
+
+
+.dress_txt{ 
+    grid-row: 2-4;
+    grid-column: 3-4;
+ }
+
+.img2{ 
+    grid-row: 2/4 ;
+    grid-column: 4/-1 ;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+  
+
+
+.img3{
+     grid-row: 4/6;
+     grid-column: 3/4;
+     width: 100%;
+    height: 100%;
+    object-fit: cover;}
+
+.jac_txt{ 
+   
+     grid-row:4/6;
+     grid-column: 2/3;
+}
+
+
+.img4{
+    grid-row: 4/6;
+    grid-column: 1/2;
+
+     width: 100%;
+     height: 100%;
+    object-fit: cover;}
+
+
+.tshirts_txt{
+    
+    grid-row: 4/6;
+     grid-column: 4/-1;
+}
+*/
+
+
+img{
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+    padding:0;
+    position: relative;
+}
+/*
+.footer{
+    border: solid 1px;
+}*/
