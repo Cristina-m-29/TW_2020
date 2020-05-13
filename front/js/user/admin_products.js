@@ -50,7 +50,7 @@ function showAdminProducts(){
                 <form class="adm_prod_form">
                     <div class="adm_prod_form_header">                  
                     <div>
-                        <img src="../../images/women/woman-in-black-full-zip-jacket-1034859.jpg" class="adm_prod_new_img new_img_${prod}">
+                        <img src="../../images/women/extra/geaca.jpg" class="adm_prod_new_img new_img_${prod}">
                     </div>
                     <div class="adm_prod_form_side"> 
                         <div><input type="file" class="image_selector image_selector_${prod}"></div>
