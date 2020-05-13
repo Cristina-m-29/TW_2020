@@ -23,7 +23,7 @@ function showAdminProducts(){
                 </div>-->
                 <div class="adm_prod_main adm_prod_main_${prod}">
                     <div class="adm_prod_img">
-                        <img id="adm_prod_img_${prod}" src="../../images/women/woman-in-black-full-zip-jacket-1034859.jpg">
+                        <img id="adm_prod_img_${prod}" src="../../images/women/extra/geaca.jpg">
                     </div>
                     <div class="adm_prod_txt">
                         <p>Product id</p>
