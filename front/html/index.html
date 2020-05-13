@@ -1,194 +1,22 @@
 <!DOCTYPE html>
 <html>
-<head>
-  <title>Atara fashion</title>
-  <link rel="stylesheet" type="text/css" href="../css/stylesheet.css"/>
-  <link rel="stylesheet" type="text/css" href="../css/navbar.css"/>
-  <link rel="stylesheet" type="text/css" href="../css/signin.css"/>
-  <link rel="stylesheet" type="text/css" href="../css/signup.css"/>
-  <link rel="stylesheet" type="text/css" href="../css/pass.css"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-</head>
-<body>
-  <!--SIDEMENU_________________________________________________-->
-  <div class="sidemenu">
-    <div class="sidemenu_img">
-      <img src="../images/sidemenu/sidemenu1.jpg">
-      <img src="../images/sidemenu/sidemenu2.jpg">
-    </div>
-    <div class="sidemenu_container">
-      <div class= "options">
-        <p class="sidemenu_opt"> WOMEN   </p>
-        <p class="sidemenu_opt"> MEN     </p>
-        <p class="sidemenu_opt"> KIDS    </p>
-        <p class="sidemenu_opt"> AUCTION </p>
-      </div>
-    </div>
-  </div>
-  <!--NAVBAR___________________________________________________-->
-  <div class="navbar">
-    <div class="sidemenu_btn">
-      <div id="open"><img src = "../images/navbar/menu.png"></div>
-      <div id="close"><img src = "../images/navbar/close.png"></div>
-    </div>
-    <div class="logo">
-      <a href=""><p class="logo_txt"> ATARA </p></a>
-    </div>
-    <div class="user_option">
-      <div class="admin">
-        <a href="user/admin.html">
-        <img src = "../images/navbar/user.png"></a>
-      </div>
-      <div class="logged_user">
-        <a href="user/user.html">
-        <img src = "../images/navbar/user.png"></a>
-      </div>
-      <div class="user">
-        <img src = "../images/navbar/user.png">
-      </div>
-      <div class="wishlist">
-        <a href="favorites/favorites.html">
-        <img src = "../images/navbar/favorite.png"></a>
-      </div>
-      <div class="cart">
-        <img src = "../images/navbar/cart.png">
-      </div>
-    </div>
-  </div> 
-
-  <!--SIGN IN-->
-  <div class="sign-in">
-    <div class="main-sign-in">
-      <div id="close-sign-in"><img src="../images/navbar/smallclose.png"></div>
-      <p id="msg-1-si">Hello!</h1>
-      <p id="msg-2-si">Sign into your account here.</p>
-      <form id="sign-in-form" onsubmit="submitSignIn(event.preventDefault())">    
-        <div class="email-input">
-          <input id="email-si" type="email" name="email" placeholder="Email / Username">
-        </div>
-        <div class="sign-in-pass-input">
-          <div class="sign-in-view-pass"><p id="p_si">Show</p></div>
-          <input id="pass-si" type="password" name="password" placeholder="Password" >
-        </div>
-        <input id="sign-in-btn" type="submit" value="Sign in">
-      </form>
-    </div>
-    <div class="other-sign-in">
-      <div class="other-sign-options">
-        <div class="in-opt-1">
-          <p>Forgot password? </p>
-          <p class="sign-in-a res-si">Reset</p>
-        </div>       
-        <div class="in-opt-2">
-          <p>Don't have an account? </p>
-          <p class="sign-in-a sign-up-si" >Sign up</p>
-        </div>                
-      </div>
-    </div>
-  </div>
-
-  <!--SIGN UP-->
-  <div class="sign-up">
-    <div class="main-sign-up">
-    <div id="close-sign-up"><img src="../../images/navbar/smallclose.png"></div>
-    <p id="msg-1-su">Join Atara!</h1>
-        <p id="msg-2-su">Sign up to get more power.</p>
-        <form id="sign-up-form">
-        <div class="name">
-            <input id="fname" type="text" name="fname" placeholder="First name">
-            <input id="lname" type="text" name="lname" placeholder="Last name">
-        </div>
-        <div class="email-input">
-            <input id="email-su" type="email" name="email" placeholder="Email / Username">
-        </div>
-        <div class="sign-up-pass-input">
-            <div class="sign-up-view-pass">
-            <p id="p_su">Show</p>
+    <head>
+        <title>Fashion</title>
+        <link rel="stylesheet" type="text/css" href="../css/stylesheet.css">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+        <div class="container">
+            <div class="women">
+                <a href="women.html"> Women </a> 
             </div>
-            <input id="pass-su" type="password" name="password" placeholder="Password">
+            <div class="men">
+                <a href="men.html"> Men </a>
+            </div>
         </div>
-        <input type="submit" value="Sign up">
-        </form>
-    </div>
-    <div class="other-sign-up">
-    <div class="other-sign-up-options">
-        <p>Already registered? </p>
-        <p class="sign-up-a sign-in-su">Sign in</p>
-    </div>
-    </div>
-</div>
-
-  <!--RESET PASSWORD-->
-  <div class="reset-pass">
-    <div class="header-reset-pass">
-      <div id="close-reset-pass"><img src="../images/navbar/smallclose.png"></div>
-      <p>Reset password</p>
-    </div>
-    <div class="main-reset-pass"> 
-      <form id="reset-pass-form"> 
-        <div class="email-input">
-          <p class="rp">Email</p>
-          <input id="email-r" type="email" name="email" placeholder="Email / Username">
+        <div class="footer">
+            <p> Contact us</p>
         </div>
-        <div class="reset-pass-input">
-          <p class="rp">Choose a new password</p>
-          <div class="reset-pass-pass-field">
-            <div class="reset-view-pass"><p id="p_r">Show</p></div>
-            <input id="pass-r" type="password" name="password" placeholder="Password">
-          </div>          
-        </div>
-        <input type="submit" value="Reset password">
-      </form>
-    </div>
-    <div class="other-reset-pass">
-      <div class="other-reset-options">
-        <p>Back to </p>
-        <p class="reset-a sign-in-r"> Sign in</p>
-      </div>
-    </div>
-  </div>
-
-  <!--SLIDE-SHOW_________________________________________________-->
-  <div class="main_container">
-    <div class="slider_container_sliders">
-      <div class="slide" id="firstClone">
-        <p> BOYS </p>
-        <a href=" " id="k_btn" src="">View more</a>
-        <img src="../images/landing_page/slide4.jpg">
-      </div>
-      <div class="slide">
-        <p> WOMEN </p>
-        <a href=" " id="w_btn">View more</a>
-        <img src="../images/landing_page/slide1.jpg">
-      </div>
-      <div class="slide">
-        <p> MEN </p>
-        <a href=" " id="m_btn">View more</a>
-        <img src="../images/landing_page/slide2.jpg">
-      </div>
-      <div class="slide">
-        <p> GIRLS </p>
-        <a href=" " id="k_btn">View more</a>
-        <img src="../images/landing_page/slide3.jpg">
-      </div>
-      <div class="slide">
-        <p> BOYS </p>
-        <a href=" " id="k_btn">View more</a>
-        <img src="../images/landing_page/slide4.jpg">
-      </div>
-      <div class="slide" id="lastClone">
-        <p> WOMEN </p>
-        <a href=" " id="w_btn">View more</a>
-        <img src="../images/landing_page/slide1.jpg">
-      </div>
-    </div>
-  </div>
-
-  <script type="text/javascript" src="../js/index.js"></script>
-  <script type="text/javascript" src="../js/navbar.js"></script>
-  <script type="text/javascript" src="../js/user-btn.js"></script>
-  <script type="text/javascript" src="../js/sign-in.js"></script>
-  <script type="text/javascript" src="../js/sign-up.js"></script>
-  <script type="text/javascript" src="../js/reset-pass.js"></script>
-</body>
+        
+    </body>
 </html>
