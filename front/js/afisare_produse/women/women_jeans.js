@@ -1,15 +1,3 @@
-/*var wj_product=document.getElementsByClassName('wj-product')[0];
-var text=document.getElementsByClassName('text')[0];
-var wj_img=document.getElementsByClassName('wj-img')[0];
-var wj_cart=document.getElementsByClassName('wj-cart')[0];
-var wj_more_info=document.getElementsByClassName('wj-more-info')[0];
-
-wj_product.onmouseover=wj_product.onmouseout=setOpacityImage;
-wj_cart.onmouseover=wj_cart.onmouseout=setStyleCart;
-wj_more_info.onmouseover=wj_more_info.onmouseout=setStyleInfo;
-text.onmouseover=text.onmouseout=setStyleText;
-*/
-
 
 var colors = ['red','light pink','light brown'];
 var colors_hex = ['#e74343','#ffdfff','#d38653'];
@@ -18,14 +6,41 @@ var sizes = ['XS','S','M'];
 var size_selected = null;
 var women_jeans=document.querySelector('.women-jeans');
 
-
-
 women_jeans.addEventListener('onload', addProductInfo());
+document.querySelector('#wj-cart-id').addEventListener('click', hideTextShowColor);
+document.querySelector('#previous-info-colors').addEventListener('click', showPreviousCategoriesColors);
+document.querySelector('#next-info-colors').addEventListener('click', showNextCategoriesColors);
 
+document.querySelector('#previous-info-size').addEventListener('click', showPreviousCategoriesSize);
+document.querySelector('#next-info-size').addEventListener('click', showNextCategoriesSize);
 
+document.querySelector('#previous-info-cart').addEventListener('click', showPreviousCategoriesCart);
+
+document.querySelector('#check').addEventListener('click', AddedToCartAndStartOver);
+document.querySelector('#wj-img-id').addEventListener('mouseenter', MakeTextAppear);
+document.querySelector('#wj-img-id').addEventListener('mouseleave', MakeTextDisappear);
+
+document.querySelector('.text').addEventListener('mouseenter', MakeAppear);
+document.querySelector('.text').addEventListener('mouseleave', MakeDisappear);
+
+function MakeTextAppear(){
+    document.querySelector('.text').style.display = "block";
+
+}
+function MakeTextDisappear(){
+    document.querySelector('.text').style.display = "none";
+
+}
+function MakeAppear(){
+    document.querySelector('.text').style.display = "block";
+
+}
+function MakeDisappear(){
+    document.querySelector('.text').style.display = "none";
+
+}
 function addProductInfo(){
 
-    document.querySelector('#wj-color-product').innerHTML = colors[0].charAt(0).toUpperCase() + colors[0].slice(1);
     color_selected = colors[0].charAt(0).toUpperCase() + colors[0].slice(1);
 
     for(i=0;i<colors_hex.length;i++){
@@ -42,8 +57,13 @@ function addProductInfo(){
 
 function addEventColor(i){
     document.querySelector(`.color_list_${i}`).addEventListener('click',()=>{
-        color_selected = colors[i];
-        document.querySelector('#wj-color-product').innerHTML = colors[i].charAt(0).toUpperCase() + colors[i].slice(1);
+        for(j=0;j<colors_hex.length;j++)
+          if(j!=i){
+            document.querySelector(`.color_list_${j}`).style.borderColor = "black";
+          }
+         document.querySelector(`.color_list_${i}`).style.borderColor = "red";
+         color_selected = colors[i];
+         
     });
 }
 function addEventSize(i){
@@ -54,13 +74,109 @@ function addEventSize(i){
         }
         document.querySelector(`#size_${i}`).style.fontWeight = "bold";
         size_selected = sizes[i];
+
     });
+ }
+
+function hideTextShowColor(){
+
+    document.querySelector('.wj-cart').style.display = "none";
+    document.querySelector('#wj-more-info').style.display = "none";
+    document.querySelector('.wj-product-color').style.display = "flex";
+    for(i=0;i<colors_hex.length;i++)
+      document.querySelector(`.color_list_${i}`).style.display = "block";
+    document.querySelector('#previous-info-colors').style.display = "block";
+    document.querySelector('#next-info-colors').style.display = "block";
+
+}
+function hideTextShowSize(){
+    coverColors();
+    document.querySelector('.wj-size').style.display = "block";
+    for(i=0;i<sizes.length;i++)
+      document.querySelector(`#size_${i}`).style.display = "block";
+    document.querySelector('#previous-info-size').style.display = "block";
+    document.querySelector('#next-info-size').style.display = "block";
+}
+function hideTextAddToCart(){
+         //  imediat dupa size
+    coverSize();
+    document.querySelector('.add-now').style.display = "block";
+    document.querySelector('#check').style.display = "block";
+    document.querySelector('#previous-info-cart').style.display = "block";
+}
+function AddedToCartAndStartOver(){
+    // adaugat in cart after press check
+    AddedToCart();
+    setTimeout(showInitialDelete, 5000);
+}
+function showInitialDelete(){
+    document.querySelector('.wj-cart').style.display = "block";
+    document.querySelector('#wj-more-info').style.display = "block";
+    document.querySelector('.added-to-cart').style.display = "none";
+
+}
+function AddedToCart(){
+    document.querySelector('#previous-info-cart').style.display = "none";
+    document.querySelector('.added-to-cart').style.display = "block";
+    document.querySelector('.add-now').style.display = "none";
+    document.querySelector('#check').style.display = "none";
+}
+function showNextCategoriesColors(){
+    if(color_selected!=null){
+        hideTextShowSize();
+    }
+}
+function showNextCategoriesSize(){
+    if(size_selected!=null){
+        hideTextAddToCart();
+    }
 }
 
+function showPreviousCategoriesColors(){
+    color_selected=null;
+    document.querySelector('.wj-cart').style.display = "block";
+    document.querySelector('#wj-more-info').style.display = "block";
+    coverColors();
+    coverSize();
+    
+}
 
+function showPreviousCategoriesSize(){
+    size_selected=null;
+    hideTextShowColor();
+    coverSize();
+}
+function showPreviousCategoriesCart(){
+    document.querySelector('.add-now').style.display = "none";
+    document.querySelector('#check').style.display = "none";
+    document.querySelector('#previous-info-cart').style.display = "none";
+
+    document.querySelector('.wj-size').style.display = "block";
+    for(i=0;i<sizes.length;i++)
+      document.querySelector(`#size_${i}`).style.display = "block";
+    document.querySelector('#previous-info-size').style.display = "block";
+    document.querySelector('#next-info-size').style.display = "block";
+
+}
+
+function coverSize(){
+    document.querySelector('.wj-size').style.display = "none";
+    for(i=0;i<sizes.length;i++)
+      document.querySelector(`#size_${i}`).style.display = "none";
+    document.querySelector('#previous-info-size').style.display = "none";
+    document.querySelector('#next-info-size').style.display = "none"
+}
+function coverColors(){
+    document.querySelector('.wj-product-color').style.display = "none";
+    for(i=0;i<colors_hex.length;i++)
+      document.querySelector(`.color_list_${i}`).style.display = "none";
+    document.querySelector('#previous-info-colors').style.display = "none";
+    document.querySelector('#next-info-colors').style.display = "none";
+}
 
 var more_info=document.getElementById("wj-more-info");
-var wj_cart=document.getElementById("wj-cart");
+var wj_cart=document.getElementById("wj-cart-id");
+var check=document.getElementById("check");
 
 //Set fontWeight for See more informations
 more_info.addEventListener("mouseover", function(event){
@@ -78,22 +194,10 @@ wj_cart.addEventListener("mouseout", function(event){
     event.target.style.fontWeight='normal';
 }, false);
 
-
-/*
-function setOpacityImage(event){
-    if(event.type == 'mouseover')
-    {
-        wj_img.style.opacity='0.5';
-        text.style.opacity='1';
-        wj_cart.style.opacity='1';
-        wj_more_info.style.opacity='1';
-    }
-    if(event.type == 'mouseout'){
-        wj_img.style.opacity='1';
-        text.style.opacity='0';
-        wj_cart.style.opacity='0';
-        wj_more_info.style.opacity='0';
-    }
-}
-
-*/
+//set color for check
+check.addEventListener("mouseover", function(event){
+    event.target.style.color = "#ff0000";
+}, false);
+check.addEventListener("mouseout", function(event){
+    event.target.style.color = "#000000";
+}, false);

@@ -5,83 +5,130 @@
         <link rel="stylesheet" type="text/css" href="../../../css/afisare_produse/women/women_jeans.css">
         <link rel="stylesheet" type="text/css" href="../../../css/navbar.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"/>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"/>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
    
     </head>
 
     <body>
 
-        <!--SIDEMENU_________________________________________________-->
-   <div class="sidemenu">
-     <div class="sidemenu_img">
-       <img src="../../../images/sidemenu/sidemenu1.jpg">
-       <img src="../../../images/sidemenu/sidemenu2.jpg">
-     </div>
-     <div class="sidemenu_container">
-       <div class= "options">
-         <p class="sidemenu_opt"> WOMEN   </p>
-         <p class="sidemenu_opt"> MEN     </p>
-         <p class="sidemenu_opt"> KIDS    </p>
-         <p class="sidemenu_opt"> AUCTION </p>
-       </div>
-     </div>
-   </div>
- 
- 
-     <!--NAVBAR___________________________________________________-->
-     <div class="navbar">
-      <div class="sidemenu_btn">
-       <div id="open"><i class="fa">&#xf0c9;</i> </div>
-       <div id="close"><i class="fa">&#xf00d;</i></div>
-     </div>
-     <div class="logo">
-       <p class="logo_txt"> ATARA </p>
-     </div>
-     <div class="user_option">
-       <div class="user">
-         <i class="fa">&#xf2bd; </i>
-       </div>
-       <div class="wishlist">
-         <i class="fa">&#xf004; </i>
-       </div>
-       <div class="cart">
-        <img src = "../../../images/navbar/cart.png">
-       </div>
-     </div>
-   </div> 
- 
+
+<!--SIDEMENU_________________________________________________-->
+<div class="sidemenu">
+  <div class="sidemenu_img">
+    <img src="../../../images/sidemenu/sidemenu1.jpg">
+    <img src="../../../images/sidemenu/sidemenu2.jpg">
+  </div>
+  <div class="sidemenu_container">
+    <div class= "options">
+      <a href="../../../html/categorii/women.html" ><p class="sidemenu_opt"> WOMEN</p> </a>
+      <a href="../../../html/categorii/men.html" ><p class="sidemenu_opt opt_men"> MEN </p></a>
+      <a href="../../../html/categorii/girl.html" ><p class="sidemenu_opt opt_boy"> GIRL </p></a>
+      <a href="../../../html/categorii/boy.html" ><p class="sidemenu_opt opt_girl"> BOY</p></a>
+    </div>
+  </div>
+</div>
+<!--NAVBAR___________________________________________________-->
+<div class="navbar">
+  <div class="sidemenu_btn">
+    <div id="open"><img src = "../../../images/navbar/menu.png"></div>
+    <div id="close"><img src = "../../../images/navbar/close.png"></div>
+  </div>
+  <div class="logo">
+    <a href=""><p class="logo_txt"> ATARA </p></a>
+  </div>
+  <div class="user_option">
+    <div class="admin">
+      <a href="user/admin.html">
+      <img src = "../../../images/navbar/user.png"></a>
+    </div>
+    <div class="logged_user">
+      <a href="user/user.html">
+      <img src = "../../../images/navbar/user.png"></a>
+    </div>
+    <div class="user">
+      <img src = "../../../images/navbar/user.png">
+    </div>
+    <div class="wishlist">
+      <a href="favorites/favorites.html">
+      <img src = "../../../images/navbar/favorite.png"></a>
+    </div>
+    <div class="cart">
+      <a href="cart/cart.html">
+      <img src = "../../../images/navbar/cart.png"></a>
+    </div>
+  </div>
+</div> 
         <div class="main-container"> 
               <div class="women-jeans">
 
                  <div class= "wj-product"> 
-                    <img class="wj-img" src="../../../images/women/afisare_produse/high-waist-1.jpg">
+                    <img class="wj-img" id="wj-img-id" src="../../../images/women/afisare_produse/high-waist-1.jpg">
                    
                     <div class="text">
-                     <!-- <div>
-                         <p class= "wj-cart" id="wj-cart">Add to cart</p>
-                     </div>
-                     <div>
-                         <p id="wj-more-info"><a href="../../../html/product/product.html" class="wj-more-info">See more informations</a></p>
-                    </div>
-                  <div class="wj-product-color">
-                      <p>Select color:</p>
-                      <p id="wj-color-product"></p>
-                  </div>
-                  <div class="wj-product-color-list">
-                  </div> 
-                  
-                 <div>
-                    <p class="wj-size">Select size: </p>
-                  </div>
-                  <div class="wj-size-list"></div>-->
-                  <div class="added-to-cart">Added to cart</div> 
-                
+                      
+                      <div class="text-positioning">
+                        <div>
+                          <p class= "wj-cart" id="wj-cart-id">Add to cart</p>
+                        </div> 
+                        <div>
+                          <p id="wj-more-info"><a href="../../../html/product/product.html" class="wj-more-info">See more informations</a></p>
+                        </div>
+                      </div>
+                      
+                      <div class="arrows">
+                        <div>
+                        <p id="previous-info-initial">&#8592;</p> 
+                        <p id="next-info-initial">&#8594;</p> 
+                      </div></div>
+
+                    
+                      <div class="text-positioning">
+                        <div class="wj-product-color" >
+                          <p>Select a color:</p>
+                        </div>
+                        <div class="wj-product-color-list" id="wj-product-color-list-id">
+                      </div> 
+                      </div>
+                   
+                      <div class="arrows">
+                       <div>
+                        <p id="previous-info-colors">&#8592;</p> 
+                        <p id="next-info-colors">&#8594;</p> 
+                      </div></div>
+
+                      <div class="text-positioning">
+                       <div>
+                        <p id="wj-size-id" class="wj-size">Select size: </p>
+                       </div>
+                       <div id="wj-size-list-id" class="wj-size-list"></div>
+                      </div>
+                    
+                      <div class="arrows">
+                       <div>
+                        <p id="previous-info-size">&#8592;</p> 
+                        <p id="next-info-size">&#8594;</p> 
+                      </div></div>
+                    
+                      <div class="text-positioning">
+                        <div class="add-now" id="add-now-id">Add now!</div>
+                        <div>
+                          <p id="check" class="check-class">&#10003;</p> 
+                        </div>
+                      </div>
+                      <div>
+                          <p id="previous-info-cart">&#8592;</p> 
+                      </div>
+
+                      <div class="added-to-cart">Product added to cart!</div>
+                     
                     </div>
 
                    <div>
                     <p class="price1">129.99 RON</p>
                     <p class="name1">Slouchy Jeans</p>
-                   </div>
+                   
+                  </div>
                  </div>
                    <div class="wj-product"> 
                       <div>
