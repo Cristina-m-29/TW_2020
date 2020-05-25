@@ -3,6 +3,10 @@ const sideMenuOpen = document.querySelector('#open');
 const sideMenuClose = document.querySelector('#close');
 const sideMenu = document.querySelector('.sidemenu_container');
 const sideMenuOpt = document.querySelector('.options');
+const women = document.querySelector('.opt_women');
+const men = document.querySelector('.opt_men');
+const boy = document.querySelector('.opt_boy');
+const girl = document.querySelector('.opt_girl');
 const sideMenuImg = document.querySelector('.sidemenu_img');
 
 const userBtn = document.querySelector('.user');
@@ -15,7 +19,6 @@ sideMenuOpen.addEventListener('click',navBarReduceWidth);
 sideMenuOpen.addEventListener('click',sideMenuChangeHeight);
 sideMenuClose.addEventListener('click',sideMenuUndoHeight);
 sideMenuClose.addEventListener('click',navBarUndoWidth);
-
 
 function navBarReduceWidth(){
   windowWidth = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;

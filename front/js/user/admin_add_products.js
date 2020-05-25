@@ -7,6 +7,20 @@ var add_p_done = document.querySelector('#adm_add_prod_done');
 
 add_p_img_btn.addEventListener('change',readAddPropImg);
 
+function convertDataURIToBinary(dataURI) {
+	var BASE64_MARKER = ';base64,';
+	var base64Index = dataURI.indexOf(BASE64_MARKER) + BASE64_MARKER.length;
+	var base64 = dataURI.substring(base64Index);
+	var raw = window.atob(base64);
+	var rawLength = raw.length;
+	var array = new Uint8Array(new ArrayBuffer(rawLength));
+
+	for(i = 0; i < rawLength; i++) {
+		array[i] = raw.charCodeAt(i);
+	}
+	return array;
+}
+
 function readAddPropImg(evt){
     var file = evt.target.files[0];
     if(file){
@@ -15,7 +29,12 @@ function readAddPropImg(evt){
             var r = new FileReader();
             r.readAsDataURL(file);
             r.onload = function(e){
-                add_p_img.src = e.target.result;                
+                var base64 = e.target.result;
+                add_p_img.src = e.target.result;   
+                var binaryImg = convertDataURIToBinary(base64);
+                var blob = new Blob([binaryImg], {type: file.type});
+                blobURL = window.URL.createObjectURL(blob); 
+                console.log(`Blob: ${blobURL}`);
             }
         }
         else 

@@ -253,6 +253,20 @@ function addImageEvent(prod){
     document.querySelector(`.image_selector_${prod}`).addEventListener('change',readImage);
 }
 
+function convertDataURIToBinary(dataURI) {
+	var BASE64_MARKER = ';base64,';
+	var base64Index = dataURI.indexOf(BASE64_MARKER) + BASE64_MARKER.length;
+	var base64 = dataURI.substring(base64Index);
+	var raw = window.atob(base64);
+	var rawLength = raw.length;
+	var array = new Uint8Array(new ArrayBuffer(rawLength));
+
+	for(i = 0; i < rawLength; i++) {
+		array[i] = raw.charCodeAt(i);
+	}
+	return array;
+}
+
 function readImage(evt){
     var file = evt.target.files[0];
     if(file){
@@ -263,6 +277,10 @@ function readImage(evt){
             r.onload = function(e){
                 base64 = e.target.result;
                 document.querySelector(`.new_img_${current_prod}`).src=base64;
+                var binaryImg = convertDataURIToBinary(base64);
+                var blob = new Blob([binaryImg], {type: file.type});
+                blobURL = window.URL.createObjectURL(blob); 
+                console.log(`Blob: ${blobURL}`);
             }
         }
         else 
