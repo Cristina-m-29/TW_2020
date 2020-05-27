@@ -56,6 +56,20 @@ function findProductByName(client, productName) {
     });
 }
 
+async function findProductByCatandId(client,cat,productId){
+    try{
+        await client.connect();
+        const res = await client.db("tw").collection(`${cat}`).findOne({
+            _id: productId
+        });
+        return res;
+    } catch(e){
+        console.error(e);
+    } finally{
+        await client.close();
+    }
+}
+
 async function addProduct(client, forWho, product) {
     try {
         await client.connect();
@@ -314,11 +328,9 @@ async function getFromFavorites(client, user) {
         try {
             client.connect()
                 .then(() => {
-                    console.log(`User email: ${user}`);
                     return client.db("tw").collection("users").findOne({ email: user });
                 }, () => { console.log("error"); })
                 .then((userFound) => {
-                    console.log(`User id: ${userFound._id}`);
                     return client.db("tw").collection("favorites").find({ user_id: userFound._id }).toArray();
                 }, () => { console.log("no user found"); })
                 .then((favFound) => {
@@ -709,6 +721,12 @@ module.exports = {
             res.then((product) => found(product), () => notFound());
         });
     },
+    findProductByCatandId: function(cat, productId){
+        console.log(cat);
+        console.log(productId);
+        const res = findProductByCatandId(client, cat, productId);
+        console.log(res);
+    },
     getProducts: function (forWho) {
         return new Promise((resolve, reject) => {
             const res = getProducts(client, forWho);
@@ -816,4 +834,3 @@ module.exports = {
         });
     }
 }
-

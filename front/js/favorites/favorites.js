@@ -1,7 +1,27 @@
 var favoritesBody = document.querySelector('.favorites_body');
 var totalFavorites = 3;
 
-window.addEventListener('onlaod',setUpFavorites());
+window.addEventListener('onload',getCartProductsRequest());
+
+function getCartProductsRequest(){
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = ()=>{
+        if(xhttp.readyState == 4){
+            if(xhttp.status == 200){// SUCCES
+                console.log(xhttp.responseText);
+                setUpFavorites();
+            } 
+            else{
+                console.log("somenthing went wrong");
+            }
+        }
+    } 
+    xhttp.open("GET","getCartProducts",true);
+    xhttp.resposnseType='application/json';
+    xhttp.send();
+}
+
+// window.addEventListener('onlaod',setUpFavorites());
 
 function setUpFavorites(){
     if(totalFavorites == 0){
@@ -9,7 +29,7 @@ function setUpFavorites(){
         document.querySelector('.favorites_body_head').style.display="none";
     }
     else{    
-        for(favorite=1;favorite<=totalFavorites;favorite++){
+        for(favorite=0;favorite<totalFavorites;favorite++){
             favoritesBody.insertAdjacentHTML("beforeend",
             `<div class="favorites_product fav_prod_${favorite}">
                 <div class="favorites_product_side">
@@ -17,7 +37,7 @@ function setUpFavorites(){
                 </div>
                 <div class="favorites_product_main">                        
                     <div class="favorites_product_details">
-                        <p id="product_name">Men tshirt one</p>
+                        <p id="product_name" class="product_name_${favorite}">jeans one</p>
                         <p id="product_color" class="txt_center">White</p>
                         <p id="product_size" class="txt_center">M</p>
                         <p id="product_price" class="txt_center">23.99</p>
@@ -37,11 +57,27 @@ function setUpFavorites(){
         }    
     }
 }
-
+// var itertorFav = [];
 function addFavCartEvent(favorite){
     document.querySelector(`.fav_cart_btn_${favorite}`).addEventListener('click',()=>{
+        console.log(favorite);
         console.log(`adaugam produsul ${favorite} in cos`);
-        //adaugare in bd la cos client
+        const productName = document.querySelector(`.product_name_${favorite}`).innerHTML;
+        var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = ()=>{
+            if(xhttp.readyState == 4){
+                if(xhttp.status == 200){// SUCCES
+                    console.log(xhttp.responseText);
+                } 
+                else{
+                    console.log("somenthing went wrong");
+                }
+            }
+        } 
+        xhttp.open("POST",`/addProductToCart/mititelucristina@yahoo.com/${productName}`,true);
+        xhttp.resposnseType='application/json';
+        xhttp.send();
+
     });
 }
 

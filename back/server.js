@@ -98,30 +98,35 @@ var usr = require('./createUser');
 // },()=>console.log("error"));
 
 //only find from fav
-// var findInFav = [];
-// function findFromFavorites(productName, email){
-//     return new Promise((found,notFound)=>{
-//         const prodToFind = db.findProductByName(productName);
-//         prodToFind.then((prod)=>{
-//             findInFav[0] = prod._id;
-//         })
-//         .catch(e=>console.log(e));
-//         const usr = db.findUserByEmail(email);
-//         usr.then((userFound)=>{
-//             findInFav[1] = userFound._id;
-//         })
-//         .catch(e=>console.log(e));
-//         setTimeout(()=>{
-//             if(findInFav.length == 2) {
-//                 const prodInFav = db.findProductInFavorites(findInFav[0],findInFav[1]);
-//                 prodInFav.then((prodFav)=>{
-//                     found(prodFav);
-//                 },()=>{notFound()});                
-//             }
-//             else notFound();
-//         },2000)
-//         });
-// }
+var findInFav = [];
+function findFromFavorites(productName, email){
+    return new Promise((found,notFound)=>{
+        console.log(`${productName}***`);
+        const prodToFind = db.findProductByName(productName);
+        prodToFind.then((prod)=>{
+            findInFav[0] = prod._id;
+        })
+        .catch(e=>console.log(e));
+        const usr = db.findUserByEmail(email);
+        usr.then((userFound)=>{
+            findInFav[1] = userFound._id;
+        })
+        .catch(e=>console.log(e));
+        setTimeout(()=>{
+            if(findInFav.length == 2) {
+                const prodInFav = db.findProductInFavorites(findInFav[0],findInFav[1]);
+                prodInFav.then((prodFav)=>{
+                    found(prodFav);
+                },()=>{ console.log("nu avem produs"); notFound()});                
+            }
+            else{
+                console.log("nu stiu ce are");
+                console.log(findInFav.length);
+               notFound(); 
+            } 
+        },5000)
+        });
+}
 // const foundFav = findFromFavorites("Stefan","mititelucristina@yahoo.com");
 // foundFav.then((res)=>{
 //     console.log("Product found");
@@ -140,7 +145,7 @@ var usr = require('./createUser');
 //         selected_size: res.selected_size
 //     }
 //     console.log(cartProd);
-//     db.addProductToCartFromFavorites(cartProd);
+//     // db.addProductToCartFromFavorites(cartProd);
 // });
 /* _________________________________________________________ */
 
@@ -225,73 +230,111 @@ var usr = require('./createUser');
 // .catch(e=>console.log(e));
 
 /* ________________________________________________________ */
-var html;
+var categoriesReceiveURL = ["/atara/women/categories.html","/atara/men/categories.html","/atara/boy/categories.html","/atara/girl/categories.html"];
+var productsReceiveURL = ["/atara/women/products/","/atara/men/products/","/atara/boy/products/","/atara/girl/products"];
+var otherCounter = 0;
+var needMongo = 0;
 http.createServer(function (request, response) {    
     
+
     var filePath = '.' + request.url;   
     console.log(`BEFORE: ${request.url}`);
+    // console.log(request.method);
 
-    //html
-    if (filePath == './') {
-        filePath = '../front/html/index.html';
-        html="home";
+    if(request.method == "GET"){
+        if(request.url == "/favorites/getCartProducts"){ 
+            needMongo = 1;
+            db.getProductsFromFavorites("mititelucristina@yahoo.com")
+                .then((bb)=>{
+                var toSend = JSON.stringify(bb);  
+                response.writeHead(200, { 'Content-Type': 'application/json' }); 
+                response.write(toSend, 'utf-8');
+                response.end();
+            },()=>console.log("error")).catch(e=>console.log(e));
+        }
+        else{
+            needMongo = 0;
+            //html
+            //home
+            if (filePath == './' || filePath == './atara.html') {
+                filePath = '../front/html/index.html';    
+                categroriesCounter = 0;
+                productsCounter = 0;    
+            }
+            else{
+                if(path.extname(filePath) == '.html'){
+                    var ok = 0;
+                    //categories
+                    for(i=0;i<categoriesReceiveURL.length;i++){
+                        if(request.url == categoriesReceiveURL[i]){
+                            filePath = "../front/html/categorii/women.html";
+                            ok = 1;
+                            categroriesCounter = 1;
+                            break;
+                        }
+                    }
+                    //afisare produse
+                    for(i=0;i<productsReceiveURL.length;i++){
+                        var poz = 0;
+                        poz = request.url.search(productsReceiveURL[i]);
+                        if(poz >= 0){
+                            filePath = "../front/html/afisare_produse/women/women_jeans.html";
+                            ok = 1;
+                            otherCounter = 1; 
+                            break;
+                        }
+                    }
+                    //fav + cart + user + admin
+                    if(ok==0){
+                        filePath = '../front/html'+request.url;
+                        categroriesCounter = 0;
+                        otherCounter = 0; 
+                    }
+                }   
+                //css + images + js       
+                else{
+                    if(otherCounter == 1){
+                        filePath = "../front" + request.url;
+                    }
+                    else{
+                        filePath = '../front'+request.url;  
+                    }             
+                }        
+            }
+        }
     }
     else{
-        //pagini de categorii
-        if(request.url == "/front/html/women/categories.html"){
-            request.url = "../front/html/categorii/women.html"
-            filePath = request.url;
-            html = "categories";
-        }
-        else
-        if(request.url == "/front/html/men/categories.html"){
-            request.url = "../front/html/categorii/women.html" ///need template
-            filePath = request.url;
-            html = "categories";
-        }
-        else
-        if(request.url == "/front/html/boy/categories.html"){
-            request.url = "../front/html/categorii/women.html"
-            filePath = request.url;
-            html = "categories";
-        }
-        else
-        if(request.url == "/front/html/girl/categories.html"){
-            request.url = "../front/html/categorii/women.html"
-            filePath = request.url;
-            html = "categories";
-        }        
-        else
-        if(request.url == "front/html/women/products/jeans.html"){
-            filePath = "../front/html/afisare_produse/women/women_jeans.html";
-            html = "products";
-        }
-        else
-        if(request.url == "front/html/men/products/jeans.html"){
-            filePath = "../front/html/afisare_produse/women/women_jeans.html";
-            html = "products";
-        }
-        else
-        if(request.url == "front/html/boy/products/jeans.html"){
-            filePath = "../front/html/afisare_produse/women/women_jeans.html";
-            html = "products";
-        }
-        else
-        if(request.url == "front/html/girl/products/jeans.html"){
-            filePath = "../front/html/afisare_produse/women/women_jeans.html";
-            html = "products";
-        }
-        else
-        if(path.extname(filePath) == '.html')          
-            filePath = '../front/html'+request.url;         
-        else //others
-            if(html == "categories" || html == "products"){
-                filePath = '..' + request.url;
+        if(request.method == "POST"){
+            if(request.url.search("addProductToCart")>=0){
+                console.log(request.url);
+                var res = request.url.split("/");
+                const emailUser = res[2];
+                const intermediar = res[3].split("%20");
+                var productName = intermediar[0];
+                for(i=1;i<intermediar.length;i++)
+                    productName = productName + ` ${intermediar[i]}`;
+                console.log(emailUser);
+                console.log(productName);
+                const foundForCart = findFromFavorites(productName,emailUser);
+                foundForCart.then((res)=>{
+                    const cartProd = {
+                        user_id: res.user_id,
+                        for: res.for,
+                        product_id: res.product_id,
+                        selected_color: res.selected_color,
+                        selected_size: res.selected_size
+                    }
+                    console.log(cartProd);
+                    // db.addProductToCartFromFavorites(cartProd);
+                    var toSend = JSON.stringify(cartProd);                  
+                },()=>{
+                    console.log("FUCK error");                   
+                }).catch(e=>console.log(e));
             }
-            else
-                filePath = '../front'+request.url;        
-        }  
-        console.log(`AFTER: ${filePath} \n`);
+        }
+    }
+
+    // console.log(`AFTER: ${filePath} \n`);
         
     var extname = String(path.extname(filePath)).toLowerCase();
     
@@ -316,6 +359,7 @@ http.createServer(function (request, response) {
     var contentType = mimeTypes[extname] || 'application/octet-stream';
 
     fs.readFile(filePath, function(error, content) {
+        if(needMongo == 0){
         if (error) {
             if(error.code == 'ENOENT') {
                 fs.readFile('./404.html', function(error, content) {
@@ -331,6 +375,7 @@ http.createServer(function (request, response) {
         else {
             response.writeHead(200, { 'Content-Type': contentType });
             response.end(content, 'utf-8');
+        }
         }
     });
 
