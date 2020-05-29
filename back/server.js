@@ -5,252 +5,96 @@ var PORT = 2902 || process.env.PORT;
 var db = require('./mongo');
 var prod = require('./createProduct');
 var usr = require('./createUser');
+const {parse} = require('querystring');
 
-/* PRODUCTS___________________________________________________ */
-// var forWho="women";
-// var product = prod.createProduct('blob:null/1586bb94-62f7-4cdd-a266-3662a62e92f9','jeans','jeans women one',78.99,["#000000"],["black"],["XS","S"]);
-// db.addMongoProduct(forWho,product);
-
-// const b = db.findProductByName("Stefan");
-// b.then((bb)=>console.log(bb),()=>console.log("no product with that name found"))
-
-// var productUpdate = prod.createUpdateProduct(product,'','',96,'#b3b3b3','gray','XL');
-// db.updateProduct(forWho,product,productUpdate);
-
-//get all products
-// const prodList = db.getProducts("men");
-// prodList.then((prod)=>{
-//     console.log(prod);
-// },()=>console.log("no products found")).catch(e=>console.log(e));
-
-// db.deleteProduct(forWho, product.category, product.name);
-/* _________________________________________________________ */
-
-/* CATEGORIES_______________________________________________ */
-//get categories
-// db.getCategories("women").then((catList)=>{
-//     console.log(catList);
-// },()=>console.log("no categories found")).catch(e=>console.log(e));
-/* _________________________________________________________ */
-
-/* USERS____________________________________________________ */
-// var user = usr.createUser("Monica","Mititelu","monica@yahoo.com","coolpass");
-// db.addMongoUser(user);
-
-// var userNameUpdate = usr.createUserNameUpdate(user,'Madalina','Plugariu');
-// db.updateUserName(user.email,userNameUpdate);
-// db.updateUserEmail(user.email, "plugariu@gmail.com");
-// db.updateUserPass('plugariu@gmail.com',"parolaMadalina");
-// db.deleteUser("plugariu@gmail.com");
-/* _________________________________________________________ */
-
-/* PRODUCT IN FAVORITES_____________________________________ */
-// db.addProductToFavorites("mititelucristina@yahoo.com","men","jeans","Stefan",'red','S');
-
-// async function getUser(email){
-//     var user = await db.findUser(email);
-//     console.log(user._id);
-//     return user._id;
-// }
-// const userFav = getUser("mititelucristina@yahoo.com");
-
-// async function getFavorites(id){
-//     var fav = await db.getProductsFromFavorites(id);
-// }
-
-// const a = db.getProductsFromFavorites("mititelucristina@yahoo.com");
-// a.then((bb)=>{console.log(bb);})
-
-//delete from fav
-// var favDelete = [];
-
-// function deleteFromFav(){
-//     return new Promise(async (solved,notSolved)=>{
-        
-//         const prodToDelete = db.findProductByName("Stefan");
-//         prodToDelete.then((prod)=>{
-//             console.log(prod._id);
-//             favDelete[0]=prod._id;            
-//         },()=>console.log("error"))
-//         .catch(e=>console.log(e));
-//         const res =  db.findUserByEmail("mititelucristina@yahoo.com");
-//         res.then((found)=>{
-//             console.log(found._id);
-//             favDelete[1]=found._id;
-//         },()=>console.log("not found"))
-//         .catch(e=>console.log(e));
-//         setTimeout(()=>{
-//             if(favDelete.length == 2) solved(favDelete);
-//             else notSolved();
-//             },2000
-//         );
-//     });
-// }
-
-// function functionFavDelete(toDelete){    
-//     db.deleteFromFavorites(toDelete[0],toDelete[1]);
-// }
-
-// const deleteFav = deleteFromFav();
-// deleteFav.then((toDelete)=>{
-//     console.log("delete");
-//     functionFavDelete(toDelete);
-// },()=>console.log("error"));
-
-//only find from fav
-var findInFav = [];
-function findFromFavorites(productName, email){
-    return new Promise((found,notFound)=>{
-        console.log(`${productName}***`);
-        const prodToFind = db.findProductByName(productName);
-        prodToFind.then((prod)=>{
-            findInFav[0] = prod._id;
-        })
-        .catch(e=>console.log(e));
-        const usr = db.findUserByEmail(email);
-        usr.then((userFound)=>{
-            findInFav[1] = userFound._id;
-        })
-        .catch(e=>console.log(e));
-        setTimeout(()=>{
-            if(findInFav.length == 2) {
-                const prodInFav = db.findProductInFavorites(findInFav[0],findInFav[1]);
-                prodInFav.then((prodFav)=>{
-                    found(prodFav);
-                },()=>{ console.log("nu avem produs"); notFound()});                
-            }
-            else{
-                console.log("nu stiu ce are");
-                console.log(findInFav.length);
-               notFound(); 
-            } 
-        },5000)
-        });
-}
-// const foundFav = findFromFavorites("Stefan","mititelucristina@yahoo.com");
-// foundFav.then((res)=>{
-//     console.log("Product found");
-//     console.log(res);
-// })
-// .catch(e=>console.log(e));
-
-//find from fav and add to cart
-// const foundForCart = findFromFavorites("Stefan","mititelucristina@yahoo.com");
-// foundForCart.then((res)=>{
-//     const cartProd = {
-//         user_id: res.user_id,
-//         for: res.for,
-//         product_id: res.product_id,
-//         selected_color: res.selected_color,
-//         selected_size: res.selected_size
-//     }
-//     console.log(cartProd);
-//     // db.addProductToCartFromFavorites(cartProd);
-// });
-/* _________________________________________________________ */
-
-/* PRODUCT IN CART__________________________________________ */
-//add product to cart
-// db.addProductToCart("mititelucristina@yahoo.com","men","jeans","Stefan",'red','S');
-
-//get all from cart
-// const aaa = db.getProductsFromCart("mititelucristina@yahoo.com");
-// aaa.then((bb)=>{console.log(bb);})
-
-//detele from cart
-// var findInCart = [];
-// function deleteFromCart(productName, email){
-//         console.log(productName);
-//         console.log(email);
-//         const prodToDelete= db.findProductByName(productName);
-//         prodToDelete.then((prod)=>{
-//             findInCart[0] = prod._id;
-//         },()=>console.log("error"))
-//         .catch(e=>console.log(e));
-//         const usr = db.findUserByEmail(email);
-//         usr.then((userFound)=>{
-//             findInCart[1] = userFound._id;
-//         },()=>console.log("not found"))
-//         .catch(e=>console.log(e));
-//         setTimeout(()=>{
-//             if(findInCart.length == 2) {
-//                 console.log(`Prod id: ${findInCart[0]}`);
-//                 console.log(`User id: ${findInCart[1]}`);
-//                 db.deleteFromCart(findInCart[0],findInCart[1]);
-//             }
-//         },2000);
-// }
-// deleteFromCart("Stefan","mititelucristina@yahoo.com");
-
-/* _________________________________________________________ */
-
-/* ADDRESS_________________________________________________ */
-
-//add address
-// function addNewAddress(email,fName, lName, street, nr, country, city, postalCode, phoneNr){
-//     const usr = db.findUserByEmail(email);
-//     usr.then((userFound)=>{
-//         console.log(userFound._id);
-//         db.addAddress(userFound._id, fName, lName, street, nr, country, city, postalCode, phoneNr)
-//     },()=>console.log("not found"))
-//     .catch(e=>console.log(e));
-// }
-// addNewAddress("plugariumadalina@yahoo.com","Madalina", "Plugariu", "Aleea Pacurari", 6, "Romania", "Iasi", 700537, "0773893753");
-
-//get all addresses 
-// const usrAddr = db.getAddresses("plugariumadalina@yahoo.com");
-// usrAddr.then((addrList)=>{
-//     console.log(addrList);
-// },()=>console.log("no address found"))
-// .catch(e=>console.log(e));
-
-//find address
-// const foundAdr = db.findAddress("mititelucristina@yahoo.com","Mititelu Monica");
-// foundAdr.then((addr)=>{
-//     console.log(addr);
-// },()=>console.log("no address found"))
-// .catch(e => console.log(e))
-
-/* ________________________________________________________ */
-
-/* ORDERS__________________________________________________ */
-
-//add order
-// db.findUserByEmail("mititelucristina@yahoo.com").then((usrFound)=>{
-//     const d = new Date();
-//     db.addOrder(usrFound._id, "Mititelu Cristina","cash",390.50, d.toDateString());
-// },()=>console.log("no user found"))
-// .catch(e=>console.log(e))
-
-//get all orders
-// const ordList = db.getOrders("mititelucristina@yahoo.com");
-// ordList.then((ord)=>{
-//     console.log(ord);
-// },()=>console.log("no orders found"))
-// .catch(e=>console.log(e));
-
-/* ________________________________________________________ */
 var categoriesReceiveURL = ["/atara/women/categories.html","/atara/men/categories.html","/atara/boy/categories.html","/atara/girl/categories.html"];
 var productsReceiveURL = ["/atara/women/products/","/atara/men/products/","/atara/boy/products/","/atara/girl/products"];
 var otherCounter = 0;
 var needMongo = 0;
+
+
+
 http.createServer(function (request, response) {    
     
 
     var filePath = '.' + request.url;   
-    console.log(`BEFORE: ${request.url}`);
+    // console.log(`BEFORE: ${request.url}`);
     // console.log(request.method);
 
     if(request.method == "GET"){
-        if(request.url == "/favorites/getCartProducts"){ 
+        if(request.url.search("getCartProducts") > 0){ 
             needMongo = 1;
-            db.getProductsFromFavorites("mititelucristina@yahoo.com")
-                .then((bb)=>{
-                var toSend = JSON.stringify(bb);  
+            // db.findProductByName("jeans one").then((prod)=>{
+            //     console.log(prod);
+            // },()=>console.log("error")).catch(e=>console.log(e));
+            response.writeHead(200, { 'Content-Type': 'application/json' }); 
+            response.write("get favorites", 'utf-8');
+            response.end();
+        }
+        if(request.url.search("getAllProducts") > 0){
+            needMongo = 1;
+            var allProductsContor = 0;
+            var allProducts = [];
+            const women = db.getProducts('women');
+            women.then((womenProducts)=>{
+                console.log("WOMEN");
+                if(womenProducts.length > 0){
+                    allProducts += JSON.stringify(womenProducts); 
+                }                  
+                allProductsContor++;         
+            },()=>{
+                allProductsContor++;
+                console.log("no women products");
+            }).catch(e=>console.log(e));
+            const men = db.getProducts('men');
+            men.then((menProducts)=>{
+                console.log("MEN");
+                if(menProducts.length > 0){
+                   allProducts += JSON.stringify(menProducts); 
+                }                
+                allProductsContor++;
+            },()=>{
+                allProductsContor++;
+                console.log("no men products");
+            }).catch(e=>console.log(e));
+            const boy = db.getProducts('boy');
+            boy.then((boyProducts)=>{
+                console.log("BOY");
+                if(boyProducts.length > 0){
+                    allProducts += JSON.stringify(boyProducts);
+                }                    
+                allProductsContor++;
+            },()=>{
+                allProductsContor++;
+                console.log("no boy products");
+            }).catch(e=>console.log(e));
+            const girl = db.getProducts('girl');
+            girl.then((girlProducts)=>{
+                console.log("GIRL");
+                if(girlProducts.length > 0){
+                    allProducts += JSON.stringify(girlProducts);
+                }                
+                allProductsContor++;
+            },()=>{ 
+                allProductsContor++;
+                console.log("no girl products");
+            }).catch(e=>console.log(e));
+            setTimeout(()=>{
+                console.log("got all products");
+                console.log(allProducts);
+                // console.log(JSON.parse(allProducts));
+                var splitAllProducts = allProducts.split("},{");
+                console.log(splitAllProducts);
+                for(i=0;i<splitAllProducts.length;i++){
+                    if(splitAllProducts[i].search("{") > 0)
+                        console.log(splitAllProducts[i].search("{"));
+                    if(splitAllProducts[i].search("}") > 0)
+                        console.log(splitAllProducts[i].search("}"));
+                }
                 response.writeHead(200, { 'Content-Type': 'application/json' }); 
-                response.write(toSend, 'utf-8');
+                response.write("get all products", 'utf-8');
                 response.end();
-            },()=>console.log("error")).catch(e=>console.log(e));
+            },4000);            
         }
         else{
             needMongo = 0;
@@ -305,31 +149,23 @@ http.createServer(function (request, response) {
     }
     else{
         if(request.method == "POST"){
+            needMongo = 1;
             if(request.url.search("addProductToCart")>=0){
-                console.log(request.url);
-                var res = request.url.split("/");
-                const emailUser = res[2];
-                const intermediar = res[3].split("%20");
-                var productName = intermediar[0];
-                for(i=1;i<intermediar.length;i++)
-                    productName = productName + ` ${intermediar[i]}`;
-                console.log(emailUser);
-                console.log(productName);
-                const foundForCart = findFromFavorites(productName,emailUser);
-                foundForCart.then((res)=>{
-                    const cartProd = {
-                        user_id: res.user_id,
-                        for: res.for,
-                        product_id: res.product_id,
-                        selected_color: res.selected_color,
-                        selected_size: res.selected_size
-                    }
-                    console.log(cartProd);
-                    // db.addProductToCartFromFavorites(cartProd);
-                    var toSend = JSON.stringify(cartProd);                  
-                },()=>{
-                    console.log("FUCK error");                   
-                }).catch(e=>console.log(e));
+                var body = '';
+                request.on('data', function (chunk) {
+                    body += chunk;
+                });                
+                request.on("end", ()=>{
+                    body = JSON.parse(body);
+                    var hcolors = body.hex_colors.split(","); 
+                    var scolors = body.string_colors.split(",");
+                    var sizes = body.size.split(",");
+                    const product = prod.createProduct(body.img, body.category, body.name, parseInt(body.price), hcolors, scolors, sizes);
+                    db.addMongoProduct(body.for, product);
+                    response.writeHead(200, { 'Content-Type': 'application/json' });
+                    response.write(JSON.stringify(product));
+                    response.end();
+                })               
             }
         }
     }

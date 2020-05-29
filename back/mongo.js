@@ -3,6 +3,8 @@ const MongoClient = require('mongodb').MongoClient;
 const uri = "mongodb+srv://admin_cristina:doinoua@ataradb-xxrbg.mongodb.net/test?retryWrites=true&w=majority";
 const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
 
+
+
 async function findProductByCatandName(client, forWho, productCat, productName) {
     try {
         await client.connect();
@@ -73,7 +75,6 @@ async function findProductByCatandId(client,cat,productId){
 async function addProduct(client, forWho, product) {
     try {
         await client.connect();
-        console.log(product.category);
         const categ = await client.db("tw").collection("categories").findOne({ forWho: forWho });
         var ok = 0;
         for (i = 0; i < categ.categories_list.length; i++) {
@@ -86,7 +87,6 @@ async function addProduct(client, forWho, product) {
                 img: product.img
             }
             toAdd.categories_list.push(catToAdd);
-            console.log(toAdd);
             const addCat = await client.db("tw").collection("categories").updateOne({ forWho: forWho }, { $set: toAdd });
             if (addCat)
                 console.log(`Category ${product.category} added to categories.${forWho}`);
@@ -708,6 +708,17 @@ function getOrders(client, user) {
 }
 
 module.exports = {
+    getClient: function (){
+        return client;
+    },
+    connectMongo: async function(){
+        await client.connect();
+        console.log("connected to MongoDB");
+    },
+    disconnectMongo: async function(){
+        await client.close();
+        console.log("disconnected from MongoDB");
+    },
     addMongoProduct: function (forWho, product) {
         addProduct(client, forWho, product);
     },
@@ -730,7 +741,6 @@ module.exports = {
     getProducts: function (forWho) {
         return new Promise((resolve, reject) => {
             const res = getProducts(client, forWho);
-
             res.then((prodList) => { resolve(prodList); }, () => { reject(); });
         });
     },

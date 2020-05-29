@@ -95,7 +95,7 @@
     padding-left: 0.5em;
 }
 
-#adm_add_prod_all_fields, #adm_add_prod_hs_txt, #adm_add_prod_done, #adm_prod_not_hex{
+#adm_add_prod_all_fields, #adm_add_prod_hs_txt, #adm_add_prod_done, #adm_prod_not_hex, #adm_add_prod_change_photo{
     font-size: 0.9vw;
     font-weight: bold;
     color: red;

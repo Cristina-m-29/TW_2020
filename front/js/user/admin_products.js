@@ -6,7 +6,27 @@ var totalSizes = 2;
 var sizes = ['XS','S'];
 var base64 = null;
 var current_prod;
-admin_products_main.addEventListener('onload',showAdminProducts());
+// admin_products_main.addEventListener('onload',showAdminProducts());
+admin_products_main.addEventListener('onload',setUpProducts());
+
+function setUpProducts(){
+    console.log("get products");
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = ()=>{
+        if(xhttp.readyState == 4){
+            if(xhttp.status == 200){// SUCCES
+                console.log(xhttp.responseText);
+                showAdminProducts();
+            } 
+            else{
+                console.log("somenthing went wrong");
+            }            
+        }
+    } 
+    xhttp.open("GET","getAllProducts",true);
+    xhttp.resposnseType='application/json';
+    xhttp.send();
+}
 
 function showAdminProducts(){
     document.querySelector('#admin_nr_products').insertAdjacentHTML("beforeend",`<p id="adm_number_prod">${totalProducts}</p>`);

@@ -9,7 +9,13 @@ var admin_products_main = document.querySelector('.main_products');
 var admin_add_products_side = document.querySelector('.add_products');
 var admin_add_products_main = document.querySelector('.main_add_products');
 
-admin_data_side.addEventListener('click',()=>{
+// window.addEventListener("onload",setUpAdmin());
+
+// function setUpAdmin(){
+//    
+// }
+
+admin_data_side.addEventListener('click',()=>{   
     console.log("Personal data");
     //reset others    
     admin_users_side.style.fontWeight="normal";

@@ -4,21 +4,21 @@ var totalFavorites = 3;
 window.addEventListener('onload',getCartProductsRequest());
 
 function getCartProductsRequest(){
-    var xhttp = new XMLHttpRequest();
-    xhttp.onreadystatechange = ()=>{
-        if(xhttp.readyState == 4){
-            if(xhttp.status == 200){// SUCCES
-                console.log(xhttp.responseText);
-                setUpFavorites();
-            } 
-            else{
-                console.log("somenthing went wrong");
-            }
-        }
-    } 
-    xhttp.open("GET","getCartProducts",true);
-    xhttp.resposnseType='application/json';
-    xhttp.send();
+    // var xhttp = new XMLHttpRequest();
+    // xhttp.onreadystatechange = ()=>{
+    //     if(xhttp.readyState == 4){
+    //         if(xhttp.status == 200){// SUCCES
+    //             console.log(xhttp.responseText);
+    //             setUpFavorites();
+    //         } 
+    //         else{
+    //             console.log("somenthing went wrong");
+    //         }
+    //     }
+    // } 
+    // xhttp.open("GET","getCartProducts",true);
+    // xhttp.resposnseType='application/json';
+    // xhttp.send();
 }
 
 // window.addEventListener('onlaod',setUpFavorites());
@@ -63,20 +63,20 @@ function addFavCartEvent(favorite){
         console.log(favorite);
         console.log(`adaugam produsul ${favorite} in cos`);
         const productName = document.querySelector(`.product_name_${favorite}`).innerHTML;
-        var xhttp = new XMLHttpRequest();
-        xhttp.onreadystatechange = ()=>{
-            if(xhttp.readyState == 4){
-                if(xhttp.status == 200){// SUCCES
-                    console.log(xhttp.responseText);
-                } 
-                else{
-                    console.log("somenthing went wrong");
-                }
-            }
-        } 
-        xhttp.open("POST",`/addProductToCart/mititelucristina@yahoo.com/${productName}`,true);
-        xhttp.resposnseType='application/json';
-        xhttp.send();
+        // var xhttp = new XMLHttpRequest();
+        // xhttp.onreadystatechange = ()=>{
+        //     if(xhttp.readyState == 4){
+        //         if(xhttp.status == 200){// SUCCES
+        //             console.log(xhttp.responseText);
+        //         } 
+        //         else{
+        //             console.log("somenthing went wrong");
+        //         }
+        //     }
+        // } 
+        // xhttp.open("POST",`/addProductToCart/mititelucristina@yahoo.com/${productName}`,true);
+        // xhttp.resposnseType='application/json';
+        // xhttp.send();
 
     });
 }
