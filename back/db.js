@@ -102,6 +102,14 @@ function getUsers(){
     });
 }
 
+function updateUser(email,updatedUser){
+    return new Promise((resolve)=>{
+        User.updateOne({email:email},{$set:updatedUser}).then(()=>{
+            resolve();
+        }).catch(e=>resolve(e));
+    });
+}
+
 function deleteUser(email){
     return new Promise((resolve)=>{
         User.deleteOne({ email:email }, function (err) {
@@ -381,14 +389,23 @@ module.exports = {
         }).catch(e=>{return e;});
     },
     findUser: function(email){
-        findUser(email).then((res)=>{
-            return res;
-        }).catch(e=>{return e;});
+        return new Promise((resolve)=>{
+            findUser(email).then((res)=>{
+                resolve(res);
+            }).catch(e=>{resolve(e);});
+        });
     },
     getUsers: function(){
-        getUsers().then((res)=>{
+        return new Promise((resolve)=>{
+            getUsers().then((res)=>{
+                resolve(res);
+            }).catch(e=>{resolve(e);});           
+        })
+    },
+    updateUser: function(email,updatedUser){
+        updateUser(email,updatedUser).then((res)=>{
             return res;
-        }).catch(e=>{return e;});
+        }).catch(e=>{});
     },
     deleteUser: function(email){
         deleteUser(email).then((res)=>{
@@ -443,9 +460,11 @@ module.exports = {
         }).catch(e=>{return e;});
     },
     getFavorites: function(email){
-        getFavorites(email).then((res)=>{
-            return res;
-        }).catch(e=>{return e;});
+        return new Promise((resolve)=>{
+            getFavorites(email).then((res)=>{
+                resolve(res);
+            }).catch(e=>{resolve(e);});
+        });
     },
     deleteFromFavorites: function(email, productName){
         deleteFromFavorites(email,productName).then((res)=>{
@@ -490,8 +509,7 @@ module.exports = {
             getOrders(email).then((res)=>{
                 resolve(res);
             }).catch(e=>{resolve(e);});
-        });
-        
+        }); 
     },
     getAllOrders: async function(){
         return new Promise((resolve)=>{

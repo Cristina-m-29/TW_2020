@@ -18,8 +18,6 @@ function setUpOrders(){
           }
           else{
             const orders = JSON.parse(xhttp.responseText);
-            // const orders = xhttp.responseText;
-            console.log(orders);
             showAdminOrders(orders);
           }
         } 

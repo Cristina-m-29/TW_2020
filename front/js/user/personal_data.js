@@ -4,15 +4,31 @@ var user_accountType = document.querySelector('#user_accountType');
 var user_birthday = document.querySelector('#user_birthday');
 var user_email = document.querySelector('.email_view');
 var user_password = document.querySelector('.pass_view');
+var userData;
+data_main.addEventListener('onload', setUpUserData());
 
-data_main.addEventListener('onload', setUserData());
+function setUpUserData(){
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = ()=>{
+        if(xhttp.readyState == 4){
+        if(xhttp.status == 200){// SUCCES
+          setUserData(JSON.parse(xhttp.responseText));
+        } 
+        else{
+            console.log("somenthing went wrong");
+        }            
+      }
+    } 
+    xhttp.open("GET",`getUserData/admin_cristina@mail.ro`,true);
+    xhttp.resposnseType='application/json';
+    xhttp.send();
+}
 
-function setUserData(){
-    //datele trebuie luate din bd
-    user_firstName.innerHTML="Cristina";
-    user_lastName.innerHTML="Mititelu";
-    user_accountType.innerHTML="Individual";
-    user_birthday.innerHTML="29-Ian-2000";
-    user_email.innerHTML="mititelucristina29@gmail.com";
-    user_password.innerHTML="parolamea";
+function setUserData(user){
+    userData = user;
+    user_firstName.innerHTML=user.first_name;
+    user_lastName.innerHTML=user.last_name;
+    user_accountType.innerHTML="User/Individual";
+    user_email.innerHTML=user.email;
+    user_password.innerHTML=user.password;
 }

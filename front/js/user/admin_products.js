@@ -28,9 +28,8 @@ function setUpProducts(){
                         document.querySelector('#admin_nr_products').style.display="none";
                     }
                     else{
+                        console.log(JSON.parse(xhttp.responseText));
                         showAdminProducts(JSON.parse(xhttp.responseText));
-                        // const prod = JSON.parse(xhttp.responseText);
-                        // console.log(prod);
                     }
                 } 
                 else{
@@ -76,7 +75,7 @@ function showAdminProducts(products){
                     </div>
                     <div class="adm_prod_data">
                         <div class="adm_prod_data_id">${product._id}</div>
-                        <div class="adm_prod_for_${prod}">${product.forWho}</div>
+                        <div class="adm_prod_for_${prod}">${product.for}</div>
                         <div class="adm_prod_cat_${prod}">${product.category}</div>
                         <div class="adm_prod_name_${prod}">${product.name}</div>
                         <div class="adm_prod_price_${prod}">${product.price}</div>
@@ -168,10 +167,7 @@ function showAdminProducts(products){
 }
 
 function addAdmProdDeleteEvent(prod){
-    // console.log(prod);
     document.querySelector(`.adm_prod_delete_${prod}`).addEventListener('click',()=>{
-        console.log('Delete');
-        console.log(prod);
         //sterge produs din bd
         var xhttp = new XMLHttpRequest();
         xhttp.onreadystatechange = ()=>{
@@ -185,13 +181,8 @@ function addAdmProdDeleteEvent(prod){
             }
         } 
         xhttp.open("DELETE",`deleteProduct`,true);
-        var dataToDelete = {
-            "for":document.querySelector(`.adm_prod_for_${prod}`).innerHTML, 
-            "category":document.querySelector(`.adm_prod_cat_${prod}`).innerHTML, 
-            "name": document.querySelector(`.adm_prod_name_${prod}`).innerHTML
-        };
-        console.log(JSON.stringify(dataToDelete));
-        xhttp.send(JSON.stringify(dataToDelete));
+        var name = document.querySelector(`.adm_prod_name_${prod}`).innerHTML;
+        xhttp.send(name);
         totalProducts--;
         document.querySelector(`.adm_prod_${prod}`).style.display="none";
         document.querySelector("#adm_number_prod").innerHTML = totalProducts;
@@ -238,14 +229,15 @@ function addAdmProdDoneEvent(prod){
         }
         else{
             var dataToUpdate = {};
-            dataToUpdate.img_before = document.querySelector(`#adm_prod_img_${prod}`).src;
+            dataToUpdate.img = document.querySelector(`#adm_prod_img_${prod}`).src;
             dataToUpdate.for = document.querySelector(`.adm_prod_for_${prod}`).innerHTML;
             dataToUpdate.category = document.querySelector(`.adm_prod_cat_${prod}`).innerHTML;
             dataToUpdate.name_before = document.querySelector(`.adm_prod_name_${prod}`).innerHTML;
-            dataToUpdate.price_before = document.querySelector(`.adm_prod_price_${prod}`).innerHTML;
-            dataToUpdate.hex_before = hexColors[prod];
-            dataToUpdate.string_before = stringColors[prod];
-            dataToUpdate.size_before = sizesProduct[prod];
+            dataToUpdate.name = document.querySelector(`.adm_prod_name_${prod}`).innerHTML;
+            dataToUpdate.price = document.querySelector(`.adm_prod_price_${prod}`).innerHTML;
+            dataToUpdate.hex_colors = hexColors[prod];
+            dataToUpdate.string_colors = stringColors[prod];
+            dataToUpdate.size = sizesProduct[prod];
 
             //adaugare culoare si in bd
             if(p_hex!="" && p_string !=""){
@@ -307,7 +299,7 @@ function addAdmProdDoneEvent(prod){
                 dataToUpdate.size = sizesProduct[prod];         
             }
 
-            if(Object.entries(dataToUpdate).length > 8){ 
+            // if(Object.entries(dataToUpdate).length > 8){ 
                 var xhttp = new XMLHttpRequest();
                 xhttp.onreadystatechange = ()=>{
                     if(xhttp.readyState == 4){
@@ -321,7 +313,7 @@ function addAdmProdDoneEvent(prod){
                 } 
                 xhttp.open("POST",`updateProduct`,true);
                 xhttp.send(JSON.stringify(dataToUpdate));
-            }            
+            // }            
 
             document.querySelector(`.adm_prod_main_${prod}`).style.display="grid";
             document.querySelector(`.adm_prod_edit_body_${prod}`).style.display="none";
