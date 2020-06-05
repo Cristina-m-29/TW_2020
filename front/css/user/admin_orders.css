@@ -40,6 +40,11 @@
     border-bottom: solid 0.02em #b3b3b3;
 }
 
+.adm_order > div{
+    margin-right: 1em;
+    overflow: hidden;
+}
+
 .adm_order_prod{
     display: grid;
     grid-template-columns: 30% 10% 30% 10% 20%;

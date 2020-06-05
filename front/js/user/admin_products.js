@@ -1,41 +1,61 @@
-var totalProducts = 5;
-var totalColors = 3;
-var color = ['green','red','yellow'];
-var colors_to_delete =[];
-var totalSizes = 2;
-var sizes = ['XS','S'];
+var totalProducts;
+var hexColors = [];
+var nrOfHexColors;
+var stringColors = [];
+var sizesProduct = [];
+var nrOfSizes;
 var base64 = null;
 var current_prod;
-// admin_products_main.addEventListener('onload',showAdminProducts());
-admin_products_main.addEventListener('onload',setUpProducts());
+// window.addEventListener("onload", setUpProducts());
+document.querySelector(`.products`).addEventListener("click",setUpProducts());
 
 function setUpProducts(){
-    console.log("get products");
-    var xhttp = new XMLHttpRequest();
-    xhttp.onreadystatechange = ()=>{
-        if(xhttp.readyState == 4){
-            if(xhttp.status == 200){// SUCCES
-                console.log(xhttp.responseText);
-                showAdminProducts();
-            } 
-            else{
-                console.log("somenthing went wrong");
-            }            
-        }
-    } 
-    xhttp.open("GET","getAllProducts",true);
-    xhttp.resposnseType='application/json';
-    xhttp.send();
+    document.querySelector(`.products`).addEventListener("click",()=>{
+        document.querySelector('.main_products').innerHTML = `
+        <p>Products in store</p>
+        <div id="admin_nr_products">
+          <p>Number of products </p>
+        </div>
+        <div class="admin_products">          
+        </div> `;
+        console.log("get products");
+        var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = ()=>{
+            if(xhttp.readyState == 4){
+                if(xhttp.status == 200){// SUCCES
+                    if(xhttp.responseText == "no products"){
+                        admin_products_main.insertAdjacentHTML("beforeend",'<p id="no_adm_prod_txt">No products found </p>');
+                        document.querySelector('#admin_nr_products').style.display="none";
+                    }
+                    else{
+                        showAdminProducts(JSON.parse(xhttp.responseText));
+                        // const prod = JSON.parse(xhttp.responseText);
+                        // console.log(prod);
+                    }
+                } 
+                else{
+                    console.log("somenthing went wrong");
+                }            
+            }
+        } 
+        xhttp.open("GET","getAllProducts",true);
+        xhttp.resposnseType='application/json';
+        xhttp.send();
+    });
 }
 
-function showAdminProducts(){
-    document.querySelector('#admin_nr_products').insertAdjacentHTML("beforeend",`<p id="adm_number_prod">${totalProducts}</p>`);
-    if(totalProducts == 0) {
+function showAdminProducts(products){
+    document.querySelector('#admin_nr_products').insertAdjacentHTML("beforeend",`<p id="adm_number_prod">${products.length}</p>`);
+    totalProducts = products.length;
+    if(products.length == 0) {
         admin_products_main.insertAdjacentHTML("beforeend",'<p id="no_adm_prod_txt">No products found </p>');
         document.querySelector('#admin_nr_products').style.display="none";
     }
     else{
-        for(prod=0;prod<totalProducts;prod++){
+        for(prod=0;prod<products.length;prod++){
+            var product = products[prod];
+            console.log(product);
+            // console.log(product.img);
             document.querySelector('.admin_products').insertAdjacentHTML("beforeend",
             `<div class="adm_prod adm_prod_${prod}">
                 <!--<div class="adm_prod_header adm_prod_header_${prod}">
@@ -43,7 +63,7 @@ function showAdminProducts(){
                 </div>-->
                 <div class="adm_prod_main adm_prod_main_${prod}">
                     <div class="adm_prod_img">
-                        <img id="adm_prod_img_${prod}" src="../../images/women/extra/geaca.jpg">
+                        <img id="adm_prod_img_${prod}" src="">
                     </div>
                     <div class="adm_prod_txt">
                         <p>Product id</p>
@@ -55,11 +75,11 @@ function showAdminProducts(){
                         <p>Sizes</p>
                     </div>
                     <div class="adm_prod_data">
-                        <div>1594</div>
-                        <div>Women</div>
-                        <div>Jeans</div>
-                        <div class="adm_prod_name_${prod}">Mom jeans one</div>
-                        <div class="adm_prod_price_${prod}">99.99</div>
+                        <div class="adm_prod_data_id">${product._id}</div>
+                        <div class="adm_prod_for_${prod}">${product.forWho}</div>
+                        <div class="adm_prod_cat_${prod}">${product.category}</div>
+                        <div class="adm_prod_name_${prod}">${product.name}</div>
+                        <div class="adm_prod_price_${prod}">${product.price}</div>
                         <div class="adm_prod_colors adm_prod_colors_${prod}">
                         </div>
                         <div class="adm_prod_sizes adm_prod_sizes_${prod}">
@@ -120,14 +140,19 @@ function showAdminProducts(){
             </div>`);
 
             //parcurgere culori produs in bd
-            for(i=0;i<totalColors;i++){
-                document.querySelector(`.adm_prod_colors_${prod}`).insertAdjacentHTML("beforeend",`<div class="prod_color pc_${prod}${i}" style="background-color:${color[i]}"></div>`);
-                document.querySelector(`.apcc_${prod}`).insertAdjacentHTML("beforeend",`<div class="prod_color delete_color_${prod}${i}" style="background-color:${color[i]}"></div>`);
+            var colors = product.hex_colors;
+            stringColors[prod] = product.string_colors;
+            hexColors[prod] = product.hex_colors;
+            for(i=0;i<colors.length;i++){
+                document.querySelector(`.adm_prod_colors_${prod}`).insertAdjacentHTML("beforeend",`<div class="prod_color pc_${prod}${i}" style="background-color:${colors[i]}"></div>`);
+                document.querySelector(`.apcc_${prod}`).insertAdjacentHTML("beforeend",`<div class="prod_color delete_color_${prod}${i}" style="background-color:${colors[i]}"></div>`);
                 document.querySelector(`.delete_color_${prod}${i}`).addEventListener('click',addColorDeleteEvent(prod,i));
             }
 
             //parcurgere marimi produs in bd
-            for(i=0;i<totalSizes;i++){
+            var sizes = product.sizes;
+            sizesProduct[prod] = sizes;
+            for(i=0;i<sizes.length;i++){
                 document.querySelector(`.adm_prod_sizes_${prod}`).insertAdjacentHTML("beforeend",`<p class="ps_${prod}${i}">${sizes[i]}</p>`);
                 document.querySelector(`.apcs_${prod}`).insertAdjacentHTML("beforeend",`<p  class="pcs_${prod}${i}">${sizes[i]}</p>`);
                 document.querySelector(`.pcs_${prod}${i}`).addEventListener('click',addSizeDeleteEvent(prod,i));
@@ -143,11 +168,32 @@ function showAdminProducts(){
 }
 
 function addAdmProdDeleteEvent(prod){
+    // console.log(prod);
     document.querySelector(`.adm_prod_delete_${prod}`).addEventListener('click',()=>{
         console.log('Delete');
+        console.log(prod);
         //sterge produs din bd
-        document.querySelector(`.adm_prod_${prod}`).style.display="none";
+        var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = ()=>{
+            if(xhttp.readyState == 4){
+                if(xhttp.status == 200){// SUCCES
+                    console.log(xhttp.responseText);
+                } 
+                else{
+                    console.log("somenthing went wrong");
+                }            
+            }
+        } 
+        xhttp.open("DELETE",`deleteProduct`,true);
+        var dataToDelete = {
+            "for":document.querySelector(`.adm_prod_for_${prod}`).innerHTML, 
+            "category":document.querySelector(`.adm_prod_cat_${prod}`).innerHTML, 
+            "name": document.querySelector(`.adm_prod_name_${prod}`).innerHTML
+        };
+        console.log(JSON.stringify(dataToDelete));
+        xhttp.send(JSON.stringify(dataToDelete));
         totalProducts--;
+        document.querySelector(`.adm_prod_${prod}`).style.display="none";
         document.querySelector("#adm_number_prod").innerHTML = totalProducts;
         if(totalProducts == 0){
             admin_products_main.insertAdjacentHTML("beforeend",'<p id="no_adm_prod_txt">No products found </p>');
@@ -156,15 +202,24 @@ function addAdmProdDeleteEvent(prod){
     });    
 }
 
+function hexCode(i) { 
+    return ("0" + parseInt(i).toString(16)).slice(-2); 
+} 
+
+function RGBToHex(rgb) {
+    rgb = rgb.match(/^rgb\((\d+),\s*(\d+),\s*(\d+)\)$/);     
+    return "#" + hexCode(rgb[1]) + hexCode(rgb[2]) + hexCode(rgb[3]); 
+}
+
 function addAdmProdEditEvent(prod){
     document.querySelector(`.adm_prod_edit_${prod}`).addEventListener('click',()=>{
         console.log('Edit');
-        // current_prod = prod;
+        nrOfHexColors = hexColors[prod].length;
+        nrOfSizes = sizesProduct[prod].length;
         document.querySelector(`.adm_prod_main_${prod}`).style.display="none";
         document.querySelector(`.adm_prod_edit_body_${prod}`).style.display="block";
         document.querySelector(`.adm_prod_edit_${prod}`).style.display="none";
         document.querySelector(`.adm_prod_done_${prod}`).style.display="block";
-        // document.querySelector(`.adm_prod_header_${prod}`).style.display="none";
     });    
 }
 
@@ -182,53 +237,103 @@ function addAdmProdDoneEvent(prod){
             document.querySelector(`.hex_string_${prod}`).style.display="block";            
         }
         else{
+            var dataToUpdate = {};
+            dataToUpdate.img_before = document.querySelector(`#adm_prod_img_${prod}`).src;
+            dataToUpdate.for = document.querySelector(`.adm_prod_for_${prod}`).innerHTML;
+            dataToUpdate.category = document.querySelector(`.adm_prod_cat_${prod}`).innerHTML;
+            dataToUpdate.name_before = document.querySelector(`.adm_prod_name_${prod}`).innerHTML;
+            dataToUpdate.price_before = document.querySelector(`.adm_prod_price_${prod}`).innerHTML;
+            dataToUpdate.hex_before = hexColors[prod];
+            dataToUpdate.string_before = stringColors[prod];
+            dataToUpdate.size_before = sizesProduct[prod];
+
             //adaugare culoare si in bd
             if(p_hex!="" && p_string !=""){
-                console.log("Adaugam culoare");
-                //Si hex si string!
-                var i=color.length;
-                color.push(p_hex);
-                document.querySelector(`.adm_prod_colors_${prod}`).insertAdjacentHTML("beforeend",`<div class="prod_color pc_${prod}${i}" style="background-color:${p_hex}"></div>`);            
-                document.querySelector(`.apcc_${prod}`).insertAdjacentHTML("beforeend",`<div class="prod_color delete_color_${prod}${i}" style="background-color:${p_hex}"></div>`);
-                document.querySelector(`.delete_color_${prod}${i}`).addEventListener('click',addColorDeleteEvent(prod,i));                
+                // console.log("Adaugam culoare");
+                var updateHex = p_hex.split(",");
+                var updateString = p_string.split(",");
+                if(updateHex.length != updateString.length){
+                    document.querySelector(`.hex_string_${prod}`).style.display="block";
+                }   
+                else{
+                    for(k=0;k<updateHex.length;k++){
+                        if(updateHex[k].search("#")<0){
+                            document.querySelector(`.hex_string_${prod}`).style.display="block";
+                        }
+                        else{
+                            hexColors[prod].push(updateHex[k]);
+                            stringColors[prod].push(updateString[k]);
+                            var i = hexColors[prod].length;
+                            document.querySelector(`.adm_prod_colors_${prod}`).insertAdjacentHTML("beforeend",`<div class="prod_color pc_${prod}${i}" style="background-color:${updateHex[k]}"></div>`);            
+                            document.querySelector(`.apcc_${prod}`).insertAdjacentHTML("beforeend",`<div class="prod_color delete_color_${prod}${i}" style="background-color:${updateHex[k]}"></div>`);
+                            document.querySelector(`.delete_color_${prod}${i}`).addEventListener('click',addColorDeleteEvent(prod,i));
+                        }                        
+                    } 
+                    dataToUpdate.hex_colors = hexColors[prod];
+                    dataToUpdate.string_colors = stringColors[prod];                 
+                }                           
             }
-
             document.querySelector(`.hex_string_${prod}`).style.display="none";
-            document.querySelector(`#adm_prod_img_${prod}`).src = document.querySelector(`.new_img_${prod}`).src;
+
+            //schimbare img
+            if(document.querySelector(`#adm_prod_img_${prod}`).src != document.querySelector(`.new_img_${prod}`).src){
+                document.querySelector(`#adm_prod_img_${prod}`).src = document.querySelector(`.new_img_${prod}`).src;
+                dataToUpdate.img = document.querySelector(`.new_img_${prod}`).src;
+            }
+            
             if(p_name != ""){
                 //Schimbare nume in bd
+                dataToUpdate.name = p_name;
                 console.log("Schimbam nume produs");
                 document.querySelector(`.adm_prod_name_${prod}`).innerHTML = p_name;
             }
             if(p_price != ""){
                 //Schimbare pret in
+                dataToUpdate.price = p_price;
                 console.log("Schimbam pret produs");
                 document.querySelector(`.adm_prod_price_${prod}`).innerHTML = p_price;
             }        
             if(p_size != ""){
                 //adaugare marime si in bd
-                console.log("Adaugam marime");
-                var i=sizes.length;
-                sizes.push(p_size);
-                document.querySelector(`.adm_prod_sizes_${prod}`).insertAdjacentHTML("beforeend",`<p class="ps_${prod}${i}">${sizes[i]}</p>`);
-                document.querySelector(`.apcs_${prod}`).insertAdjacentHTML("beforeend",`<p  class="pcs_${prod}${i}">${sizes[i]}</p>`);
-                document.querySelector(`.pcs_${prod}${i}`).addEventListener('click',addSizeDeleteEvent(prod,i));
+                var updateSize = p_size.split(",");
+                for(k=0;k<updateSize.length;k++){
+                    // console.log("Adaugam marime");
+                    sizesProduct[prod].push(updateSize[k]);
+                    var i = sizesProduct[prod].length;
+                    document.querySelector(`.adm_prod_sizes_${prod}`).insertAdjacentHTML("beforeend",`<p class="ps_${prod}${i}">${updateSize[k]}</p>`);
+                    document.querySelector(`.apcs_${prod}`).insertAdjacentHTML("beforeend",`<p  class="pcs_${prod}${i}">${updateSize[k]}</p>`);
+                    document.querySelector(`.pcs_${prod}${i}`).addEventListener('click',addSizeDeleteEvent(prod,i));
+                } 
+                dataToUpdate.size = sizesProduct[prod];         
             }
+
+            if(Object.entries(dataToUpdate).length > 8){ 
+                var xhttp = new XMLHttpRequest();
+                xhttp.onreadystatechange = ()=>{
+                    if(xhttp.readyState == 4){
+                        if(xhttp.status == 200){// SUCCES
+                            console.log(xhttp.responseText);
+                        } 
+                        else{
+                            console.log("somenthing went wrong");
+                        }            
+                    }
+                } 
+                xhttp.open("POST",`updateProduct`,true);
+                xhttp.send(JSON.stringify(dataToUpdate));
+            }            
 
             document.querySelector(`.adm_prod_main_${prod}`).style.display="grid";
             document.querySelector(`.adm_prod_edit_body_${prod}`).style.display="none";
             document.querySelector(`.adm_prod_edit_${prod}`).style.display="block";
             document.querySelector(`.adm_prod_done_${prod}`).style.display="none";
-            // document.querySelector(`.adm_prod_header_${prod}`).style.display="block";
 
             document.querySelector(`#p_name_${prod}`).value="";    
             document.querySelector(`#p_price_${prod}`).value="";
             document.querySelector(`#p_hex_${prod}`).value="";
             document.querySelector(`#p_string_${prod}`).value="";
             document.querySelector(`#p_size_${prod}`).value="";
-            // console.log(`${p_name} | ${p_price} | ${p_hex} | ${p_size}`);
         }
-        
     });
 }
 
@@ -241,10 +346,10 @@ function addColorDeleteEvent(prod,i){
         color_to_delete.style.backgroundImage = "none";
     });
     color_to_delete.addEventListener('click',()=>{
-        //delete color from bd
+        stringColors[prod].splice(i,1);
+        hexColors[prod].splice(i,1);
         color_to_delete.style.display="none";
         document.querySelector(`.pc_${prod}${i}`).style.display="none";
-        colors_to_delete.push(`${prod}${i}`);
     });
 }
 
@@ -259,8 +364,7 @@ function addSizeDeleteEvent(prod,i){
         size_to_delete.style.backgroundImage = "none";
     });
     size_to_delete.addEventListener('click',()=>{
-        // console.log("delete size");
-        //delete size from bd
+        sizesProduct[prod].splice(i,1);
         size_to_delete.style.display="none";
         document.querySelector(`.ps_${prod}${i}`).style.display="none";
     });

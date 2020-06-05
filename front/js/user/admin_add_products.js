@@ -31,12 +31,15 @@ function readAddPropImg(evt){
             var r = new FileReader();
             r.readAsDataURL(file);
             r.onload = function(e){
-                var base64 = e.target.result;                 
+                var base64 = e.target.result;      
+                // var binaryImg = convertDataURIToBinary(base64);           
                 var binaryImg = convertDataURIToBinary(base64);
                 var blob = new Blob([binaryImg], {type: file.type});
-                var blobURL = window.URL.createObjectURL(blob); 
-                console.log(`Blob: ${blobURL}`);
-                add_p_img.src = blobURL;  
+                var blobURL = window.URL.createObjectURL(blob,{oneTimeOnly: false}); 
+                // console.log(`Blob: ${blobURL}`);
+                // console.log(base64);
+                // console.log(JSON.stringify(binaryImg, null, 2));
+                add_p_img.src = base64;  
                 photoChanged = 1;
             }
         }
@@ -117,7 +120,6 @@ add_p_btn.addEventListener('click',()=>{
                         "string_colors":add_p_string, 
                         "size":add_p_size
                     };
-                    console.log(JSON.stringify(dataToPost)); 
                     xhttp.send(JSON.stringify(dataToPost));
 
                     sleep(2000).then(()=>{

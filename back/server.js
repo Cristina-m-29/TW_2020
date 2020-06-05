@@ -2,7 +2,8 @@ var http = require('http');
 var fs = require('fs');
 var path = require('path');
 var PORT = 2902 || process.env.PORT;
-var db = require('./mongo');
+// var db = require('./mongo');
+var db = require('./db');
 var prod = require('./createProduct');
 var usr = require('./createUser');
 const {parse} = require('querystring');
@@ -12,13 +13,11 @@ var productsReceiveURL = ["/atara/women/products/","/atara/men/products/","/atar
 var otherCounter = 0;
 var needMongo = 0;
 
+const forWho = ['women','men','boy','girl'];
 
-
-http.createServer(function (request, response) {    
-    
-
+http.createServer(async function (request, response) {    
     var filePath = '.' + request.url;   
-    // console.log(`BEFORE: ${request.url}`);
+    console.log(`BEFORE: ${request.url}`);
     // console.log(request.method);
 
     if(request.method == "GET"){
@@ -31,119 +30,156 @@ http.createServer(function (request, response) {
             response.write("get favorites", 'utf-8');
             response.end();
         }
-        if(request.url.search("getAllProducts") > 0){
-            needMongo = 1;
-            var allProductsContor = 0;
-            var allProducts = [];
-            const women = db.getProducts('women');
-            women.then((womenProducts)=>{
-                console.log("WOMEN");
-                if(womenProducts.length > 0){
-                    allProducts += JSON.stringify(womenProducts); 
-                }                  
-                allProductsContor++;         
-            },()=>{
-                allProductsContor++;
-                console.log("no women products");
-            }).catch(e=>console.log(e));
-            const men = db.getProducts('men');
-            men.then((menProducts)=>{
-                console.log("MEN");
-                if(menProducts.length > 0){
-                   allProducts += JSON.stringify(menProducts); 
-                }                
-                allProductsContor++;
-            },()=>{
-                allProductsContor++;
-                console.log("no men products");
-            }).catch(e=>console.log(e));
-            const boy = db.getProducts('boy');
-            boy.then((boyProducts)=>{
-                console.log("BOY");
-                if(boyProducts.length > 0){
-                    allProducts += JSON.stringify(boyProducts);
-                }                    
-                allProductsContor++;
-            },()=>{
-                allProductsContor++;
-                console.log("no boy products");
-            }).catch(e=>console.log(e));
-            const girl = db.getProducts('girl');
-            girl.then((girlProducts)=>{
-                console.log("GIRL");
-                if(girlProducts.length > 0){
-                    allProducts += JSON.stringify(girlProducts);
-                }                
-                allProductsContor++;
-            },()=>{ 
-                allProductsContor++;
-                console.log("no girl products");
-            }).catch(e=>console.log(e));
-            setTimeout(()=>{
-                console.log("got all products");
-                console.log(allProducts);
-                // console.log(JSON.parse(allProducts));
-                var splitAllProducts = allProducts.split("},{");
-                console.log(splitAllProducts);
-                for(i=0;i<splitAllProducts.length;i++){
-                    if(splitAllProducts[i].search("{") > 0)
-                        console.log(splitAllProducts[i].search("{"));
-                    if(splitAllProducts[i].search("}") > 0)
-                        console.log(splitAllProducts[i].search("}"));
-                }
-                response.writeHead(200, { 'Content-Type': 'application/json' }); 
-                response.write("get all products", 'utf-8');
-                response.end();
-            },4000);            
-        }
         else{
-            needMongo = 0;
-            //html
-            //home
-            if (filePath == './' || filePath == './atara.html') {
-                filePath = '../front/html/index.html';    
-                categroriesCounter = 0;
-                productsCounter = 0;    
+            if(request.url  == "/user/getAllProducts"){
+                needMongo = 1;
+                const prod = db.getProducts();
+                prod.then((res)=>{
+                    if(res){
+                        console.log(res);
+                        const send = JSON.stringify(res);
+                        response.writeHead(200, { 'Content-Type': 'application/json' });
+                        response.end(send, 'utf-8'); 
+                    }else{
+                        response.writeHead(200, { 'Content-Type': 'application/json' });
+                        response.end("error", 'utf-8');
+                    }                
+                }).catch(e=>console.log(e));
             }
             else{
-                if(path.extname(filePath) == '.html'){
-                    var ok = 0;
-                    //categories
-                    for(i=0;i<categoriesReceiveURL.length;i++){
-                        if(request.url == categoriesReceiveURL[i]){
-                            filePath = "../front/html/categorii/women.html";
-                            ok = 1;
-                            categroriesCounter = 1;
-                            break;
+                if(request.url == "/user/getAllOrders"){
+                    needMongo = 1;
+                    const ords = db.getAllOrders();
+                    ords.then((res)=>{
+                        if(res){
+                            console.log(res);
+                            const send = JSON.stringify(res);
+                            console.log(send);
+                            console.log(typeof(send));
+                            response.writeHead(200, { 'Content-Type': 'application/json' });
+                            response.end(send, 'utf-8'); 
                         }
-                    }
-                    //afisare produse
-                    for(i=0;i<productsReceiveURL.length;i++){
-                        var poz = 0;
-                        poz = request.url.search(productsReceiveURL[i]);
-                        if(poz >= 0){
-                            filePath = "../front/html/afisare_produse/women/women_jeans.html";
-                            ok = 1;
-                            otherCounter = 1; 
-                            break;
-                        }
-                    }
-                    //fav + cart + user + admin
-                    if(ok==0){
-                        filePath = '../front/html'+request.url;
-                        categroriesCounter = 0;
-                        otherCounter = 0; 
-                    }
-                }   
-                //css + images + js       
+                        else{
+                            response.writeHead(200, { 'Content-Type': 'application/json' });
+                            response.end("no orders", 'utf-8'); 
+                        }       
+                    }).catch(e=>console.log(e));           
+                }
                 else{
-                    if(otherCounter == 1){
-                        filePath = "../front" + request.url;
+                    if(request.url.search("getAllUsersAndTheirInfo")>=0){
+                        needMongo = 1;
+                        // const info = await db.getUsersAndTheirInfo();
+                        // if(info == "no users"){
+                        //     response.writeHead(200, { 'Content-Type': 'application/json' }); 
+                        //     response.write("no users", 'utf-8');
+                        //     response.end();
+                        // }
+                        // else{
+                            response.writeHead(200, { 'Content-Type': 'application/json' }); 
+                            response.write("JSON.stringify(info)", 'utf-8');
+                            response.end();
+                        // }
                     }
                     else{
-                        filePath = '../front'+request.url;  
-                    }             
-                }        
+                        if(request.url.search("getAllUsers")>=0){
+                            needMongo = 1;
+                            // const usrs = await db.getUsers();
+                            // if(usrs){
+                            //     response.writeHead(200, { 'Content-Type': 'application/json' }); 
+                            //     response.write(JSON.stringify(usrs), 'utf-8');
+                            //     response.end();
+                            // }
+                            // else{
+                                response.writeHead(200, { 'Content-Type': 'application/json' }); 
+                                response.write("no users", 'utf-8');
+                                response.end();
+                            // }
+                        }
+                        else{
+                            if(request.url.search("getOrders")>=0){
+                                needMongo = 1;
+                                var email = request.url.split("/");
+                                email = email[email.length - 1];
+                                console.log(email); 
+                                // var orders = await db.getOrders(email);
+                                // if(orders){
+                                //     console.log(orders);
+                                //     response.writeHead(200, { 'Content-Type': 'application/json' }); 
+                                //     response.write("got orders for user", 'utf-8');
+                                //     response.end();
+                                // }
+                                // else{
+                                    response.writeHead(200, { 'Content-Type': 'application/json' }); 
+                                    response.write("no orders for user", 'utf-8');
+                                    response.end();
+                                // }                            
+                            }
+                            else{
+                                if(request.url.search("getUserData")>=0){
+                                    needMongo = 1;
+                                    var email = request.url.split("/");
+                                    email = email[email.length-1]
+                                    console.log(email);
+                                    // const usr = await db.findUser(email);
+                                    // if(usr) console.log(usr);
+                                    // else console.log("no user");
+                                    response.writeHead(200, { 'Content-Type': 'application/json' }); 
+                                    response.write("got user data", 'utf-8');
+                                    response.end();
+                                }
+                                else{
+                                    needMongo = 0;
+                                    //html
+                                    //home
+                                    if (filePath == './' || filePath == './atara.html') {
+                                        filePath = '../front/html/index.html';    
+                                        categroriesCounter = 0;
+                                        productsCounter = 0;    
+                                    }
+                                    else{
+                                        if(path.extname(filePath) == '.html'){
+                                            var ok = 0;
+                                            //categories
+                                            for(i=0;i<categoriesReceiveURL.length;i++){
+                                                if(request.url == categoriesReceiveURL[i]){
+                                                    filePath = "../front/html/categorii/women.html";
+                                                    ok = 1;
+                                                    categroriesCounter = 1;
+                                                    break;
+                                                }
+                                            }
+                                            //afisare produse
+                                            for(i=0;i<productsReceiveURL.length;i++){
+                                                var poz = 0;
+                                                poz = request.url.search(productsReceiveURL[i]);
+                                                if(poz >= 0){
+                                                    filePath = "../front/html/afisare_produse/women/women_jeans.html";
+                                                    ok = 1;
+                                                    otherCounter = 1; 
+                                                    break;
+                                                }
+                                            }
+                                            //fav + cart + user + admin
+                                            if(ok==0){
+                                                filePath = '../front/html'+request.url;
+                                                categroriesCounter = 0;
+                                                otherCounter = 0; 
+                                            }
+                                        }
+                                        else{ //css + images + js 
+                                            if(otherCounter == 1){
+                                                filePath = "../front" + request.url;
+                                            }
+                                            else{
+                                                filePath = '../front'+request.url;  
+                                            }    
+                                        }  
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
             }
         }
     }
@@ -160,12 +196,134 @@ http.createServer(function (request, response) {
                     var hcolors = body.hex_colors.split(","); 
                     var scolors = body.string_colors.split(",");
                     var sizes = body.size.split(",");
-                    const product = prod.createProduct(body.img, body.category, body.name, parseInt(body.price), hcolors, scolors, sizes);
-                    db.addMongoProduct(body.for, product);
+                    const product = prod.createProduct("img_for_product", body.for, body.category, body.name, parseInt(body.price), hcolors, scolors, sizes);
+                    db.addProduct(product).then((res)=>{
+                        console.log(res);
+                        response.writeHead(200, { 'Content-Type': 'application/json' });
+                        response.write(JSON.stringify(product));
+                        response.end();
+                    });                    
+                });               
+            }
+            if(request.url.search("updateProduct")>=0){
+                var body = '';
+                request.on('data', function (chunk) {
+                    body += chunk;
+                });                
+                request.on("end", ()=>{
+                    body = JSON.parse(body);
+                    var oldProd = {
+                        name: body.name_before,
+                        category: body.category
+                    };
+                    console.log(oldProd);
+                    if(Object.entries(body).length > 0){
+                        var newProd = {
+                            img: body.img_before,
+                            forWho: body.for,
+                            category: body.category,
+                            name: body.name_before,
+                            price: parseInt(body.price_before),
+                            hex_colors: body.hex_before,
+                            string_colors: body.string_before,
+                            sizes: body.size_before
+                        };
+                        if('img' in body) newProd.img = body.img;
+                        if('name' in body) newProd.name = body.name;
+                        if('price' in body) newProd.price = parseInt(body.price);
+                        if('hex_colors' in body) newProd.hex_colors = body.hex_colors;
+                        if('string_colors' in body) newProd.string_colors = body.string_colors;
+                        if('size' in body) newProd.sizes = body.size;
+                        // db.updateProduct(body.for, oldProd, newProd);
+                    }                    
                     response.writeHead(200, { 'Content-Type': 'application/json' });
-                    response.write(JSON.stringify(product));
+                    response.write("product updated");
                     response.end();
-                })               
+                });      
+            }
+            if(request.url.search("getAllOrders")>=0){
+                needMongo = 1;
+                const ords = db.getAllOrders();
+                ords.then((res)=>{
+                    if(res){
+                        console.log(res);
+                        const send = JSON.stringify(res);
+                        console.log(send);
+                        console.log(typeof(send));
+                        response.writeHead(200, { 'Content-Type': 'application/json' });
+                        response.end(send, 'utf-8'); 
+                    }
+                    else{
+                        response.writeHead(200, { 'Content-Type': 'application/json' });
+                        response.end("no orders", 'utf-8'); 
+                    }       
+                }).catch(e=>console.log(e));           
+            }
+            if(request.url.search("getAllProducts") > 0){
+                needMongo = 1;
+                const prod = db.getProducts();
+                prod.then((res)=>{
+                    if(res){
+                        console.log(res);
+                        const send = JSON.stringify(res);
+                        response.writeHead(200, { 'Content-Type': 'application/json' });
+                        response.end("got all products", 'utf-8'); 
+                    }else{
+                        response.writeHead(200, { 'Content-Type': 'application/json' });
+                        response.end("error", 'utf-8');
+                    }                
+                }).catch(e=>console.log(e));
+            }
+        }
+        else{
+            if(request.method == "DELETE"){
+                needMongo = 1;
+                if(request.url.search("deleteProduct")>=0){
+                    var body = '';
+                    request.on('data', function (chunk) {
+                        body += chunk;
+                    });                
+                    request.on("end", ()=>{
+                        body = JSON.parse(body);
+                        console.log(body);   
+                        // db.deleteProduct(body.for, body.category, body.name);                 
+                        response.writeHead(200, { 'Content-Type': 'application/json' });
+                        response.write("deleted product");
+                        response.end();
+                    });   
+                }
+                if(request.url.search("deleteColorOfProduct")>=0){
+                    var body = '';
+                    request.on('data', function (chunk) {
+                        body += chunk;
+                    });                
+                    request.on("end", ()=>{
+                        body = JSON.parse(body);
+                        console.log(body);
+                        var oldProd ={
+                            name: body.name,
+                            category: body.category
+                        }   
+                        console.log(oldProd);          
+                        response.writeHead(200, { 'Content-Type': 'application/json' });
+                        response.write("deleted color");
+                        response.end();
+                    });   
+                }
+                if(request.url.search("deleteUser")>=0){
+                    var body = '';
+                    request.on('data', function (chunk) {
+                        body += chunk;
+                    });                
+                    request.on("end", ()=>{
+                        // body = JSON.parse(body);
+                        console.log(body.trim());
+                        // db.deleteUser(body.trim());         
+                        response.writeHead(200, { 'Content-Type': 'application/json' });
+                        response.write("deleted user");
+                        response.end();
+                    });   
+                }
             }
         }
     }

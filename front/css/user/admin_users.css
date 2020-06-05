@@ -104,6 +104,11 @@
     margin: 1em 0;
 }
 
+.old > div{
+    margin-right: 1em;
+    overflow: hidden;
+}
+
 .admin_users_fav_list{
     border-top: solid 0.02em #b3b3b3;
     border-bottom: solid 0.02em #b3b3b3;
@@ -148,6 +153,11 @@
     display: grid;
     grid-template-columns: 54% 20% 15% 11%;
     margin: 1em 0;
+}
+
+.fld > div{
+    margin-right: 1em;
+    overflow: hidden;
 }
 
 /*--> Users edit btns*/
@@ -224,6 +234,7 @@
 .old_products_list{
     display: grid;
     grid-template-columns: 40% 20% 20% 20%;
+    margin-bottom: 0.5em;
 }
 
 .old_products_list > p{

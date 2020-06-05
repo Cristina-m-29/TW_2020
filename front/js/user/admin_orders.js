@@ -1,31 +1,69 @@
 var totalOrders = 10;
-admin_orders_main.addEventListener('onload',showAdminOrders());
+const ordSide = document.querySelector('.orders');
 
-function showAdminOrders(){
+ordSide.addEventListener('click',setUpOrders());
+
+function setUpOrders(){
+  ordSide.addEventListener('click',()=>{
+    document.querySelector('.admin_orders_body').innerHTML ="";
+    console.log("Users orders");
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = ()=>{
+        if(xhttp.readyState == 4){
+        if(xhttp.status == 200){// SUCCES
+          if(xhttp.responseText == "no orders"){
+            document.querySelector('.admin_orders_header').style.display="none";
+            admin_orders_main.insertAdjacentHTML("beforeend",
+            `<p class="admin_no_orders_txt">No orders found</p>`);
+          }
+          else{
+            const orders = JSON.parse(xhttp.responseText);
+            // const orders = xhttp.responseText;
+            console.log(orders);
+            showAdminOrders(orders);
+          }
+        } 
+        else{
+            console.log("somenthing went wrong");
+        }            
+      }
+    } 
+    xhttp.open("GET","getAllOrders",true);
+    xhttp.resposnseType='application/json';
+    xhttp.send();
+  });
+}
+
+function showAdminOrders(orders){
     if(totalOrders == 0){
         document.querySelector('.admin_orders_header').style.display="none";
         admin_orders_main.insertAdjacentHTML("beforeend",
         `<p class="admin_no_orders_txt">No orders found</p>`);        
     }
     else{
-        for(adm_order=0;adm_order<totalOrders;adm_order++){
-            document.querySelector('.admin_orders_body').insertAdjacentHTML("beforeend",
+        for(adm_order=0;adm_order<orders.length;adm_order++){
+          var d = orders[adm_order].submision_date;
+          d = d.split(" ");
+          var date = d[1] + ' ' + d[2] + ' ' + d[3];
+          document.querySelector('.admin_orders_body').insertAdjacentHTML("beforeend",
             `<div class="adm_order adm_order_${adm_order}">
-            <div><p>334</p></div>
-            <div><p>25</p></div>
-            <div><p>13-MAY-19</p></div>
+            <div><p style="overflow:hidden;">${orders[adm_order]._id}</p></div>
+            <div><p>${orders[adm_order].user_id}</p></div>
+            <div><p>${date}</p></div>
             <div class="adm_order_prod adm_ord_prod_${adm_order}">            
             </div>
-            <div><p>13.59</p></div>
+            <div><p>${orders[adm_order].price} RON</p></div>
           </div>`);
           
-          for(ord_prod=0;ord_prod<3;ord_prod++){
+          var products_list = orders[adm_order].product_list;
+          console.log(products_list);
+          for(ord_prod=0;ord_prod<products_list.length;ord_prod++){
             document.querySelector(`.adm_ord_prod_${adm_order}`).insertAdjacentHTML("beforeend",`
-            <p>Shirt two</p>
-            <p class="ord_right">M</p>
-            <p class="ord_right">Blue</p>
-            <p class="ord_right">1</p>
-            <p class="ord_right">13.59</p>`);
+            <p>${products_list[ord_prod].product_name}</p>
+            <p class="ord_right">${products_list[ord_prod].size}</p>
+            <p class="ord_right">${products_list[ord_prod].color}</p>
+            <p class="ord_right">${products_list[ord_prod].pieces}</p>
+            <p class="ord_right">${products_list[ord_prod].price} RON</p>`);
           }
         }        
     }

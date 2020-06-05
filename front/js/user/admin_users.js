@@ -6,16 +6,44 @@ var usersPass = ['parolaCristina','parolaMadalina'];
 var usersOrders = [2,4];
 var usersFav = [6,8];
 
-admin_users_main.addEventListener('onload',showAdminUsers());
+document.querySelector('.users').addEventListener('click',setUpUsers());
 
-function showAdminUsers(){
-    if(totalUsers == 0){
+function setUpUsers(){
+    document.querySelector('.users').addEventListener('click',()=>{
+        admin_users_main.innerHTML = "<p>Store users</p>";
+        console.log("get users and their info");
+        var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = ()=>{
+            if(xhttp.readyState == 4){
+                if(xhttp.status == 200){// SUCCES
+                    if(xhttp.responseText == "no users"){
+                        admin_users_main.insertAdjacentHTML("beforeend",`<p id="adminNoUsersTxt">No users found</p>`);
+                    }
+                    else{
+                        const u = JSON.parse(xhttp.responseText);
+                        console.log(JSON.parse(xhttp.responseText));
+                        showAdminUsers(u);
+                    }
+                } 
+                else{
+                    console.log("somenthing went wrong");
+                }            
+            }
+        } 
+        xhttp.open("GET","getAllUsersAndTheirInfo",true);
+        xhttp.resposnseType='application/json';
+        xhttp.send();
+    });
+}
+
+function showAdminUsers(users){
+    if(users.length == 0){
         console.log("No users");
         admin_users_main.insertAdjacentHTML("beforeend",`<p id="adminNoUsersTxt">No users found</p>`);
     }
     else{
         //parcurgere in bd
-        for(user = 0;user < totalUsers;user++){
+        for(let user = 0;user < users.length;user++){
             admin_users_main.insertAdjacentHTML('beforeend',
             `<div class="users_main user_main_${user}">
                 <div class="users_main_header">
@@ -45,16 +73,16 @@ function showAdminUsers(){
                             <p class="adm_total_fav_${user}"> Total favorites</p>
                         </div>
                         <div class="users_main_data"> 
-                            <p id="admin_users_name_${user}"> ${usersLastNames[user]} ${usersFirstNames[user]}</p>
-                            <p id="admin_users_email_${user}"> ${usersEmails[user]}</p>
+                            <p id="admin_users_name_${user}"> ${users[user].name}</p>
+                            <p id="admin_users_email_${user}"> ${users[user].email}</p>
                             <div class="admin_hide_pass admin_users_pass_hidden_${user}">
                             <img src="../../images/user/dots.png">
                             <img src="../../images/user/dots.png">
                             <img src="../../images/user/dots.png">
                             </div>
-                            <p class="admin_pass" id="admin_users_pass_${user}"> ${usersPass[user]}</p>
-                            <p id="admin_users_ord_${user}"> ${usersOrders[user]}</p>                        
-                            <p id="admin_users_fav_${user}"> ${usersFav[user]}</p>                                          
+                            <p class="admin_pass" id="admin_users_pass_${user}"> ${users[user].password}</p>
+                            <p id="admin_users_ord_${user}"> ${users[user].nr_orders}</p>                        
+                            <p id="admin_users_fav_${user}"> ${users[user].nr_favorites}</p>                                          
                         </div>
                     </div> 
                     <div class="admin_users_order_list auol_${user}">
@@ -64,7 +92,7 @@ function showAdminUsers(){
                                 <p>Orders list</p>
                             </div>                        
                             <div class="orders_list_main">
-                                <p>${usersOrders[user]}</p>
+                                <p>${users[user].nr_orders}</p>
                                 <p class="admin_users_no_orders_txt adm_no_ord_txt_${user}"> No orders </p>
                                 <div class="orders_list orders_list_${user}">
                                     <div class="orders_list_data_header">
@@ -86,7 +114,7 @@ function showAdminUsers(){
                                 <p>Favorites list</p> 
                             </div>
                             <div class="fav_list_main">
-                                <p>${usersFav[user]}</p>
+                                <p>${users[user].nr_favorites}</p>
                                 <p class="admin_users_no_fav_txt adm_no_fav_txt_${user}"> No favorites </p>
                                 <div class="fav_list fav_list_${user}">
                                     <div class="fav_list_data_header">
@@ -104,43 +132,53 @@ function showAdminUsers(){
                 </div>
             </div>`);
 
-            if(usersOrders[user] == 0){
+            if(users[user].nr_orders == 0){
                 document.querySelector(`.adm_no_ord_txt_${user}`).style.display="block";
-                document.querySelector(`orders_list_${user}`).style.display="none";
+                document.querySelector(`.orders_list_${user}`).style.display="none";
             }
             else{
-                for(order=0;order<usersOrders[user];order++){
-                    var item = 0;
+                const ords = users[user].orders;
+                for(order=0;order<users[user].nr_orders;order++){
+                    var item = ords[order];
+                    var d = item.submision_date.split(" ");
+                    date = d[1] + ' '+ d[2] + ' ' + d[3]; 
                     document.querySelector(`.old_${user}`).insertAdjacentHTML("beforeend",`
                     <div class="old">
-                        <div> <p>450</p> </div>
-                        <div> <p>22-FEB-20</p> </div> 
+                        <div> <p>${item._id}</p> </div>
+                        <div> <p>${date}</p> </div> 
                         <div class="old_products_${order}">
-                            <div class="old_products_list">
-                                <p>Dress one</p>
-                                <p class="old_right">XS</p>
-                                <p class="old_right">Red</p>
-                                <p class="old_right">1</p>
-                            </div>
                         </div> 
-                        <div> <p>299.79</p> </div>
+                        <div> <p>${item.price}</p> </div>
                     </div>`);
+
+                    var prods = item.products_list;
+                    for(i=0;i<prods.length;i++){
+                        document.querySelector(`.old_products_${order}`).insertAdjacentHTML("beforeend",`
+                            <div class="old_products_list">
+                                <p>${prods[i].product_name}</p>
+                                <p class="old_right">${prods[i].size}</p>
+                                <p class="old_right">${prods[i].color}</p>
+                                <p class="old_right">${prods[i].pieces}</p>
+                            </div>
+                        `);
+                    }
                 }
             }
 
-            if(usersFav[user] == 0){
+            if(users[user].nr_favorites == 0){
                 document.querySelector(`.adm_no_fav_txt_${user}`).style.display="block";
                 document.querySelector(`.fav_list_${user}`).style.display="none";
             }
             else{
-                for(fav=0;fav<usersFav[user];fav++){
+                const favs = users[user].favorites;
+                for(fav=0;fav<favs.length;fav++){
                     var item = 0;
                     document.querySelector(`.fld_${user}`).insertAdjacentHTML("beforeend",`
                     <div class="fld">
-                        <div> <p>Jacket one</p> </div>
-                        <div> <p>Green</p> </div> 
-                        <div> <p>S </p> </div> 
-                        <div> <p>30.99</p> </div>
+                        <div> <p>${favs[fav].product_name}</p> </div>
+                        <div> <p>${favs[fav].selected_color}</p> </div> 
+                        <div> <p>${favs[fav].selected_size} </p> </div> 
+                        <div> <p>${favs[fav].price}</p> </div>
                     </div>`);
                 }
             }
@@ -189,6 +227,21 @@ function addShowDataEvent(user){
 function addDeleteUserEvent(user){
     document.querySelector(`.dau_${user}`).addEventListener('click',()=>{
         //delete user from db
+        const email = document.querySelector(`#admin_users_email_${user}`).innerHTML;
+        var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = ()=>{
+            if(xhttp.readyState == 4){
+                if(xhttp.status == 200){// SUCCES
+                    console.log(xhttp.responseText);
+                } 
+                else{
+                    console.log("somenthing went wrong");
+                }            
+            }
+        } 
+        xhttp.open("DELETE","deleteUser",true);
+        xhttp.resposnseType='application/json';
+        xhttp.send(email);
         document.querySelector(`.user_main_${user}`).style.display="none";
         totalUsers--;
         if(totalUsers == 0)
