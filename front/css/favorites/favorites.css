@@ -1,0 +1,155 @@
+html, body{
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    overflow-x: hidden;
+    background: #f5f5f5;
+    transition: 0.5s;
+    cursor: pointer;
+    
+}
+
+p{
+    margin:0;    
+}
+
+
+/* MAIN-CONTAINER__________________________________________________________ */
+
+.main_container{
+    position: relative;    
+    width: 100%;
+    margin: auto;
+    margin-top: 76px;
+    overflow: hidden;
+    z-index: 10;
+    font-family: "Open Sans",sans-serif,serif;
+}
+
+/*FAVORITES________________________________________________________________*/
+
+.favorites{
+    display: flex;
+    flex-direction: column;
+    /* margin: 2em 40em 0 40em; */
+    width: 45%;
+    margin: auto;
+}
+
+.favorites_header{
+    font-size: 1vw;
+    font-weight: bold;
+    text-align: center;
+}
+
+.favorites_body{
+    margin: 3em 0 ;
+}
+
+.favorites_body_head{
+    display: grid;
+    grid-template-columns: 30% 70%;
+    /* text-align: center; */
+    font-size: 0.8vw;
+    font-weight: bold;
+    margin-bottom: 1em;
+    color: #000000;
+}
+
+.favorites_body_list{
+    display: grid;
+    grid-template-columns: 34% 22% 22% 22%;
+}
+
+.favorites_body_list>p{
+    padding-left: 2em;
+}
+
+
+.favorites_product{
+    display: grid;
+    grid-template-columns: 30% 70%;
+    padding: 1em 0;
+    margin-bottom: 1em;
+    border-bottom: dashed 2px #000000;
+    /* height: 30%; */
+}
+
+.favorites_product_side{
+    text-align: center;
+}
+
+.favorites_product_side >img{
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+}
+
+.favorites_product_main{
+    display: flex;
+    flex-direction: column;
+    position: relative;
+}
+
+.favorites_product_details{
+    display: grid;
+    grid-template-columns: 34% 22% 22% 22%;
+    /* text-align: center; */
+}
+
+.favorites_product_details > p{
+    padding-left: 2em;
+}
+
+#product_name:hover{
+    font-weight: bold;
+}
+
+.favorites_product_footer{
+    width: 100%;
+    position: absolute;
+    bottom: 2em;
+    display: grid;
+    grid-template-columns: 34% 22% 22% 22%;
+    /* text-align: center; */
+}
+
+.fav_cart_btn{
+    color: #ffffff;
+    background-color: #000000;
+    font-weight: bold;
+    font-size: 0.8vw;
+    margin-left: 2em;
+    padding: 1em 0;
+    text-align: center;
+}
+
+.fav_cart_btn:hover{
+    background-color: #397bdd;
+}
+
+.fav_delete_btn{
+    font-weight: bold;
+    font-size: 0.8vw;    
+    padding: 1em 0 0 0.5em;
+    text-align: center;
+    background-image: url(../../images/navbar/smallclose.png);
+    background-repeat: no-repeat;
+    background-position: 6.5em 1.2em;
+    background-size: 0.8em;
+}
+
+.fav_delete_btn:hover{
+    font-size: 0.85vw;
+    background-size: 0.85em;
+    background-position: 6.3em 1.2em;
+}
+
+.txt_center{
+    text-align: center;
+}
+
+#noFavProdMsg{
+    text-align: center;
+    padding: 3em;
+}

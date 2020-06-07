@@ -1,0 +1,95 @@
+/*ORDERS CONTAINER___________________________________________________*/
+
+.main_orders{    
+    display:none;
+}
+
+.main_orders > p{
+    font-size: 1.1em;
+    padding-bottom: 0.5em;
+}
+
+/* --> Order main_____________________________________________________*/
+
+.order_main{
+    margin: 1em 0;
+    border: solid 0.02em #b3b3b3;
+}
+
+.order_main_header{
+    background-image: url(../../images/user/box-dark.svg);
+    background-position: 1.5em 1em;
+    background-repeat: no-repeat;
+    background-size: 1.3em;
+    font-weight: bold;
+    font-size: 0.8vw;
+    border-bottom: solid 0.02em #b3b3b3;
+    padding: 1em 0 1em 3.5em;
+    position: relative;
+    background-color: #96c6ea;
+}
+
+.order_main_body{
+    padding: 0.5em 0 0.3em 1.5em;        
+}
+
+.order_main_details{
+    display: grid;
+    grid-template-columns: 25% 75%;
+    padding: 0.5em 3em 0.5em 0;
+}
+
+.order_main_prop{
+    color: #8c8c8c;
+    padding: 0 10em 1em 0;
+    font-size: 0.8vw;
+}
+
+.order_main_prop > p, .order_main_data >p{
+    padding: 0.5em 0;
+}
+
+.order_main_data{
+    padding: 0 0 1em 1.5em;
+    font-size: 0.8vw;
+}
+
+.order_main_summary_prop{
+    padding: 0.5em 0;
+    width: 100%;
+    display: grid;
+    grid-template-columns: 40% 20% 20% 20%; 
+}
+
+.order_main_summary_prop > p{
+    font-size: 0.8vw;
+    padding-bottom: 0.5em;
+    font-weight: bold;
+    margin-right: 1em;
+    border-bottom: solid 0.02em #000000;
+}
+
+.order_main_summary{
+    padding: 0.5em 0;
+    margin-right: 1em;
+    display: flex;
+    flex-direction: column;
+}
+
+.order_item{
+    width: 100%;
+    display: grid;
+    grid-template-columns: 41% 20% 20.5% 18.5%;
+    border-bottom: solid 0.02em #b3b3b3;
+}
+
+.order_item > p{
+    font-size: 0.8vw;
+    margin-right: 1em;
+    padding: 0 0 1em 0;
+    
+}
+
+#no_orders_msg{
+    padding: 1em 0;
+}

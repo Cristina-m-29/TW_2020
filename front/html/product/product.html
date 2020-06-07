@@ -1,15 +1,228 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <p>Hei buna! Aceasta este pagina pentru product!</p>
-    </head>
-    <body>
-        <div class="container">
-           
+<head>
+  <meta charset="utf-8">
+  <title>Atara | Product</title>
+  <!--Product css-->
+  <link rel="stylesheet" type="text/css" href="../../css/product/product.css"/>
+  <!--Navbar css-->
+  <link rel="stylesheet" type="text/css" href="../../css/navbar.css" />
+  <link rel="stylesheet" type="text/css" href="../../css/signin.css" />
+  <link rel="stylesheet" type="text/css" href="../../css/signup.css" />
+  <link rel="stylesheet" type="text/css" href="../../css/pass.css" />
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body>
+     <!--SIDEMENU_________________________________________________-->
+  <div class="sidemenu">
+    <div class="sidemenu_img">
+      <img src="../images/sidemenu/sidemenu1.jpg">
+      <img src="../images/sidemenu/sidemenu2.jpg">
+    </div>
+    <div class="sidemenu_container">
+      <div class= "options">
+        <a href="/front/html/women/categories.html" ><p class="sidemenu_opt"> WOMEN</p> </a>
+        <a href="/front/html/men/categories.html" ><p class="sidemenu_opt opt_men"> MEN </p></a>
+        <a href="/front/html/boy/categories.html" ><p class="sidemenu_opt opt_boy"> BOY </p></a>
+        <a href="/front/html/girl/categories.html" ><p class="sidemenu_opt opt_girl"> GIRL</p></a>
+      </div>
+    </div>
+  </div>
+  <!--NAVBAR___________________________________________________-->
+  <div class="navbar">
+    <div class="sidemenu_btn">
+      <div id="open"><img src = "../images/navbar/menu.png"></div>
+      <div id="close"><img src = "../images/navbar/close.png"></div>
+    </div>
+    <div class="logo">
+      <a href="../index.html"><p class="logo_txt"> ATARA </p></a>
+    </div>
+    <div class="user_option">
+      <div class="admin">
+        <a href="user/admin.html">
+        <img src = "../images/navbar/user.png"></a>
+      </div>
+      <div class="logged_user">
+        <a href="user/user.html">
+        <img src = "../images/navbar/user.png"></a>
+      </div>
+      <div class="user">
+        <img src = "../images/navbar/user.png">
+      </div>
+      <div class="wishlist">
+        <a href="../favorites/favorites.html">
+        <img src = "../images/navbar/favorite.png"></a>
+      </div>
+      <div class="cart">
+        <a href="../cart/cart.html">
+        <img src = "../images/navbar/cart.png"></a>
+      </div>
+    </div>
+  </div> 
+
+    <!--SIGN IN-->
+    <div class="sign-in">
+        <div class="main-sign-in">
+        <div id="close-sign-in"><img src="../../images/navbar/smallclose.png"></div>
+        <p id="msg-1-si">Hello!</h1>
+            <p id="msg-2-si">Sign into your account here.</p>
+            <form id="sign-in-form" onsubmit="submitSignIn(event.preventDefault())">
+            <div class="email-input">
+                <input id="email-si" type="email" name="email" placeholder="Email / Username">
+            </div>
+            <div class="sign-in-pass-input">
+                <div class="sign-in-view-pass">
+                <p id="p_si">Show</p>
+                </div>
+                <input id="pass-si" type="password" name="password" placeholder="Password">
+            </div>
+            <input id="sign-in-btn" type="submit" value="Sign in">
+            </form>
         </div>
-        <footer>
-            <p> Contact us</p>
-        </footer>
+        <div class="other-sign-in">
+        <div class="other-sign-options">
+            <div class="in-opt-1">
+            <p>Forgot password? </p>
+            <p class="sign-in-a res-si">Reset</p>
+            </div>
+            <div class="in-opt-2">
+            <p>Don't have an account? </p>
+            <p class="sign-in-a sign-up-si">Sign up</p>
+            </div>
+        </div>
+        </div>
+    </div>
+
+    <!--SIGN UP-->
+    <div class="sign-up">
+        <div class="main-sign-up">
+        <div id="close-sign-up"><img src="../../images/navbar/smallclose.png"></div>
+        <p id="msg-1-su">Join Atara!</h1>
+            <p id="msg-2-su">Sign up to get more power.</p>
+            <form id="sign-up-form">
+            <div class="name">
+                <input id="fname" type="text" name="fname" placeholder="First name">
+                <input id="lname" type="text" name="lname" placeholder="Last name">
+            </div>
+            <div class="email-input">
+                <input id="email-su" type="email" name="email" placeholder="Email / Username">
+            </div>
+            <div class="sign-up-pass-input">
+                <div class="sign-up-view-pass">
+                <p id="p_su">Show</p>
+                </div>
+                <input id="pass-su" type="password" name="password" placeholder="Password">
+            </div>
+            <input type="submit" value="Sign up">
+            </form>
+        </div>
+        <div class="other-sign-up">
+        <div class="other-sign-up-options">
+            <p>Already registered? </p>
+            <p class="sign-up-a sign-in-su">Sign in</p>
+        </div>
+        </div>
+    </div>
+
+    <!--RESET PASSWORD-->
+    <div class="reset-pass">
+        <div class="header-reset-pass">
+        <div id="close-reset-pass"><img src="../images/navbar/smallclose.png"></div>
+        <p>Reset password</p>
+        </div>
+        <div class="main-reset-pass"> 
+        <form id="reset-pass-form"> 
+            <div class="email-input">
+            <p class="rp">Email</p>
+            <input id="email-r" type="email" name="email" placeholder="Email / Username">
+            </div>
+            <div class="reset-pass-input">
+            <p class="rp">Choose a new password</p>
+            <div class="reset-pass-pass-field">
+                <div class="reset-view-pass"><p id="p_r">Show</p></div>
+                <input id="pass-r" type="password" name="password" placeholder="Password">
+            </div>          
+            </div>
+            <input type="submit" value="Reset password">
+        </form>
+        </div>
+        <div class="other-reset-pass">
+        <div class="other-reset-options">
+            <p>Back to </p>
+            <p class="reset-a sign-in-r"> Sign in</p>
+        </div>
+        </div>
+    </div>
+ 
+    
+    <!--MAIN-CONTAINER-->
+
+    <div class="main_container">
         
-    </body>
+        <div class="product">
+            <div class="product_header">                
+                <p id="people_cat"></p>
+                <div class="between_sign">
+                    <p id="category_name"></p>
+                </div>
+                <div class="between_sign">
+                    <p id="header_product_name"></p>
+                </div>
+            </div>
+            <div class="product_body">
+                <div class="product_img">
+                    <img src="../../images/women/categorii/jac.jpg">
+                </div>
+                <div class="product_details">             
+                    <p id="product_name"></p>
+                    <div class="product_id">
+                        <p> Product id </p>
+                        <p id="id_product"></p>
+                    </div>
+                    <div class="product_price">
+                        <p id="price_product"></p>
+                        <p id="currency"> RON </p>
+                    </div>
+                    <div class="product_color">
+                        <p>Color:</p>
+                        <p id="color_product"></p>
+                    </div>
+                    <div class="product_color_list">
+                    </div>
+                    <p class="sizes">Sizes</p>       
+                    <p class="select_size">Select size</p>
+                    <p class="select_size_for_cart">Select size before adding product to cart</p>             
+                    <div class="product_sizes">
+                    </div>
+                    <div class="add_to_favorites">
+                        <p> Add to favorites</p>
+                    </div>
+                    <div class="add_to_cart">
+                        <p> Add to cart</p>
+                    </div>
+                    
+                    <!--ADDED TO FAVORITES-->
+                    <div class="added_to_favorites">
+                        <p>Added to favorites</p>
+                    </div>
+                    <!--ADDED TO CART-->
+                    <div class="added_to_cart">
+                        <p>Added to cart</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    
+
+    <!--Product js-->
+    <script type="text/javascript" src="../../js/product/product.js"></script>
+    <!--Navbar js-->
+    <script type="text/javascript" src="../../js/navbar.js"></script>
+    <script type="text/javascript" src="../../js/user-btn.js"></script>
+    <script type="text/javascript" src="../../js/sign-in.js"></script>
+    <script type="text/javascript" src="../../js/sign-up.js"></script>
+    <script type="text/javascript" src="../../js/reset-pass.js"></script>
+</body>
 </html>

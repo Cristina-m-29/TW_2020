@@ -1,3 +1,6 @@
+a{
+    text-decoration: none;
+}
 
 /* SIDEMENU_______________________________________________________________ */
 
@@ -6,7 +9,7 @@
     height: 0;
     width: 50%;
     right: 0;
-    position: absolute;
+    position: fixed;
     background:red;
     display: grid;
     grid-template-rows: 50% 50%;
@@ -22,7 +25,7 @@
 .sidemenu_container{
     width: 100%;
     height:0;   
-    position: absolute;
+    position: fixed;
     background: whitesmoke;
     z-index: 9;
     align-content: center;    
@@ -49,9 +52,10 @@
     height: 10px;
     align-items: center;
     color: black;
-    font-family: "Segoe UI";
+    font-family: "Open Sans",sans-serif,serif;
     padding: 1em 0 ;
     font-size: 1.2vw;
+    text-align: center;
 }
 
 
@@ -62,11 +66,13 @@
     grid-template-columns: 20% 60% 20%;
     align-items: center;
     width: 100%;
+    height: 35px;
     padding: 1.3em 0 ;
     background-color: #f5f5f5;
     transition: width 0.5s ease-in-out;
     z-index:13;
-    position: absolute;
+    position: fixed;
+    /* position: sticky; */
 }
 
 .sidemenu_btn{
@@ -75,6 +81,10 @@
 
 #close{
     display: none;
+}
+
+#open_mobile{
+    display:none;
 }
 
 .logo{
@@ -101,12 +111,63 @@
 }
 
 .user_option > div {
-    padding: 0 0.5em;
+    padding: 0 0.4em;
 }
 
-.user > a, .wishlist > a, .cart > a{
-    text-decoration: none;  
-    font-size: large;  
-    font-weight: bold;
-    color:black;
+.admin{
+    display: none;
 }
+
+.logged_user{
+    /* position: absolute; */
+    display:none;
+}
+
+
+/*MEDIA QUERIES______________________________________________________*/
+
+/*-->Sidemenu txt*/
+
+@media screen and (min-width: 1100px) and (max-width: 1400px){ 
+    .sidemenu_opt {
+        font-size: 1.7vw;
+    }
+} 
+
+@media screen and (min-width: 900px) and (max-width: 1100px){ 
+    .sidemenu_opt {
+        font-size: 1.9vw;
+    }
+} 
+
+@media screen and (min-width: 830px) and (max-width: 900px){ 
+    .sidemenu_opt {
+        font-size: 2vw;
+    }
+} 
+
+@media screen and (min-width: 700px) and (max-width: 830px){ 
+    .sidemenu_opt {
+        font-size: 2.3vw;
+    }
+} 
+
+@media screen and (min-width:600px) and (max-width: 700px){     
+    .sidemenu_opt {
+        font-size: 3vw;
+    }
+} 
+
+@media screen and (min-width:500px) and (max-width: 600px){     
+    .sidemenu_opt {
+        font-size: 3.8vw;
+    }
+} 
+
+@media screen and (min-width:400px) and (max-width: 500px){     
+    .sidemenu_opt {
+        font-size: 4.3vw;
+    }
+} 
+
+/*___________________________________________________________________*/

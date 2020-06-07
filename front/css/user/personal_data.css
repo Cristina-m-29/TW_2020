@@ -1,0 +1,240 @@
+
+/* PERSONAL-DATA CONTAINER_______________________________________________*/
+
+.main_data{
+    width: 95%;
+    margin: auto;
+}
+
+.main_data > p{
+    font-size: 1.1em;
+    padding-bottom: 0.5em;
+}
+
+.main_data_profile{
+    border: solid 0.02em #b3b3b3;
+    /* border-radius: 5px; */
+    margin: 1em 0;
+}
+
+/* --> My profile _______________________________________________________*/
+.main_data_profile_header{
+    background-image: url(../../images/user/avatar-dark.svg);
+    background-position: 1.5em 1em;
+    background-repeat: no-repeat;
+    background-size: 1.3em;
+    font-weight: bold;
+    font-size: 0.8vw;
+    border-bottom: solid 0.02em #b3b3b3;
+    padding: 1em 0 1em 3.5em;
+    position: relative;
+    background-color: #96c6ea;
+
+}
+
+.edit_user_data{
+    background-image: url(../../images/user/pen.svg);
+    background-position: 0.5em 0.6em;
+    background-repeat: no-repeat;
+    background-size: 1em;
+    font-weight: normal;
+    position: absolute;
+    top: 50%;
+    left: 96.5%;
+    transform: translate(-50%,-50%);
+    padding: 0.5em;
+    padding-left:2em;
+    border: solid 0.05em #000000;
+    border-radius: 5%;
+}
+
+.main_data_profile_body{
+    display: grid;
+    grid-template-columns: 25% 75%; 
+    padding: 1em 3 0.8em 1.5em;
+}
+
+.user_prop{
+    color: #8c8c8c;
+    padding: 1em 10em 1em 1.5em;
+    font-size: 0.8vw;
+}
+
+.user_prop > p{
+    padding: 0.5em 0;
+}
+
+.user_data{
+    color: #000000;
+    padding: 1em 0 ;
+    font-size: 0.8vw;
+}
+
+.user_data > p{
+    padding: 0.5em 0;
+}
+
+/* --> Email _____________________________________________________________*/
+
+.main_data_email{
+    border: solid 0.02em #b3b3b3;
+    margin: 1em 0;
+}
+
+.main_data_email_header{
+    background-image: url(../../images/user/email.svg);
+    background-position: 1.5em 1em;
+    background-repeat: no-repeat;
+    background-size: 1.3em;
+    font-weight: bold;
+    font-size: 0.8vw;
+    border-bottom: solid 0.02em #b3b3b3;
+    padding: 1em 0 1em 3.5em;
+    position: relative;
+    background-color: #96c6ea;
+}
+
+.main_data_email_body{    
+    padding: 0.5em 0 0.3em 1.5em;    
+}
+
+.email_dots{
+    align-self: center;
+}
+
+.email_view{
+    font-size: 0.8vw;
+    display: none;
+    padding: 0.3em 0;
+}
+
+.main_data_email_body > img{
+    padding: 0;
+    margin:0;
+}
+
+.edit_view_user_email{
+    position: absolute; 
+    top: 50%;
+    left: 93%;
+    transform: translate(-50%,-50%);
+    display: flex;
+}
+
+.hide_user_data_email{
+    background-image: url(../../images/user/view.svg);
+    background-position: 0.5em 0.6em;
+    background-repeat: no-repeat;
+    background-size: 1em;    
+    font-weight: normal;    
+    padding: 0.5em;
+    padding-left:2em;
+    border: solid 0.05em #000000;
+    border-radius: 5%;
+    display: none;    
+}
+
+.view_user_data_email{
+    background-image: url(../../images/user/view.svg);
+    background-position: 0.5em 0.6em;
+    background-repeat: no-repeat;
+    background-size: 1em;    
+    font-weight: normal;    
+    padding: 0.5em;
+    padding-left:2em;
+    border: solid 0.05em #000000;
+    border-radius: 5%;
+}
+
+.edit_user_data_email{
+    background-image: url(../../images/user/pen.svg);
+    background-position: 0.5em 0.6em;
+    background-repeat: no-repeat;
+    background-size: 1em;    
+    font-weight: normal;    
+    padding: 0.5em;
+    padding-left:2em;
+    border: solid 0.05em #000000;
+    border-radius: 5%;
+    margin-left: 0.5em;
+}
+
+/* --> Password __________________________________________________________*/
+
+.main_data_pass{
+    border: solid 0.02em #b3b3b3;
+    margin: 1em 0;
+}
+
+.main_data_pass_header{
+    background-image: url(../../images/user/lock.svg);
+    background-position: 1.5em 1em;
+    background-repeat: no-repeat;
+    background-size: 1.3em;
+    font-weight: bold;
+    font-size: 0.8vw;
+    border-bottom: solid 0.02em #b3b3b3;
+    padding: 1em 0 1em 3.5em;
+    position: relative; 
+    background-color: #96c6ea;
+}
+
+.main_data_pass_body{
+    padding: 0.5em 0 0.3em 1.5em;
+}
+
+.pass_dots{
+    align-self: center;
+}
+
+.pass_view{
+    font-size: 0.8vw;
+    display: none;
+    padding: 0.3em 0;
+}
+
+.edit_view_user_pass{
+    position: absolute;
+    top: 50%;
+    left: 93%;
+    transform: translate(-50%,-50%);
+    display: flex;
+}
+
+.hide_user_data_pass{
+    background-image: url(../../images/user/view.svg);
+    background-position: 0.5em 0.6em;
+    background-repeat: no-repeat;
+    background-size: 1em;    
+    font-weight: normal;    
+    padding: 0.5em;
+    padding-left:2em;
+    border: solid 0.05em #000000;
+    border-radius: 5%;
+    display:none;
+}
+
+.view_user_data_pass{
+    background-image: url(../../images/user/view.svg);
+    background-position: 0.5em 0.6em;
+    background-repeat: no-repeat;
+    background-size: 1em;    
+    font-weight: normal;    
+    padding: 0.5em;
+    padding-left:2em;
+    border: solid 0.05em #000000;
+    border-radius: 5%;
+}
+
+.edit_user_data_pass{
+    background-image: url(../../images/user/pen.svg);
+    background-position: 0.5em 0.6em;
+    background-repeat: no-repeat;
+    background-size: 1em;    
+    font-weight: normal;    
+    padding: 0.5em;
+    padding-left:2em;
+    border: solid 0.05em #000000;
+    border-radius: 5%;
+    margin-left: 0.5em;
+}

@@ -12,8 +12,10 @@ p{
     border: solid 1px;
 }
 
-.main-container{
+
+.main_container{
         background-color: white;
+  font-family: Inter,sans-serif;
     }
 
 .women-jeans{
@@ -42,6 +44,7 @@ p{
   }
   
   .text{
+    z-index: 10;
     display: none;
     height: 10%;
     width: 90%;
@@ -67,18 +70,21 @@ p{
     left:5%;
     display: none;
     position: absolute;
+    z-index: 10;
   } 
   #previous-info-colors{
     top:60%;
     left:5%;
     display: none;
     position: absolute;
+    z-index: 10;
   } 
   #previous-info-size{
     top:60%;
     left:5%;
     display: none;
     position: absolute;
+    z-index: 10;
   } 
   
   #previous-info-cart{
@@ -86,6 +92,7 @@ p{
     left:5%;
     display: none;
     position: absolute;
+    z-index: 10;
   } 
   
   #next-info-initial{
@@ -93,18 +100,21 @@ p{
     left:90%;
     display: none;
     position: absolute;
+    z-index: 10;
   }
   #next-info-colors{
     top:60%;
     left:90%;
     display: none;
     position: absolute;
+    z-index: 10;
   }
   #next-info-size{
     top:60%;
     left:90%;
     display: none;
     position: absolute;
+    z-index: 10;
   }
   
   
@@ -147,7 +157,8 @@ p{
 
    } */
     .wj-product-color-list{
-      display: flex; 
+      /* display: flex;  */
+      display: none;
     }
     .wj-product-color-list > div{
       border: solid 0.08em #000000;
@@ -156,7 +167,6 @@ p{
       width: 1em;
       margin-left: 2em;
       margin-top: 1em;
-      display:none;
     }
   
     .wj-size{
@@ -174,7 +184,6 @@ p{
     .wj-size-list{
       display:none;
       align-items: center;
-      display:flex;
       color:#775a5a;
       margin-left: 2em;
       margin-top: 1em;
@@ -188,7 +197,7 @@ p{
     }
    
     .wj-size-list > p {
-      display:none;
+      /* display:none; */
       padding-right: 1.2em;
       margin-left: 0.3em;
       margin-right: 0.3em;
@@ -224,28 +233,23 @@ p{
       position: absolute;
     }
 
-  .price1{
-
+  .price{
     display: block;
-    align-items: center;
-    text-align: center;
+    text-align: left;
     color: black;
     letter-spacing: 0.3em;
     font-weight: bold;
     font-size: 1.4vw;
-    margin-top: 1em;
-       
-        
+    margin-top: 1em;  
     }
 
-  .name1{
+  .name{
         display: block;
-        align-items: center;
-        text-align: center;
+        text-align: left;
         color: black;
         font-family: "Segoe UI", Roboto;
         letter-spacing: 0.2em;
-        font-size: 1.2vw;
+        font-size: 1.5 vw;
         margin-top: 1em;
     }  
       
@@ -271,13 +275,15 @@ p{
         display: block;
       }
 
-img{
+.wj-img{
+    z-index: 9;
     height: 100%;
     width: 100%;
     object-fit: cover;
     padding:0;
     position: relative;
 }
+
 /*.footer{
     border: solid 1px;
 }*/

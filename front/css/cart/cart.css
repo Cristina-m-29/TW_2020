@@ -44,6 +44,7 @@ p{
 
 .cart_body{
     margin: 3em 0 ;
+    display: block;
 }
 
 .cart_body_head{
@@ -138,4 +139,215 @@ p{
 #noCartProdMsg{
     text-align: center;
     padding: 3em;
+}
+
+.orderBtn{
+    padding: 0.7em 0;
+    background-color: #588ddd;
+    font-size: 0.9vw;
+    color:white;
+    text-align: center;
+}
+
+.orderBtn:hover{
+    font-weight: bold;
+    background-color:#397bdd;
+}
+
+
+/*FINISH ORDER________________________________________________________________*/
+.cart_order{
+   display: none;
+}
+
+#cart_order_txt{
+    font-size: 1vw;
+    font-weight: bold;
+    text-align: center;  
+}
+
+.finish_order{
+    width: 70%;
+    margin: 1em auto 2em auto;
+    border-top: solid 0.02em #b3b3b3;
+}
+
+.order_all_products{
+    display: grid;
+    grid-template-columns: 33.33% 33.33% 33.33%;
+    border-bottom:  solid 0.02em #b3b3b3;
+    padding: 1em 0;
+}
+
+.order_product{
+    display: grid;
+    grid-template-columns: 40% 60%;
+    margin: 1em;
+
+}
+
+.order_product_img > img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    padding: 0;
+}
+
+.order_product_details{
+    display: grid;
+    grid-template-columns: 40% 60%;
+    margin-left: 1em;
+}
+
+.order_product_details_side > p{
+    color: #cfcbcb;
+    font-weight: bold;
+    font-size: 0.8vw;
+    padding-right: 0.5em;
+    padding-bottom: 1em;
+}
+
+.order_product_details_main > p{
+    font-size: 0.8vw;
+    padding-bottom: 1em;
+}
+
+.order_footer{
+    display: grid;
+    grid-template-columns: 50% 50%;
+    border-bottom: solid 0.02em #b3b3b3; 
+    padding: 1em 0;
+}
+
+.order_address{
+    padding: 2em 1em 1em 1em;    
+    /* border-right: solid 0.02em #b3b3b3; //il vei da in js */
+}
+
+.order_address > p{
+    font-size: 0.9vw;
+    font-weight: bold;
+}
+#your_order_adress{
+    display: none;
+}
+#order_no_addresses{
+    margin-top: 0.5em;
+    display: block;
+}
+.user_all_addresses{
+    display: none;
+}
+
+.user_all_addresses{
+    padding: 0.5em 0;
+}
+
+.user_address{
+    display: grid;
+    grid-template-columns: 5% 95%;
+    padding: 0.5em 0;
+}
+
+.address_check{
+    position: relative;
+}
+
+.address_check > input{
+    border-radius: 50%;
+    position: absolute;
+    top:30%;
+    left:30%;
+    transform: translate(-50%,-50%);
+}
+
+.address_check_details > p{
+    padding: 0.25em 0;
+}
+
+.add_address_btn{
+    width: 25%;
+    background-color: #588ddd;
+    font-size: 0.9vw;
+    color: #ffffff;
+    text-align: center;
+    padding:0.25em;
+    margin: 1em 0;
+}
+
+.add_address_form_input > p{
+    font-size: 0.8vw;
+    padding-bottom: 0.5em;
+}
+
+.name-grid, .street-nr-grid, .country-city-grid, .postal-phone-grid {
+    display: grid;
+    grid-template-columns: 50% 50%;
+    column-gap: 0.2em;
+}
+
+.name-input, .street-nr-input, .country-city-input, .postal-phone-input{
+    display: none;
+}
+
+#add_address_first_name, #add_address_last_name, #add_address_street, #add_address_number, 
+#add_address_country, #add_address_city, #add_address_code, #add_address_phone{
+    width: 95%;
+    background-image: none;
+    padding: 1em;
+}
+
+.add_address_btn_final{
+    display: none;
+}
+.order_other{
+    padding: 0 1em;
+    display: none;
+}
+
+.order_payment_methods{
+    padding: 2em 1em;
+    border-bottom: solid 0.02em #b3b3b3;
+    display: flex;
+}
+
+.order_payment_methods > p{
+    font-weight: bold;
+    font-size: 0.9vw;
+    padding-right: 2em;
+}
+
+
+.order_payment_methods > div{
+    padding-right: 1em;
+}
+
+.order_prices{
+    padding: 2em 1em;
+    font-size: 0.9vw;
+    display: grid;
+    grid-template-columns: 35% 55%;
+}
+
+.order_prices_side{
+    font-weight: bold;
+}
+
+.order_prices_main{
+    font-weight: normal;
+    padding-left: 0.5em;
+}
+
+.order_prices_side > div, .order_prices_main > div{
+    padding-bottom: 1em;
+} 
+
+.submit_order{
+    margin-left: 1em;
+    width: 25%;
+    text-align: center;
+    background-color: #397bdd;
+    color: #ffffff;
+    padding: 0.25em;
+    font-size: 0.9vw;
 }
