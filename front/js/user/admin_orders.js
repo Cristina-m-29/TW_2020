@@ -6,7 +6,6 @@ ordSide.addEventListener('click',setUpOrders());
 function setUpOrders(){
   ordSide.addEventListener('click',()=>{
     document.querySelector('.admin_orders_body').innerHTML ="";
-    console.log("Users orders");
     var xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = ()=>{
         if(xhttp.readyState == 4){
@@ -54,7 +53,6 @@ function showAdminOrders(orders){
           </div>`);
           
           var products_list = orders[adm_order].product_list;
-          console.log(products_list);
           for(ord_prod=0;ord_prod<products_list.length;ord_prod++){
             document.querySelector(`.adm_ord_prod_${adm_order}`).insertAdjacentHTML("beforeend",`
             <p>${products_list[ord_prod].product_name}</p>

@@ -26,19 +26,16 @@ function convertDataURIToBinary(dataURI) {
 function readAddPropImg(evt){
     var file = evt.target.files[0];
     if(file){
-        console.log("We got a file");
         if( /(jpe?g|png|gf)$/i.test(file.type)){
             var r = new FileReader();
             r.readAsDataURL(file);
             r.onload = function(e){
+                
                 var base64 = e.target.result;      
                 // var binaryImg = convertDataURIToBinary(base64);           
                 var binaryImg = convertDataURIToBinary(base64);
                 var blob = new Blob([binaryImg], {type: file.type});
                 var blobURL = window.URL.createObjectURL(blob,{oneTimeOnly: false}); 
-                // console.log(`Blob: ${blobURL}`);
-                // console.log(base64);
-                // console.log(JSON.stringify(binaryImg, null, 2));
                 add_p_img.src = base64;  
                 photoChanged = 1;
             }
@@ -61,7 +58,6 @@ add_p_btn.addEventListener('click',()=>{
     var add_p_string = document.querySelector('#adm_add_prod_string').value;
     var add_p_size = document.querySelector('#adm_add_prod_size').value;
 
-    console.log(photoChanged);
     if(photoChanged == 0){
         document.querySelector('#adm_add_prod_change_photo').style.display="block";
     }
@@ -75,7 +71,6 @@ add_p_btn.addEventListener('click',()=>{
             var split_string = add_p_string.split(",");
             if(split_hex.length != split_string.length){
                 add_p_hex_string.style.display="block";
-                console.log(`${split_hex[0]} | ${split_hex[0].length}`);
             }
             else{
                 var ok_hex = 1;
@@ -86,8 +81,6 @@ add_p_btn.addEventListener('click',()=>{
                 }
                 for(i=0;i<split_string.length;i++){
                     for(j=0;j<split_string[i].length;j++){
-                        console.log(j);
-                        console.log(`${split_string[i].slice(j,j+1)} | `);
                     }
                 }
                 if( ok_hex == 0 || ok_string == 0){
@@ -100,15 +93,12 @@ add_p_btn.addEventListener('click',()=>{
                     var xhttp = new XMLHttpRequest();
                     xhttp.onreadystatechange = ()=>{
                         if(xhttp.readyState == 4){
-                            if(xhttp.status == 200){// SUCCES
-                                console.log(xhttp.responseText);
-                            } 
-                            else{
+                            if(xhttp.status != 200){
                                 console.log("somenthing went wrong");
                             }
                         }
                     } 
-                    xhttp.open("POST","addProductToCart",true);
+                    xhttp.open("POST","addProduct",true);
                     xhttp.resposnseType='application/json';
                     var dataToPost = {
                         "img":add_p_img.src, 

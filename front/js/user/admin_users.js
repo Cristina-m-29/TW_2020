@@ -285,10 +285,7 @@ function addDeleteUserEvent(user){
         var xhttp = new XMLHttpRequest();
         xhttp.onreadystatechange = ()=>{
             if(xhttp.readyState == 4){
-                if(xhttp.status == 200){// SUCCES
-                    console.log(xhttp.responseText);
-                } 
-                else{
+                if(xhttp.status != 200){
                     console.log("somenthing went wrong");
                 }            
             }

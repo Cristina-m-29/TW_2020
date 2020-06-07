@@ -94,10 +94,10 @@
     <div id="close-sign-up"><img src="../images/navbar/smallclose.png"></div>
     <p id="msg-1-su">Join Atara!</h1>
         <p id="msg-2-su">Sign up to get more power.</p>
-        <form id="sign-up-form">
+        <form id="sign-up-form" onsubmit="submitSignUp(event.preventDefault())">
         <div class="name">
-            <input id="fname" type="text" name="fname" placeholder="First name">
-            <input id="lname" type="text" name="lname" placeholder="Last name">
+            <input id="fname" class="fname_su" type="text" name="fname" placeholder="First name">
+            <input id="lname" class="lname_su" type="text" name="lname" placeholder="Last name">
         </div>
         <div class="email-input">
             <input id="email-su" type="email" name="email" placeholder="Email / Username">
@@ -126,7 +126,7 @@
       <p>Reset password</p>
     </div>
     <div class="main-reset-pass"> 
-      <form id="reset-pass-form"> 
+      <form id="reset-pass-form" onsubmit="submitResetPass(event.preventDefault())"> 
         <div class="email-input">
           <p class="rp">Email</p>
           <input id="email-r" type="email" name="email" placeholder="Email / Username">

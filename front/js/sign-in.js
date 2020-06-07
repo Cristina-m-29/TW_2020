@@ -12,6 +12,7 @@ const user_si = document.querySelector('.user');
 const admin_si = document.querySelector('.admin');
 const logged_user_si = document.querySelector('.logged_user');
 
+//change ids and classes
 const email_si = document.querySelector('#email-si');
 const pass_si = document.querySelector('#pass-si');
 var user_state = "not logged";
@@ -19,7 +20,6 @@ var user_state = "not logged";
 /* SIGN IN ______________________________________________________*/
 
 close_si.addEventListener('click', () => {
-    console.log('Close sign in');
     si.style.opacity="0";
     si.style.zIndex="9";
     si.style.top="47%";
@@ -27,7 +27,6 @@ close_si.addEventListener('click', () => {
     cont_si.style.filter="blur(0px)";    
     email_si.value= "";
     pass_si.value="";
-    popUp = 0;
     document.querySelector('.wishlist').style.display="block";
 });
 
@@ -46,34 +45,67 @@ show_pass_si.addEventListener('click', () => {
 
 
 function submitSignIn(event){
-    
-    //close pop up
-    si.style.opacity="0";
-    si.style.zIndex="9";
-    si.style.top="47%";
-    nav_si.style.filter="blur(0px)";
-    cont_si.style.filter="blur(0px)";
+    const em = email_si.value;
+    const ps = pass_si.value;
 
-    //change user icon 
-    if(user_state == "not logged"){
-        user_state = "logged";
-        user_si.style.display="none";
-        console.log(email_si.value); 
-        //verificare in baza de date - evident
-        if(email_si.value == "admin_cristina@mail.ro"){
-            admin_si.style.display="block";
+    if(em == "" || ps == "") alert("All fields must be completed!");
+    else{
+        var checkUser = {
+            email: em,
+            password: ps
         }
-        else{
-            logged_user_si.style.display="block";
-        }    
+        var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = ()=>{
+            if(xhttp.readyState == 4){
+                if(xhttp.status == 200){
+                    const res = xhttp.responseText;
+                    if(res === "no user found"){
+                        alert("No user found!");
+                    }
+                    else{
+                        if(res === "wrong password"){
+                            alert("Wrong password!");
+                        } 
+                        else{
+                            if(res === "user found"){
+                                //close pop up
+                                si.style.opacity = "0";
+                                si.style.zIndex = "0";
+                                si.style.top = "47%";
+                                nav_si.style.filter="blur(0px)";
+                                cont_si.style.filter="blur(0px)";
+
+                                localStorage.setItem('email',`${em}`);
+                                localStorage.setItem('logged','true');
+
+                                //change user icon 
+                                if(localStorage.getItem('logged') === "true"){
+                                    user_si.style.display="none";
+                                    if(em === "admin_cristina@mail.ro" || em === "admin_madaline@mail.ro"){
+                                        admin_si.style.display = "block";
+                                    }
+                                    else{
+                                        logged_user_si.style.display="block"; 
+                                    }
+                                }
+
+                                document.querySelector('.wishlist').style.display="block";
+                            }
+                        }
+                    }
+                }
+                else{
+                    console.log("somenthing went wrong");
+                }
+            }
+        } 
+        xhttp.open("POST",`checkUser`,true);
+        xhttp.resposnseType='application/json';
+        xhttp.send(JSON.stringify(checkUser));
     }
-    
-    popUp = 0;
-    document.querySelector('.wishlist').style.display="block";
 };
 
 reset_si.addEventListener('click', () =>{
-    console.log("Sign in -> reset pass");
     si.style.opacity="0";
     si.style.zIndex="9";
     si.style.top="47%";
@@ -87,7 +119,6 @@ reset_si.addEventListener('click', () =>{
 });
 
 sign_si.addEventListener('click',() =>{
-    console.log("Sign in -> sign up");
     si.style.opacity="0";
     email_si.value= "";
     pass_si.value="";

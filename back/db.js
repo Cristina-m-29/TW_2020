@@ -79,10 +79,15 @@ var Order = mongoose.model("orders",orderSchema);
 
 function createUser(user){
     return new Promise((resolve)=>{
-        const newUser = new User(user);
-        newUser.save().then((doc)=>{
-            resolve(doc);
-        }).catch(e=>resolve(e));
+        findUser(user.email).then((res)=>{
+            if(res.email === user.email) resolve("exists");
+            else{
+                const newUser = new User(user);
+                newUser.save().then((doc)=>{
+                    resolve(doc);
+                }).catch(e=>resolve(e));
+            }
+        }).catch(()=>resolve("exists"));
     });
 }
 
@@ -107,6 +112,16 @@ function updateUser(email,updatedUser){
         User.updateOne({email:email},{$set:updatedUser}).then(()=>{
             resolve();
         }).catch(e=>resolve(e));
+    });
+}
+
+function resetPassword(email,password){
+    return new Promise((resolve)=>{
+        findUser(email).then((res)=>{
+            User.updateOne({_id:res._id},{password:password}).then(()=>{
+                resolve("password reseted");
+            }).catch(e=>resolve(e));
+        }).catch(e=>resolve("no user"));
     });
 }
 
@@ -277,17 +292,13 @@ function addProductToCart(user,product,color,size){
                 cartToAdd.price = result.price;
                 Cart.findOne({user_id:cartToAdd.user_id, product_id:cartToAdd.product_id}).then((found)=>{
                     if(found){
-                        resolve("exists");
                         cartToAdd.pieces = found.pieces + 1;
-                        Cart.updateOne({user_id:cartToAdd.user_id, product_id:cartToAdd.product_id},{pieces: cartToAdd.pieces}).then(()=>{
-                           console.log(cartToAdd);
-                        }).catch(e=>resolve(e));
+                        Cart.updateOne({user_id:cartToAdd.user_id, product_id:cartToAdd.product_id},{pieces: cartToAdd.pieces}).then(()=>{}).catch(e=>resolve(e));
                     }
                     else{
                         cartToAdd.pieces = 1;
                         const cart = new Cart(cartToAdd);
                         cart.save().then((doc)=>{
-                            console.log("added");
                             resolve(doc);
                         }).catch(e=>resolve(e));
                     }
@@ -338,10 +349,18 @@ function addAddress(user,address){
 function getAddresses(user){
     return new Promise((resolve)=>{
         findUser(user).then((res)=>{
-            console.log(res._id);
             Address.find({user_id:res._id}).then((doc)=>{
                 resolve(doc);
             }).catch(e=>resolve(e));
+        }).catch(e=>resolve(e));
+    });
+}
+
+
+function updateAddress(id, updatedAddress){
+    return new Promise((resolve)=>{
+        Address.updateOne({_id:id},{$set:updatedAddress}).then(()=>{
+            resolve();
         }).catch(e=>resolve(e));
     });
 }
@@ -384,9 +403,11 @@ function getAllOrders(){
 module.exports = {
     // USER
     createUser: function(user){
-        createUser(user).then((res)=>{
-            return res;
-        }).catch(e=>{return e;});
+        return new Promise((resolve)=>{
+            createUser(user).then((res)=>{
+                resolve(res);
+            }).catch(()=>{resolve("exists")});
+        });
     },
     findUser: function(email){
         return new Promise((resolve)=>{
@@ -406,6 +427,13 @@ module.exports = {
         updateUser(email,updatedUser).then((res)=>{
             return res;
         }).catch(e=>{});
+    },
+    resetPassword: function(email,password){
+        return new Promise((resolve)=>{
+            resetPassword(email,password).then((res)=>{
+                resolve(res);
+            }).catch(e=>{resolve("no user")});
+        });
     },
     deleteUser: function(email){
         deleteUser(email).then((res)=>{
@@ -494,9 +522,18 @@ module.exports = {
         }).catch(e=>{return e;}); 
     },
     getAddresses: function(email){
-        getAddresses(email).then((res)=>{
-            return res;
-        }).catch(e=>{return e;});
+        return new Promise((resolve)=>{
+            getAddresses(email).then((res)=>{
+                resolve(res);
+            }).catch(e=>{resolve(e)});
+        });
+    },
+    updateAddress: function(id, updatedAddress){
+        return new Promise((resolve)=>{
+            updateAddress(id, updatedAddress).then((res)=>{
+                resolve(res);
+            }).catch(e=>{resolve(e)});
+        });
     },
     // ORDER
     addOrder: function(email, addressName, order){

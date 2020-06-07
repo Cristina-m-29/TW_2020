@@ -105,6 +105,16 @@ p{
     font-weight: bold;
 }
 
+.login_req_txt{
+    text-align: center;
+    font-size: 0.8em;
+    margin-top: 3em;
+    margin-left: 1em;
+    color: #ff0000;
+    font-weight: bold;
+    display: none;
+}
+
 .favorites_product_footer{
     width: 100%;
     position: absolute;

@@ -18,7 +18,7 @@ function setUpAdminData(){
         }            
       }
     } 
-    xhttp.open("GET",`getUserData/admin_cristina@mail.ro`,true);
+    xhttp.open("GET",`getUserData/${localStorage.getItem('email')}`,true);
     xhttp.resposnseType='application/json';
     xhttp.send();
 }
@@ -49,10 +49,7 @@ document.querySelector(".profile_save").addEventListener("click",()=>{
     var xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = ()=>{
       if(xhttp.readyState == 4){
-        if(xhttp.status == 200){// SUCCES
-          console.log(xhttp.responseText);
-        } 
-        else{
+        if(xhttp.status != 200){
           console.log("somenthing went wrong");
         }            
       }
@@ -78,10 +75,7 @@ document.querySelector(".email_save").addEventListener("click",()=>{
         var xhttp = new XMLHttpRequest();
         xhttp.onreadystatechange = ()=>{
           if(xhttp.readyState == 4){
-            if(xhttp.status == 200){// SUCCES
-              console.log(xhttp.responseText);
-            } 
-            else{
+            if(xhttp.status != 200){
               console.log("somenthing went wrong");
             }            
           }
@@ -114,10 +108,7 @@ document.querySelector(".pass_save").addEventListener("click",()=>{
       var xhttp = new XMLHttpRequest();
       xhttp.onreadystatechange = ()=>{
         if(xhttp.readyState == 4){
-          if(xhttp.status == 200){// SUCCES
-            console.log(xhttp.responseText);
-          } 
-          else{
+          if(xhttp.status != 200){
             console.log("somenthing went wrong");
           }            
         }

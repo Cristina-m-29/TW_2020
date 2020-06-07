@@ -19,7 +19,7 @@ function setUpUserData(){
         }            
       }
     } 
-    xhttp.open("GET",`getUserData/admin_cristina@mail.ro`,true);
+    xhttp.open("GET",`getUserData/${localStorage.getItem('email')}`,true);
     xhttp.resposnseType='application/json';
     xhttp.send();
 }

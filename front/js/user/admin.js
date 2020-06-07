@@ -9,6 +9,12 @@ var admin_products_main = document.querySelector('.main_products');
 var admin_add_products_side = document.querySelector('.add_products');
 var admin_add_products_main = document.querySelector('.main_add_products');
 
+document.querySelector('#log_out').addEventListener('click',()=>{
+    window.location.href = "/";
+    localStorage.setItem('logged','false');
+    localStorage.setItem('email','');
+});
+
 admin_data_side.addEventListener('click',()=>{ 
     //reset others    
     admin_users_side.style.fontWeight="normal";

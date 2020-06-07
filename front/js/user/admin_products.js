@@ -18,7 +18,6 @@ function setUpProducts(){
         </div>
         <div class="admin_products">          
         </div> `;
-        console.log("get products");
         var xhttp = new XMLHttpRequest();
         xhttp.onreadystatechange = ()=>{
             if(xhttp.readyState == 4){
@@ -28,7 +27,6 @@ function setUpProducts(){
                         document.querySelector('#admin_nr_products').style.display="none";
                     }
                     else{
-                        console.log(JSON.parse(xhttp.responseText));
                         showAdminProducts(JSON.parse(xhttp.responseText));
                     }
                 } 
@@ -53,8 +51,6 @@ function showAdminProducts(products){
     else{
         for(prod=0;prod<products.length;prod++){
             var product = products[prod];
-            console.log(product);
-            // console.log(product.img);
             document.querySelector('.admin_products').insertAdjacentHTML("beforeend",
             `<div class="adm_prod adm_prod_${prod}">
                 <!--<div class="adm_prod_header adm_prod_header_${prod}">
@@ -172,10 +168,7 @@ function addAdmProdDeleteEvent(prod){
         var xhttp = new XMLHttpRequest();
         xhttp.onreadystatechange = ()=>{
             if(xhttp.readyState == 4){
-                if(xhttp.status == 200){// SUCCES
-                    console.log(xhttp.responseText);
-                } 
-                else{
+                if(xhttp.status != 200){ 
                     console.log("somenthing went wrong");
                 }            
             }
@@ -204,7 +197,6 @@ function RGBToHex(rgb) {
 
 function addAdmProdEditEvent(prod){
     document.querySelector(`.adm_prod_edit_${prod}`).addEventListener('click',()=>{
-        console.log('Edit');
         nrOfHexColors = hexColors[prod].length;
         nrOfSizes = sizesProduct[prod].length;
         document.querySelector(`.adm_prod_main_${prod}`).style.display="none";
@@ -224,7 +216,6 @@ function addAdmProdDoneEvent(prod){
 
         //change data in bd
         if((p_hex != "" && p_string == "") || (p_hex == "" && p_string != "")){
-            console.log("HEX+STRING REQUIRED");
             document.querySelector(`.hex_string_${prod}`).style.display="block";            
         }
         else{
@@ -241,7 +232,6 @@ function addAdmProdDoneEvent(prod){
 
             //adaugare culoare si in bd
             if(p_hex!="" && p_string !=""){
-                // console.log("Adaugam culoare");
                 var updateHex = p_hex.split(",");
                 var updateString = p_string.split(",");
                 if(updateHex.length != updateString.length){
@@ -276,20 +266,17 @@ function addAdmProdDoneEvent(prod){
             if(p_name != ""){
                 //Schimbare nume in bd
                 dataToUpdate.name = p_name;
-                console.log("Schimbam nume produs");
                 document.querySelector(`.adm_prod_name_${prod}`).innerHTML = p_name;
             }
             if(p_price != ""){
                 //Schimbare pret in
                 dataToUpdate.price = p_price;
-                console.log("Schimbam pret produs");
                 document.querySelector(`.adm_prod_price_${prod}`).innerHTML = p_price;
             }        
             if(p_size != ""){
                 //adaugare marime si in bd
                 var updateSize = p_size.split(",");
                 for(k=0;k<updateSize.length;k++){
-                    // console.log("Adaugam marime");
                     sizesProduct[prod].push(updateSize[k]);
                     var i = sizesProduct[prod].length;
                     document.querySelector(`.adm_prod_sizes_${prod}`).insertAdjacentHTML("beforeend",`<p class="ps_${prod}${i}">${updateSize[k]}</p>`);
@@ -303,10 +290,7 @@ function addAdmProdDoneEvent(prod){
                 var xhttp = new XMLHttpRequest();
                 xhttp.onreadystatechange = ()=>{
                     if(xhttp.readyState == 4){
-                        if(xhttp.status == 200){// SUCCES
-                            console.log(xhttp.responseText);
-                        } 
-                        else{
+                        if(xhttp.status != 200){
                             console.log("somenthing went wrong");
                         }            
                     }
@@ -386,7 +370,6 @@ function convertDataURIToBinary(dataURI) {
 function readImage(evt){
     var file = evt.target.files[0];
     if(file){
-        console.log("We got a file");
         if( /(jpe?g|png|gf)$/i.test(file.type)){
             var r = new FileReader();
             r.readAsDataURL(file);
@@ -396,7 +379,6 @@ function readImage(evt){
                 var binaryImg = convertDataURIToBinary(base64);
                 var blob = new Blob([binaryImg], {type: file.type});
                 blobURL = window.URL.createObjectURL(blob); 
-                console.log(`Blob: ${blobURL}`);
             }
         }
         else 
