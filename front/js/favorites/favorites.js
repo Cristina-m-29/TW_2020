@@ -67,7 +67,10 @@ function setUpFavorites(fav){
 
 function addFavCartEvent(favorite){
     document.querySelector(`.fav_cart_btn_${favorite}`).addEventListener('click',()=>{
-        if(localStorage.getItem('logged' === "true")){
+        if(localStorage.getItem('logged' === "false") || !('logged' in localStorage)){
+            document.querySelector(`.login_req_txt_${favorite}`).style.display = "block";
+        }
+        else{
             const toSend = {
                 email : localStorage.getItem('email'),
                 name: document.querySelector(`.product_name_${favorite}`).innerHTML,
@@ -85,9 +88,6 @@ function addFavCartEvent(favorite){
             xhttp.open("POST",`addProductToCart`,true);
             xhttp.resposnseType='application/json';
             xhttp.send(JSON.stringify(toSend));
-        }
-        else{
-            document.querySelector(`.login_req_txt_${favorite}`).style.display = "block";
         }        
     });
 }

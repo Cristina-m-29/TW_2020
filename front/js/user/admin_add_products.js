@@ -1,10 +1,10 @@
+
 var add_p_img_btn = document.querySelector('.adm_add_img_btn');
 var add_p_img = document.querySelector('#adm_add_prod_img');
 var add_p_btn = document.querySelector('#adm_add_prod_btn');
 var add_p_hex_string = document.querySelector('#adm_add_prod_hs_txt');
 var add_p_all_fields = document.querySelector('#adm_add_prod_all_fields');
 var add_p_done = document.querySelector('#adm_add_prod_done');
-
 var photoChanged = 0;
 
 add_p_img_btn.addEventListener('change',readAddPropImg);
@@ -14,7 +14,7 @@ function convertDataURIToBinary(dataURI) {
 	var base64Index = dataURI.indexOf(BASE64_MARKER) + BASE64_MARKER.length;
 	var base64 = dataURI.substring(base64Index);
 	var raw = window.atob(base64);
-	var rawLength = raw.length;
+    var rawLength = raw.length;
 	var array = new Uint8Array(new ArrayBuffer(rawLength));
 
 	for(i = 0; i < rawLength; i++) {
@@ -25,17 +25,22 @@ function convertDataURIToBinary(dataURI) {
 
 function readAddPropImg(evt){
     var file = evt.target.files[0];
+    const data = new FormData();
+    data.append('my-image',file);
+
+    fetch('postImage',{
+        method: 'POST',
+        data: data
+    }).then((res)=>{
+        console.log("nn");
+    }).catch(e=>console.log(e));
+
     if(file){
         if( /(jpe?g|png|gf)$/i.test(file.type)){
             var r = new FileReader();
             r.readAsDataURL(file);
             r.onload = function(e){
-                
-                var base64 = e.target.result;      
-                // var binaryImg = convertDataURIToBinary(base64);           
-                var binaryImg = convertDataURIToBinary(base64);
-                var blob = new Blob([binaryImg], {type: file.type});
-                var blobURL = window.URL.createObjectURL(blob,{oneTimeOnly: false}); 
+                var base64 = e.target.result;               
                 add_p_img.src = base64;  
                 photoChanged = 1;
             }
@@ -63,6 +68,8 @@ add_p_btn.addEventListener('click',()=>{
     }
     else{
         document.querySelector('#adm_add_prod_change_photo').style.display="none";
+        //got img src
+
         if( add_p_people == "" || add_p_cat == "" || add_p_name == "" || add_p_price == "" || add_p_hex == "" || add_p_string == "" || add_p_size == "" ){
             add_p_all_fields.style.display = "block";
         }
@@ -101,7 +108,7 @@ add_p_btn.addEventListener('click',()=>{
                     xhttp.open("POST","addProduct",true);
                     xhttp.resposnseType='application/json';
                     var dataToPost = {
-                        "img":add_p_img.src, 
+                        "img":"image", 
                         "for":add_p_people, 
                         "category":add_p_cat, 
                         "name":add_p_name, 

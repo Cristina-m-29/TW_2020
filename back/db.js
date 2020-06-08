@@ -49,8 +49,8 @@ var cartSchema = new mongoose.Schema({
     img: String,
     price: Number,
     pieces: Number,
-    selected_color: String,
-    selected_size: String
+    selected_color: Array,
+    selected_size: Array
 });
 var Cart = mongoose.model("cart",cartSchema);
 
@@ -166,7 +166,6 @@ function addProduct(product){
                 }).catch(e=>resolve(e));
             }
         });
-        
     });
 } 
 
@@ -214,7 +213,8 @@ function deleteProduct(name){
 function getCategories(forWho){
     return new Promise((resolve)=>{
         Category.findOne({for:forWho}).then((doc)=>{
-            resolve(doc.categories_list);
+            const list = doc.categories_list;
+            resolve(list);
         }).catch(e=>resolve(e));
     });
 }
@@ -229,21 +229,18 @@ function addProductToFavorites(user,product,color,size){
         }
         findUser(user).then((res)=>{
             favToAdd.user_id = res._id;
-            findProduct(product).then((result)=>{
+            console.log(product.toLowerCase());
+            findProduct(product.toLowerCase()).then((result)=>{
+                console.log(result);
                 favToAdd.product_id = result._id;
                 favToAdd.product_name = result.name;
                 favToAdd.img = result.img;
                 favToAdd.price = result.price;
                 Favorites.findOne({user_id:favToAdd.user_id, product_id:favToAdd.product_id}).then((found)=>{
-                    if(found){
-                        resolve("exists");
-                    }
-                    else{
-                        const favorites = new Favorites(favToAdd);
-                        favorites.save().then((doc)=>{
-                            resolve(doc);
-                        }).catch(e=>resolve(e));
-                    }
+                    const favorites = new Favorites(favToAdd);
+                    favorites.save().then((doc)=>{
+                        resolve(doc);
+                    }).catch(e=>resolve(e));
                 }).catch(e=>resolve(e));
             }).catch(e=>resolve(e));
         }).catch(e=>resolve(e));
@@ -279,10 +276,7 @@ function deleteFromFavorites(user,product){
 
 function addProductToCart(user,product,color,size){
     return new Promise((resolve)=>{
-        var cartToAdd = {
-            selected_color: color,
-            selected_size: size
-        }
+        var cartToAdd = {};
         findUser(user).then((res)=>{
             cartToAdd.user_id = res._id;
             findProduct(product).then((result)=>{
@@ -290,10 +284,16 @@ function addProductToCart(user,product,color,size){
                 cartToAdd.product_name = result.name;
                 cartToAdd.img = result.img;
                 cartToAdd.price = result.price;
+                cartToAdd.selected_color = [];
+                cartToAdd.selected_size = [];
                 Cart.findOne({user_id:cartToAdd.user_id, product_id:cartToAdd.product_id}).then((found)=>{
+                    cartToAdd.selected_color = found.selected_color;
+                    cartToAdd.selected_size = found.selected_size;
+                    cartToAdd.selected_color.push(color);
+                    cartToAdd.selected_size.push(size);
                     if(found){
                         cartToAdd.pieces = found.pieces + 1;
-                        Cart.updateOne({user_id:cartToAdd.user_id, product_id:cartToAdd.product_id},{pieces: cartToAdd.pieces}).then(()=>{}).catch(e=>resolve(e));
+                        Cart.updateOne({user_id:cartToAdd.user_id, product_id:cartToAdd.product_id},{pieces: cartToAdd.pieces,selected_color:cartToAdd.selected_color,selected_size:cartToAdd.selected_size}).then(()=>{}).catch(e=>resolve(e));
                     }
                     else{
                         cartToAdd.pieces = 1;
@@ -302,7 +302,15 @@ function addProductToCart(user,product,color,size){
                             resolve(doc);
                         }).catch(e=>resolve(e));
                     }
-                }).catch(e=>resolve(e));
+                }).catch(e=>{
+                    cartToAdd.pieces = 1;
+                    cartToAdd.selected_color.push(color);
+                    cartToAdd.selected_size.push(size);
+                    const cart = new Cart(cartToAdd);
+                    cart.save().then((doc)=>{
+                        resolve(doc);
+                    }).catch(e=>resolve(e));
+                });
             }).catch(e=>resolve(e));
         }).catch(e=>resolve(e));
     });
@@ -454,9 +462,12 @@ module.exports = {
         }).catch(e=>{return e;});
     },
     findProduct: function(productName){
-        findProduct(productName).then((res)=>{
-            return res;
-        }).catch(e=>{return e;});
+        return new Promise((resolve)=>{
+            findProduct(productName).then((res)=>{
+                resolve(res);
+            }).catch(e=>{resolve(e);});
+        });
+        
     },
     getProducts: async function(){
         return new Promise((resolve)=>{
@@ -467,9 +478,11 @@ module.exports = {
 
     },
     getProductsByPeopleAndCategory: function(forWho,category){
-        getProductsByPeopleAndCategory(forWho,category).then((res)=>{
-            return res;
-        }).catch(e=>{return e;});
+        return new Promise((resolve)=>{
+            getProductsByPeopleAndCategory(forWho,category).then((res)=>{
+                resolve(res);
+            }).catch(e=>{resolve(e);});
+        });
     },
     deleteProduct: function(productName){
         deleteProduct(productName).then((res)=>{
@@ -477,9 +490,12 @@ module.exports = {
         }).catch(e=>{return e;});
     },
     getCategories: function(forWho){
-        getCategories(forWho).then((res)=>{
-            return res;
-        }).catch(e=>{return e;});
+        return new Promise((resolve)=>{
+            getCategories(forWho).then((res)=>{
+                console.log(res);
+                resolve(res);
+            }).catch(e=>{resolve(e);});
+        });
     },
     // FAVORITES
     addProductToFavorites: function(email,productName, color, size){
@@ -506,9 +522,11 @@ module.exports = {
         }).catch(e=>{return e;});
     },
     getCart: function(email){
-        getCart(email).then((res)=>{
-            return res;
-        }).catch(e=>{return e;});
+        return new Promise((resolve)=>{
+            getCart(email).then((res)=>{
+                resolve(res);
+            }).catch(e=>{resolve(e);});
+        });
     },
     deleteFromCart: function(email,productName){
        deleteFromCart(email,productName).then((res)=>{
