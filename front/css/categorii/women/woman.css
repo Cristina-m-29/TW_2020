@@ -37,6 +37,7 @@ p{
 }
 
 .wc-img{
+    max-width:100%;
     display: block;
     height: auto;
     width: 100%;
@@ -75,12 +76,18 @@ a:link {
   }
 
   .wc-img{
-    height: 100%;
-    width: 100%;
+    max-width:100%;
+    height: auto;
     object-fit: cover;
     padding:0;
     position: relative;
 }
+
+/* @media screen and (min-width:500px ) and (max-width: 1100px ){
+  .women-categories{
+     margin: 10em 7em 1em 7em;
+   }
+} */
 /*
 .footer{
     border: solid 1px;

@@ -1,41 +1,67 @@
 //http://localhost:2902/atara/girl/products/jeans.html
 
 
-var colors = ['red','light pink','light brown'];
-var colors_hex = ['#e74343','#ffdfff','#d38653'];
+var colors = [];
+var colors_hex = [];
 var color_selected=null;
-var sizes = ['XS','S','M'];
+var sizes = [];
 var size_selected = null;
 var women_jeans=document.querySelector('.women-jeans');
 women_jeans.addEventListener('onload', setUpProductsView());
 
 function setUpProductsView(){
+    var url = window.location.href.split("/");
+    var cat = url[url.length -1];
+    cat = cat.split(".");
+    cat = cat[0];
+
     var xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = ()=>{
         if(xhttp.readyState == 4){
             if(xhttp.status == 200){// SUCCES
-                console.log(xhttp.responseText);
+                const prod = JSON.parse(xhttp.responseText);
                 //apel afisare date 
-                setProductCategories();
+                setProductCategories(prod);
             } 
             else{
                 console.log("somenthing went wrong");
             }            
         }
     } 
-    xhttp.open("GET","getAllProductsForCategories",true);
+    xhttp.open("GET",`getAllProductsForCategories/${url[4]}/${cat}`,true);
     xhttp.resposnseType='application/json';
     xhttp.send();
 }
-var totalCategories = 6;
 var wj_categories=document.querySelector('.women-jeans');
+//http://localhost:2902/atara/girl/jeans/get/product/Jacket_One.html
 
-// window.addEventListener('onload', setProductCategoriesJeans());
 
-function setProductCategories(){
-     for(i=0;i<totalCategories;i++){
+function setProductCategories(prod){
+    // var url = window.location.href.split("/");
+    // var cat = url[url.length -1];
+    // cat = cat.split(".");
+    // cat = cat[0];
+    // console.cat
+
+    var forWho = window.location.href.split("/");
+    forWho = forWho[4];
+     for(i=0;i<prod.length;i++){
+         var item=prod[i];
+         console.log(item);
+         colors = item.hex_colors;
+         colors_hex = item.hex_colors;
+         sizes = item.sizes;
+         var cat = item.name;
+         cat = cat.split(" ");
+         var catName = '';
+         for(k=0;k<cat.length;k++){
+            if(k == cat.length - 1) catName += cat[k];
+            else catName += cat[k] + '_';
+         }
+         console.log(catName);
+        //  var curent_size = item.sizes;
         wj_categories.insertAdjacentHTML("beforeEnd",`<div class= "wj-product"> 
-        <img class="wj-img wj-img-${i}" id="wj-img-id" src="../../../images/women/afisare_produse/wj-img-${i}.jpg">
+        <img class="wj-img wj-img-${i}" id="wj-img-id" src="../../../images/women/afisare_produse/wj-img-0.jpg">
        
         <div class="text text-${i}">
           
@@ -44,7 +70,7 @@ function setProductCategories(){
               <p class= "wj-cart" id="wj-cart-id-${i}">Add to cart</p>
             </div> 
             <div>
-              <p id="wj-more-info" ><a href="../../../html/product/product.html" class="wj-more-info more-info-${i}">See more informations</a></p>
+              <p id="wj-more-info"><a href="/atara/${forWho}/${cat}/get/product/${catName}.html" class="wj-more-info more-info-${i}">See more informations</a></p>
             </div>
           </div>
           
@@ -97,21 +123,20 @@ function setProductCategories(){
         </div>
 
        <div>
-        <p class="price wj-product-price-${i}">wj_price_${i}</p>
-        <p class="name wj-product-name-${i}">wj_name_${i}</p>
+        <p class="price wj-product-price-${i}">Price</p>
+        <p class="name wj-product-name-${i}">Name</p>
        
       </div>
      </div>`);
 
      /*------Afisare culoare si size------*/
-     for(j=0;j<colors_hex.length;j++){
-        console.log(`${i} - ${j}`);
+     for(j=0;j<colors.length;j++){
         document.querySelector(`.wj-product-color-list-${i}`).insertAdjacentHTML("beforeend",
-        `<div class="color_list_${i}${j}" style="background-color:${colors_hex[j]}"></div>`);
+        `<div class="color_list_${i}${j}" style="background-color:${colors[j]}"></div>`);
+        console.log(colors[j]);
         document.querySelector(`.color_list_${i}${j}`).addEventListener('click',addEventColor(i,j));
     }
     for(j=0;j<sizes.length;j++){
-        console.log(`${i} - ${j}`);
         document.querySelector(`.wj-size-list-${i}`).insertAdjacentHTML("beforeend",`<p id="size_${i}${j}">${sizes[j]}</p>`);        
         document.querySelector(`#size_${i}${j}`).addEventListener('click',addEventSize(i,j));
     }
@@ -145,7 +170,7 @@ function MakeTextAppear(i){
 }
 function MakeTextDisappear(i){
     document.querySelector(`.wj-img-${i}`).addEventListener('mouseleave',()=>{
-        document.querySelector(`.text-${i}`).style.display = "block";
+        document.querySelector(`.text-${i}`).style.display = "none";
     });
 }
 function MakeAppear(i){
@@ -155,7 +180,7 @@ function MakeAppear(i){
 }
 function MakeDisappear(i){
     document.querySelector(`.text-${i}`).addEventListener('mouseleave',()=>{
-        document.querySelector(`.text-${i}`).style.display = "block";
+        document.querySelector(`.text-${i}`).style.display = "none";
     });
 }
 
@@ -258,31 +283,36 @@ function hideTextAddToCart(i){
 function sendDataFromCat(i){
     document.querySelector(`.check-class-${i}`).addEventListener('click',()=> {
 
-        // adaugat in cart after press check
-        if(color_selected!=null && size_selected!=null){
-            AddedToCart(i);
-            var xhttp = new XMLHttpRequest();
-            xhttp.onreadystatechange = ()=>{
-                if(xhttp.readyState == 4){
-                    if(xhttp.status == 200){// SUCCES
-                        console.log(xhttp.responseText);
-                    } 
-                    else{
-                        console.log("somenthing went wrong");
-                        }
-                    }
-            } 
-            xhttp.open("POST", "addProductFromCategoriesToCart", true);
-            var dataToPost={
-                "email":"ralucaplugariu@yahoo.com",
-                "name":document.querySelector(`.wj-product-name-${i}`).innerHTML,
-                "color":color_selected,
-                "size":size_selected
-            }
-            xhttp.send(JSON.stringify(dataToPost));
-            setTimeout(showInitialChoicesDelete(i), 5000);
+        if(localStorage.getItem('logged') === "false" || !('logged' in localStorage)){  
+            alert('Login is requered to add products to cart!');
         }
-});
+        else{
+            // adaugat in cart after press check
+            if(color_selected!=null && size_selected!=null){
+                AddedToCart(i);
+                var xhttp = new XMLHttpRequest();
+                xhttp.onreadystatechange = ()=>{
+                    if(xhttp.readyState == 4){
+                        if(xhttp.status == 200){// SUCCES
+                            console.log(xhttp.responseText);
+                        } 
+                        else{
+                            console.log("somenthing went wrong");
+                            }
+                        }
+                } 
+                xhttp.open("POST", "addProductFromCategoriesToCart", true);
+                var dataToPost={
+                    email:localStorage.getItem('email'),
+                    name:document.querySelector(`.wj-product-name-${i}`).innerHTML,
+                    color:color_selected,
+                    size:size_selected
+                }
+                xhttp.send(JSON.stringify(dataToPost));
+                setTimeout(showInitialChoicesDelete(i), 5000);
+            }
+        }
+    });
 }
 
 /*----Se ia de la capat procesul----*/

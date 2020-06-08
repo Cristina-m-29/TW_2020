@@ -79,10 +79,15 @@ var Order = mongoose.model("orders",orderSchema);
 
 function createUser(user){
     return new Promise((resolve)=>{
-        const newUser = new User(user);
-        newUser.save().then((doc)=>{
-            resolve(doc);
-        }).catch(e=>resolve(e));
+        findUser(user.email).then((res)=>{
+            if(res.email === user.email) resolve("exists");
+            else{
+                const newUser = new User(user);
+                newUser.save().then((doc)=>{
+                    resolve(doc);
+                }).catch(e=>resolve(e));
+            }
+        }).catch(()=>resolve("exists"));
     });
 }
 
@@ -107,6 +112,16 @@ function updateUser(email,updatedUser){
         User.updateOne({email:email},{$set:updatedUser}).then(()=>{
             resolve();
         }).catch(e=>resolve(e));
+    });
+}
+
+function resetPassword(email,password){
+    return new Promise((resolve)=>{
+        findUser(email).then((res)=>{
+            User.updateOne({_id:res._id},{password:password}).then(()=>{
+                resolve("password reseted");
+            }).catch(e=>resolve(e));
+        }).catch(e=>resolve("no user"));
     });
 }
 
@@ -199,7 +214,8 @@ function deleteProduct(name){
 function getCategories(forWho){
     return new Promise((resolve)=>{
         Category.findOne({for:forWho}).then((doc)=>{
-            resolve(doc.categories_list);
+            const list = doc.categories_list;
+            resolve(list);
         }).catch(e=>resolve(e));
     });
 }
@@ -270,24 +286,22 @@ function addProductToCart(user,product,color,size){
         }
         findUser(user).then((res)=>{
             cartToAdd.user_id = res._id;
+            console.log(res);
             findProduct(product).then((result)=>{
+                console.log(result);
                 cartToAdd.product_id = result._id;
                 cartToAdd.product_name = result.name;
                 cartToAdd.img = result.img;
                 cartToAdd.price = result.price;
                 Cart.findOne({user_id:cartToAdd.user_id, product_id:cartToAdd.product_id}).then((found)=>{
                     if(found){
-                        resolve("exists");
                         cartToAdd.pieces = found.pieces + 1;
-                        Cart.updateOne({user_id:cartToAdd.user_id, product_id:cartToAdd.product_id},{pieces: cartToAdd.pieces}).then(()=>{
-                           console.log(cartToAdd);
-                        }).catch(e=>resolve(e));
+                        Cart.updateOne({user_id:cartToAdd.user_id, product_id:cartToAdd.product_id},{pieces: cartToAdd.pieces}).then(()=>{}).catch(e=>resolve(e));
                     }
                     else{
                         cartToAdd.pieces = 1;
                         const cart = new Cart(cartToAdd);
                         cart.save().then((doc)=>{
-                            console.log("added");
                             resolve(doc);
                         }).catch(e=>resolve(e));
                     }
@@ -338,10 +352,18 @@ function addAddress(user,address){
 function getAddresses(user){
     return new Promise((resolve)=>{
         findUser(user).then((res)=>{
-            console.log(res._id);
             Address.find({user_id:res._id}).then((doc)=>{
                 resolve(doc);
             }).catch(e=>resolve(e));
+        }).catch(e=>resolve(e));
+    });
+}
+
+
+function updateAddress(id, updatedAddress){
+    return new Promise((resolve)=>{
+        Address.updateOne({_id:id},{$set:updatedAddress}).then(()=>{
+            resolve();
         }).catch(e=>resolve(e));
     });
 }
@@ -355,6 +377,7 @@ function addOrder(user, addressName, order){
                 order.user_id = res._id;
                 order.address_id = found._id;
                 const ord = new Order(order);
+                console.log(ord);
                 ord.save().then((doc)=>{
                     resolve(doc);
                 }).catch(e=>resolve(e));
@@ -384,9 +407,11 @@ function getAllOrders(){
 module.exports = {
     // USER
     createUser: function(user){
-        createUser(user).then((res)=>{
-            return res;
-        }).catch(e=>{return e;});
+        return new Promise((resolve)=>{
+            createUser(user).then((res)=>{
+                resolve(res);
+            }).catch(()=>{resolve("exists")});
+        });
     },
     findUser: function(email){
         return new Promise((resolve)=>{
@@ -407,6 +432,13 @@ module.exports = {
             return res;
         }).catch(e=>{});
     },
+    resetPassword: function(email,password){
+        return new Promise((resolve)=>{
+            resetPassword(email,password).then((res)=>{
+                resolve(res);
+            }).catch(e=>{resolve("no user")});
+        });
+    },
     deleteUser: function(email){
         deleteUser(email).then((res)=>{
             return res;
@@ -426,9 +458,12 @@ module.exports = {
         }).catch(e=>{return e;});
     },
     findProduct: function(productName){
-        findProduct(productName).then((res)=>{
-            return res;
-        }).catch(e=>{return e;});
+        return new Promise((resolve)=>{
+            findProduct(productName).then((res)=>{
+                resolve(res);
+            }).catch(e=>{resolve(e);});
+        });
+        
     },
     getProducts: async function(){
         return new Promise((resolve)=>{
@@ -436,12 +471,13 @@ module.exports = {
                 resolve(res);
             }).catch(e=>{resolve(e);});
         });
-
     },
     getProductsByPeopleAndCategory: function(forWho,category){
-        getProductsByPeopleAndCategory(forWho,category).then((res)=>{
-            return res;
-        }).catch(e=>{return e;});
+        return new Promise((resolve)=>{
+            getProductsByPeopleAndCategory(forWho,category).then((res)=>{
+                resolve(res);
+            }).catch(e=>{resolve(e);});
+        });
     },
     deleteProduct: function(productName){
         deleteProduct(productName).then((res)=>{
@@ -449,9 +485,12 @@ module.exports = {
         }).catch(e=>{return e;});
     },
     getCategories: function(forWho){
-        getCategories(forWho).then((res)=>{
-            return res;
-        }).catch(e=>{return e;});
+        return new Promise((resolve)=>{
+            getCategories(forWho).then((res)=>{
+                console.log(res);
+                resolve(res);
+            }).catch(e=>{resolve(e);});
+        });
     },
     // FAVORITES
     addProductToFavorites: function(email,productName, color, size){
@@ -478,9 +517,11 @@ module.exports = {
         }).catch(e=>{return e;});
     },
     getCart: function(email){
-        getCart(email).then((res)=>{
-            return res;
-        }).catch(e=>{return e;});
+        return new Promise((resolve)=>{
+            getCart(email).then((res)=>{
+                resolve(res);
+            }).catch(e=>{resolve(e);});
+        });
     },
     deleteFromCart: function(email,productName){
        deleteFromCart(email,productName).then((res)=>{
@@ -494,9 +535,18 @@ module.exports = {
         }).catch(e=>{return e;}); 
     },
     getAddresses: function(email){
-        getAddresses(email).then((res)=>{
-            return res;
-        }).catch(e=>{return e;});
+        return new Promise((resolve)=>{
+            getAddresses(email).then((res)=>{
+                resolve(res);
+            }).catch(e=>{resolve(e)});
+        });
+    },
+    updateAddress: function(id, updatedAddress){
+        return new Promise((resolve)=>{
+            updateAddress(id, updatedAddress).then((res)=>{
+                resolve(res);
+            }).catch(e=>{resolve(e)});
+        });
     },
     // ORDER
     addOrder: function(email, addressName, order){
