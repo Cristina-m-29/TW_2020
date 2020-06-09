@@ -1,6 +1,7 @@
 var http = require('http');
 var fs = require('fs');
 var path = require('path');
+var {getBody} = require('./bodyParser');
 var PORT = 2902 || process.env.PORT;
 // var db = require('./mongo');
 var db = require('./db');
@@ -18,10 +19,32 @@ const forWho = ['women','men','boy','girl'];
 
 http.createServer(async function (request, response) {    
     var filePath = '.' + request.url;   
-    console.log(`BEFORE: ${request.url}`);
+    // console.log(`BEFORE: ${request.url}`);
     // console.log(request.method);
 
     if(request.method == "GET"){
+        needMongo = 1;
+        if(request.url.search("getImage")>=0){
+            var id = request.url.split("/");
+            id = id[id.length-1];
+            db.findProductById(id).then((res)=>{
+                var stat = fs.statSync(`./${res.img.name}`);
+                response.writeHead(200, {
+                    'Content-Type': `${res.img.type}`,
+                    'Content-Length':stat.size
+                });
+                var readStream = fs.createReadStream(`./${res.img.name}`);
+                readStream.on('data', function(data) {
+                    response.write(data);
+                });
+
+                readStream.on('end', function() {
+                    response.end();        
+                }); 
+
+            }).catch(e=>{console.log(e);});
+        }
+        else
         if(request.url.search("getAllCategories")>=0){
             needMongo = 1;
             var forWho = request.url.split("/");
@@ -106,6 +129,7 @@ http.createServer(async function (request, response) {
                                     else productName += product[j] + ' ';
                                 }
                                 db.findProduct(productName).then((res)=>{
+                                    res.img = `/getImage/${res._id}`;
                                     response.writeHead(200, { 'Content-Type': 'application/json' }); 
                                     response.end(JSON.stringify(res));
                                     // response.end();
@@ -220,6 +244,7 @@ http.createServer(async function (request, response) {
                                                                     filePath = "../front/html/product/product.html";
                                                                     ok = 1;
                                                                     prodCounter = 1;
+                                                                    otherCounter = 0;
                                                                 }
                                                                 
                                                                 //categories
@@ -356,196 +381,190 @@ http.createServer(async function (request, response) {
                             });
                         }
                         else{
-                            if(request.url.search("addProduct")>=0){
-                                var body = '';
-                                request.on('data', function (chunk) {
-                                    body += chunk;
-                                });                
-                                request.on("end", ()=>{
-                                    body = JSON.parse(body);
-                                    var img = body.img;
-                                    // console.log(img);
-                                    var hcolors = body.hex_colors.split(","); 
-                                    var scolors = body.string_colors.split(",");
-                                    var sizes = body.size.split(",");
-                                    //body.img -> to save somewhere
-                                    // console.log(body.img);
-    
-                                    const product = prod.createProduct("img_for_product", body.for, body.category, body.name, parseInt(body.price), hcolors, scolors, sizes);
-                                    db.addProduct(product).then((res)=>{
-                                        // console.log(res);
+                            if(request.url.search("addProduct")>=0){                            
+                                getBody(request).then((res)=>{
+                                    var hcolors = res.hex_colors.split(","); 
+                                    var scolors = res.string_colors.split(",");
+                                    var sizes = res.size.split(",");
+                                    const product = prod.createProduct(res.image, res.for, res.category, res.name, parseInt(res.price),hcolors,scolors,sizes);
+                                    db.addProduct(product).then((r)=>{
                                         response.writeHead(200, { 'Content-Type': 'application/json' });
-                                        response.write(JSON.stringify(product));
+                                        response.write("added");
                                         response.end();
-                                    });                    
-                                });     
+                                    }).catch(e=>{
+                                        response.writeHead(200, { 'Content-Type': 'application/json' });
+                                        response.write("error/exists");
+                                        response.end();
+                                    });
+                                }).catch(e=>console.log(e));
                             }
                             else{
-                                if(request.url.search("updateProduct")>=0){
-                                    var body = '';
-                                    request.on('data', function (chunk) {
-                                        body += chunk;
-                                    });                
-                                    request.on("end", ()=>{
-                                        body = JSON.parse(body);
-                                        var updatedProduct = {
-                                            img: body.img,
-                                            forWho: body.for,
-                                            category: body.category,
-                                            name: body.name,
-                                            price: parseInt(body.price),
-                                            hex_colors: body.hex_colors,
-                                            string_colors: body.string_colors,
-                                            sizes: body.size
-                                        };
-                                        db.updateProduct(body.name_before,updatedProduct);                
+                                if(request.url.search("updateProductImage")>=0){
+                                    getBody(request).then((res)=>{
+                                        console.log(res);
+                                        db.updateProductImage(res.name,res.image);
                                         response.writeHead(200, { 'Content-Type': 'application/json' });
-                                        response.write("product updated");
+                                        response.write("updated");
                                         response.end();
-                                    });      
+                                    });
                                 }
                                 else{
-                                    if(request.url.search("updateUser")>=0){
-                                        var body = '';
-                                        request.on('data', function (chunk) {
-                                            body += chunk;
-                                        });                
-                                        request.on("end", ()=>{
-                                            body = JSON.parse(body);
-                                            var updatedUser = {
-                                                first_name: body.first_name,
-                                                last_name: body.last_name,
-                                                email: body.email,
-                                                password: body.password
-                                            }
-                                            db.updateUser(body.email_before,updatedUser);                 
+                                    if(request.url.search("updateProduct")>=0){
+                                        getBody(request).then((res)=>{
+                                            var hcolors = res.hex_colors.split(","); 
+                                            var scolors = res.string_colors.split(",");
+                                            var sizes = res.size.split(",");
+                                            const product = prod.createProductNoImage(res.for, res.category, res.name, parseInt(res.price),hcolors,scolors,sizes);
+                                            db.updateProduct(res.name_before,product);
                                             response.writeHead(200, { 'Content-Type': 'application/json' });
-                                            response.write("user updated");
+                                            response.write("updated");
                                             response.end();
-                                        });
+                                        }).catch(e=>console.log(e));  
                                     }
                                     else{
-                                        if(request.url.search("updateAddress")>=0){
+                                        if(request.url.search("updateUser")>=0){
                                             var body = '';
                                             request.on('data', function (chunk) {
                                                 body += chunk;
                                             });                
                                             request.on("end", ()=>{
-                                                body = JSON.parse(body); 
-                                                var addr = {
-                                                   user_name: body.user_name,
-                                                   street: body.street,
-                                                   country: body.country,
-                                                   city: body.city,
-                                                   postal_code: body.postal_code,
-                                                   phone_number: body.phone_number,
-                                                   user_id: body.user_id 
+                                                body = JSON.parse(body);
+                                                var updatedUser = {
+                                                    first_name: body.first_name,
+                                                    last_name: body.last_name,
+                                                    email: body.email,
+                                                    password: body.password
                                                 }
-                                                db.updateAddress(body._id,addr);  
+                                                db.updateUser(body.email_before,updatedUser);                 
                                                 response.writeHead(200, { 'Content-Type': 'application/json' });
                                                 response.write("user updated");
                                                 response.end();
                                             });
                                         }
                                         else{
-                                            if(request.url.search("checkUser")>=0){
+                                            if(request.url.search("updateAddress")>=0){
                                                 var body = '';
                                                 request.on('data', function (chunk) {
                                                     body += chunk;
                                                 });                
                                                 request.on("end", ()=>{
                                                     body = JSON.parse(body); 
-                                                    db.findUser(body.email).then((res)=>{
-                                                        if(res.password != body.password){
-                                                            response.writeHead(200, { 'Content-Type': 'application/json' });
-                                                            response.write("wrong password");
-                                                            response.end(); 
-                                                        }
-                                                        else{
-                                                            response.writeHead(200, { 'Content-Type': 'application/json' });
-                                                            response.write("user found");
-                                                            response.end();
-                                                        }
-                                                    }).catch(e=>{
-                                                        response.writeHead(200, { 'Content-Type': 'application/json' });
-                                                        response.write("no user found");
-                                                        response.end();
-                                                    });
+                                                    var addr = {
+                                                       user_name: body.user_name,
+                                                       street: body.street,
+                                                       country: body.country,
+                                                       city: body.city,
+                                                       postal_code: body.postal_code,
+                                                       phone_number: body.phone_number,
+                                                       user_id: body.user_id 
+                                                    }
+                                                    db.updateAddress(body._id,addr);  
+                                                    response.writeHead(200, { 'Content-Type': 'application/json' });
+                                                    response.write("user updated");
+                                                    response.end();
                                                 });
                                             }
                                             else{
-                                                if(request.url.search("resetPassword")>=0){
+                                                if(request.url.search("checkUser")>=0){
                                                     var body = '';
                                                     request.on('data', function (chunk) {
                                                         body += chunk;
                                                     });                
                                                     request.on("end", ()=>{
-                                                        body = JSON.parse(body);
-                                                        db.resetPassword(body.email,body.password).then((res)=>{
-                                                            if(res === "no user"){
+                                                        body = JSON.parse(body); 
+                                                        db.findUser(body.email).then((res)=>{
+                                                            if(res.password != body.password){
                                                                 response.writeHead(200, { 'Content-Type': 'application/json' });
-                                                                response.write("no user");
-                                                                response.end();
+                                                                response.write("wrong password");
+                                                                response.end(); 
                                                             }
                                                             else{
                                                                 response.writeHead(200, { 'Content-Type': 'application/json' });
-                                                                response.write("Password changed");
+                                                                response.write("user found");
                                                                 response.end();
                                                             }
                                                         }).catch(e=>{
                                                             response.writeHead(200, { 'Content-Type': 'application/json' });
-                                                            response.write("no user");
+                                                            response.write("no user found");
                                                             response.end();
                                                         });
                                                     });
                                                 }
                                                 else{
-                                                    if(request.url.search("addNewOrder")>=0){
-                                                        body = '';
+                                                    if(request.url.search("resetPassword")>=0){
+                                                        var body = '';
                                                         request.on('data', function (chunk) {
                                                             body += chunk;
                                                         });                
                                                         request.on("end", ()=>{
                                                             body = JSON.parse(body);
-                                                            var ord = {
-                                                                date: body.date,
-                                                                product_list : body.products_list,
-                                                                payment_method:body.payment_method,
-                                                                price:parseInt(body.price)                       
-                                                            }
-                                                            db.addOrder(body.email,body.address_name,ord);
-                                                            response.writeHead(200, { 'Content-Type': 'application/json' });
-                                                            response.write(JSON.stringify(body));
-                                                            response.end();
+                                                            db.resetPassword(body.email,body.password).then((res)=>{
+                                                                if(res === "no user"){
+                                                                    response.writeHead(200, { 'Content-Type': 'application/json' });
+                                                                    response.write("no user");
+                                                                    response.end();
+                                                                }
+                                                                else{
+                                                                    response.writeHead(200, { 'Content-Type': 'application/json' });
+                                                                    response.write("Password changed");
+                                                                    response.end();
+                                                                }
+                                                            }).catch(e=>{
+                                                                response.writeHead(200, { 'Content-Type': 'application/json' });
+                                                                response.write("no user");
+                                                                response.end();
+                                                            });
                                                         });
                                                     }
                                                     else{
-                                                        if(request.url.search("addNewAddress")>=0){
+                                                        if(request.url.search("addNewOrder")>=0){
                                                             body = '';
                                                             request.on('data', function (chunk) {
                                                                 body += chunk;
                                                             });                
                                                             request.on("end", ()=>{
                                                                 body = JSON.parse(body);
-                                                                var adr = {
-                                                                    user_name: body.user_name,
-                                                                    street: body.street,
-                                                                    country: body.country,
-                                                                    city: body.city,
-                                                                    postal_code: body.postal_code,
-                                                                    phone_number: body.phone_number
+                                                                var ord = {
+                                                                    date: body.date,
+                                                                    product_list : body.products_list,
+                                                                    payment_method:body.payment_method,
+                                                                    price:parseInt(body.price)                       
                                                                 }
-                                                                db.addAddress(body.email,adr);
+                                                                db.addOrder(body.email,body.address_name,ord);
                                                                 response.writeHead(200, { 'Content-Type': 'application/json' });
-                                                                response.write("address addeed");
+                                                                response.write(JSON.stringify(body));
                                                                 response.end();
                                                             });
                                                         }
                                                         else{
-                                                            if(request.url.search("postImage")){
-                                                                response.writeHead(200, { 'Content-Type': 'application/json' });
-                                                                response.write("got em");
-                                                                response.end();
+                                                            if(request.url.search("addNewAddress")>=0){
+                                                                body = '';
+                                                                request.on('data', function (chunk) {
+                                                                    body += chunk;
+                                                                });                
+                                                                request.on("end", ()=>{
+                                                                    body = JSON.parse(body);
+                                                                    var adr = {
+                                                                        user_name: body.user_name,
+                                                                        street: body.street,
+                                                                        country: body.country,
+                                                                        city: body.city,
+                                                                        postal_code: body.postal_code,
+                                                                        phone_number: body.phone_number
+                                                                    }
+                                                                    db.addAddress(body.email,adr);
+                                                                    response.writeHead(200, { 'Content-Type': 'application/json' });
+                                                                    response.write("address addeed");
+                                                                    response.end();
+                                                                });
+                                                            }
+                                                            else{
+                                                                if(request.url.search("postImage")){
+    
+                                                                    response.writeHead(200, { 'Content-Type': 'application/json' });
+                                                                    response.write("got em");
+                                                                    response.end();
+                                                                }
                                                             }
                                                         }
                                                     }

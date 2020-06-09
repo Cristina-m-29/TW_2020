@@ -6,7 +6,10 @@ var sizesProduct = [];
 var nrOfSizes;
 var base64 = null;
 var current_prod;
-// window.addEventListener("onload", setUpProducts());
+var numberOfProduct = -1;
+const dataUpdate = new FormData();
+const dataImage = new FormData();
+
 document.querySelector(`.products`).addEventListener("click",setUpProducts());
 
 function setUpProducts(){
@@ -27,6 +30,7 @@ function setUpProducts(){
                         document.querySelector('#admin_nr_products').style.display="none";
                     }
                     else{
+                        console.log(JSON.parse(xhttp.responseText));
                         showAdminProducts(JSON.parse(xhttp.responseText));
                     }
                 } 
@@ -58,7 +62,7 @@ function showAdminProducts(products){
                 </div>-->
                 <div class="adm_prod_main adm_prod_main_${prod}">
                     <div class="adm_prod_img">
-                        <img id="adm_prod_img_${prod}" src="">
+                        <img id="adm_prod_img_${prod}" src="/getImage/${products[prod]._id}">
                     </div>
                     <div class="adm_prod_txt">
                         <p>Product id</p>
@@ -70,7 +74,7 @@ function showAdminProducts(products){
                         <p>Sizes</p>
                     </div>
                     <div class="adm_prod_data">
-                        <div class="adm_prod_data_id">${product._id}</div>
+                        <div class="adm_prod_data_id adm_prod_data_id_${prod}">${product._id}</div>
                         <div class="adm_prod_for_${prod}">${product.for}</div>
                         <div class="adm_prod_cat_${prod}">${product.category}</div>
                         <div class="adm_prod_name_${prod}">${product.name}</div>
@@ -157,7 +161,7 @@ function showAdminProducts(products){
 
             document.querySelector(`.adm_prod_delete_${prod}`).addEventListener('click',addAdmProdDeleteEvent(prod));
             document.querySelector(`.adm_prod_edit_${prod}`).addEventListener('click',addAdmProdEditEvent(prod));
-            document.querySelector(`.adm_prod_done_${prod}`).addEventListener('click',addAdmProdDoneEvent(prod));
+            document.querySelector(`.adm_prod_done_${prod}`).addEventListener('click',addAdmProdDoneEvent(prod,product));
         }
     }
 }
@@ -197,6 +201,7 @@ function RGBToHex(rgb) {
 
 function addAdmProdEditEvent(prod){
     document.querySelector(`.adm_prod_edit_${prod}`).addEventListener('click',()=>{
+        numberOfProduct = prod;
         nrOfHexColors = hexColors[prod].length;
         nrOfSizes = sizesProduct[prod].length;
         document.querySelector(`.adm_prod_main_${prod}`).style.display="none";
@@ -206,7 +211,7 @@ function addAdmProdEditEvent(prod){
     });    
 }
 
-function addAdmProdDoneEvent(prod){
+function addAdmProdDoneEvent(prod,product){
     document.querySelector(`.adm_prod_done_${prod}`).addEventListener('click',()=>{           
         var p_name = document.querySelector(`#p_name_${prod}`).value;         
         var p_price = document.querySelector(`#p_price_${prod}`).value;
@@ -219,16 +224,18 @@ function addAdmProdDoneEvent(prod){
             document.querySelector(`.hex_string_${prod}`).style.display="block";            
         }
         else{
-            var dataToUpdate = {};
-            dataToUpdate.img = document.querySelector(`#adm_prod_img_${prod}`).src;
-            dataToUpdate.for = document.querySelector(`.adm_prod_for_${prod}`).innerHTML;
-            dataToUpdate.category = document.querySelector(`.adm_prod_cat_${prod}`).innerHTML;
-            dataToUpdate.name_before = document.querySelector(`.adm_prod_name_${prod}`).innerHTML;
-            dataToUpdate.name = document.querySelector(`.adm_prod_name_${prod}`).innerHTML;
-            dataToUpdate.price = document.querySelector(`.adm_prod_price_${prod}`).innerHTML;
-            dataToUpdate.hex_colors = hexColors[prod];
-            dataToUpdate.string_colors = stringColors[prod];
-            dataToUpdate.size = sizesProduct[prod];
+            if(dataUpdate.getAll('for').length > 0) dataUpdate.delete('for');
+            if(dataUpdate.getAll('category').length > 0) dataUpdate.delete('category');
+            if(dataUpdate.getAll('name_before').length > 0) dataUpdate.delete('name_before');
+            if(dataUpdate.getAll('name').length > 0) dataUpdate.delete('name');
+            if(dataUpdate.getAll('price').length > 0) dataUpdate.delete('price');
+            if(dataUpdate.getAll('hex_colors').length > 0) dataUpdate.delete('hex_colors');
+            if(dataUpdate.getAll('string_colors').length > 0) dataUpdate.delete('string_colors');
+            if(dataUpdate.getAll('size').length > 0) dataUpdate.delete('size');
+
+            dataUpdate.append('for',document.querySelector(`.adm_prod_for_${prod}`).innerHTML);
+            dataUpdate.append('category',document.querySelector(`.adm_prod_cat_${prod}`).innerHTML);
+            dataUpdate.append('name_before',document.querySelector(`.adm_prod_name_${prod}`).innerHTML);       
 
             //adaugare culoare si in bd
             if(p_hex!="" && p_string !=""){
@@ -250,27 +257,19 @@ function addAdmProdDoneEvent(prod){
                             document.querySelector(`.apcc_${prod}`).insertAdjacentHTML("beforeend",`<div class="prod_color delete_color_${prod}${i}" style="background-color:${updateHex[k]}"></div>`);
                             document.querySelector(`.delete_color_${prod}${i}`).addEventListener('click',addColorDeleteEvent(prod,i));
                         }                        
-                    } 
-                    dataToUpdate.hex_colors = hexColors[prod];
-                    dataToUpdate.string_colors = stringColors[prod];                 
+                    }                  
                 }                           
             }
             document.querySelector(`.hex_string_${prod}`).style.display="none";
-
-            //schimbare img
-            if(document.querySelector(`#adm_prod_img_${prod}`).src != document.querySelector(`.new_img_${prod}`).src){
-                document.querySelector(`#adm_prod_img_${prod}`).src = document.querySelector(`.new_img_${prod}`).src;
-                dataToUpdate.img = document.querySelector(`.new_img_${prod}`).src;
-            }
             
             if(p_name != ""){
                 //Schimbare nume in bd
-                dataToUpdate.name = p_name;
+                dataUpdate.append('name',p_name);
                 document.querySelector(`.adm_prod_name_${prod}`).innerHTML = p_name;
             }
             if(p_price != ""){
                 //Schimbare pret in
-                dataToUpdate.price = p_price;
+                dataUpdate.append('price',p_price);
                 document.querySelector(`.adm_prod_price_${prod}`).innerHTML = p_price;
             }        
             if(p_size != ""){
@@ -282,22 +281,24 @@ function addAdmProdDoneEvent(prod){
                     document.querySelector(`.adm_prod_sizes_${prod}`).insertAdjacentHTML("beforeend",`<p class="ps_${prod}${i}">${updateSize[k]}</p>`);
                     document.querySelector(`.apcs_${prod}`).insertAdjacentHTML("beforeend",`<p  class="pcs_${prod}${i}">${updateSize[k]}</p>`);
                     document.querySelector(`.pcs_${prod}${i}`).addEventListener('click',addSizeDeleteEvent(prod,i));
-                } 
-                dataToUpdate.size = sizesProduct[prod];         
+                }                       
             }
 
-            // if(Object.entries(dataToUpdate).length > 8){ 
-                var xhttp = new XMLHttpRequest();
-                xhttp.onreadystatechange = ()=>{
-                    if(xhttp.readyState == 4){
-                        if(xhttp.status != 200){
-                            console.log("somenthing went wrong");
-                        }            
-                    }
-                } 
-                xhttp.open("POST",`updateProduct`,true);
-                xhttp.send(JSON.stringify(dataToUpdate));
-            // }            
+            if(dataUpdate.getAll('name').length === 0) dataUpdate.append('name',document.querySelector(`.adm_prod_name_${prod}`).innerHTML);
+            if(dataUpdate.getAll('price').length === 0) dataUpdate.append('price',document.querySelector(`.adm_prod_price_${prod}`).innerHTML);
+            dataUpdate.append('hex_colors',hexColors[prod]);
+            dataUpdate.append('string_colors',stringColors[prod]);
+            dataUpdate.append('size',sizesProduct[prod]);
+
+            fetch('/updateProduct',{
+                method: "POST",
+                body: dataUpdate
+            }).then((res)=>{
+                return res.text();
+            }).then((res)=>{
+                console.log("FETCH - DATA ");
+                console.log(res);
+            });         
 
             document.querySelector(`.adm_prod_main_${prod}`).style.display="grid";
             document.querySelector(`.adm_prod_edit_body_${prod}`).style.display="none";
@@ -369,6 +370,22 @@ function convertDataURIToBinary(dataURI) {
 
 function readImage(evt){
     var file = evt.target.files[0];
+    if(dataImage.getAll('image').length > 0) dataImage.delete('image');
+    if(dataImage.getAll('name').length > 0) dataImage.delete('name');
+
+    dataImage.append('image',file);
+    dataImage.append('name',document.querySelector(`.adm_prod_name_${numberOfProduct}`).innerHTML);
+
+    fetch('/updateProductImage',{
+        method: "POST",
+        body: dataImage
+    }).then((res)=>{
+        return res.text();
+    }).then((res)=>{
+        console.log("FETCH - DATA ");
+        console.log(res);
+    });
+
     if(file){
         if( /(jpe?g|png|gf)$/i.test(file.type)){
             var r = new FileReader();
@@ -376,9 +393,6 @@ function readImage(evt){
             r.onload = function(e){
                 base64 = e.target.result;
                 document.querySelector(`.new_img_${current_prod}`).src=base64;
-                var binaryImg = convertDataURIToBinary(base64);
-                var blob = new Blob([binaryImg], {type: file.type});
-                blobURL = window.URL.createObjectURL(blob); 
             }
         }
         else 

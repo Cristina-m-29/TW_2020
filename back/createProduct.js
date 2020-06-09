@@ -1,6 +1,22 @@
 function product(img, forWho,cat, name, price, hex, strigs, size){
     var prod = {
-        img:`${img}`,
+        img:{
+            type: img.type,
+            name: img.name
+        },
+        for:`${forWho}`,
+        category:`${cat}`,
+        name:`${name}`,
+        price:price,
+        hex_colors:hex,
+        string_colors:strigs,
+        sizes:size
+    }
+    return prod;
+}
+
+function productNoImage(forWho, cat, name, price, hex, strigs, size){
+    var prod = {
         for:`${forWho}`,
         category:`${cat}`,
         name:`${name}`,
@@ -59,6 +75,10 @@ function createFavorite(userId, cat, prodId, color, size){
 module.exports ={
     createProduct: function(img, forWho, cat, name, price, hex, strigs, size){        
         const prod = product(img, forWho, cat, name, price, hex, strigs, size);
+        return prod;
+    },
+    createProductNoImage: function(forWho, cat, name, price, hex, strigs, size){
+        const prod = productNoImage(forWho, cat, name, price, hex, strigs, size);
         return prod;
     },
     createUpdateProduct: function(product,img, name, price, hex, strings, size){        

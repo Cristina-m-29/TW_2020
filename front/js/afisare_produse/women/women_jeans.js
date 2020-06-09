@@ -62,7 +62,7 @@ function setProductCategories(prod){
          console.log(catName);
         //  var curent_size = item.sizes;
         wj_categories.insertAdjacentHTML("beforeEnd",`<div class= "wj-product"> 
-        <img class="wj-img wj-img-${i}" id="wj-img-id" src="../../../images/women/afisare_produse/high-waist-1.jpg">
+        <img class="wj-img wj-img-${i}" id="wj-img-id" src="/getImage/${item._id}">
        
         <div class="text text-${i}">
           
@@ -71,7 +71,7 @@ function setProductCategories(prod){
               <p class= "wj-cart" id="wj-cart-id-${i}">Add to cart</p>
             </div> 
             <div>
-              <p id="wj-more-info"><a href="/atara/${forWho}/${cat}/get/product/${catName}.html" class="wj-more-info more-info-${i}">See more informations</a></p>
+              <p id="wj-more-info" class="wj-more-info more-info-${i}">See more informations</p>
             </div>
           </div>
           
@@ -142,6 +142,7 @@ function setProductCategories(prod){
         document.querySelector(`#size_${i}${j}`).addEventListener('click',addEventSize(i,j));
     }
 
+     document.querySelector(`.more-info-${i}`).addEventListener('click',goToProduct(i));
      document.querySelector(`#wj-cart-id-${i}`).addEventListener('click', hideTextShowColor(i));
      document.querySelector(`.previous-info-colors-${i}`).addEventListener('click', showPreviousCategoriesColors(i));
      document.querySelector(`.next-info-colors-${i}`).addEventListener('click', showNextCategoriesColors(i));
@@ -163,6 +164,28 @@ function setProductCategories(prod){
 
     }
 }
+
+/* ------Trecerea la produs---------- */
+function goToProduct(i){
+    document.querySelector(`.more-info-${i}`).addEventListener('click',()=>{
+        var forWho = window.location.href.split("/");
+        var cat = forWho[forWho.length - 1];
+        cat = cat.split(".");
+        cat = cat[0];
+        forWho = forWho[4];
+        console.log(forWho);
+        console.log(cat);
+        var nameProd = document.querySelector(`.wj-product-name-${i}`).innerHTML;
+        nameProd = nameProd.split(" ");
+        var pn = "";
+        for(j=0;j<nameProd.length;j++){
+            if(j === nameProd.length - 1) pn += nameProd[j];
+            else pn += nameProd[j] + "_";
+        }
+        window.location.href=`http://localhost:2902/atara/${forWho}/${cat}/get/product/${pn}.html`;
+    });
+}
+
 /* ------Afisarea blocului de text---*/
 function MakeTextAppear(i){
     document.querySelector(`.wj-img-${i}`).addEventListener('mouseenter',()=>{
@@ -424,3 +447,4 @@ function setColorBlackCheck(i){
         document.querySelector(`.check-class-${i}`).style.color="#000000";
     });
 }
+

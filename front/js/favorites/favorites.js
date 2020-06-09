@@ -39,7 +39,7 @@ function setUpFavorites(fav){
             favoritesBody.insertAdjacentHTML("beforeend",
             `<div class="favorites_product fav_prod_${favorite}">
                 <div class="favorites_product_side">
-                    <img src="${item.img}">
+                    <img src="/getImage/${item._id}">
                 </div>
                 <div class="favorites_product_main">                        
                     <div class="favorites_product_details">
@@ -117,3 +117,5 @@ function addFavDeleteEvent(favorite){
         }
     });
 }
+
+

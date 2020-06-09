@@ -68,7 +68,7 @@ function setUpCart(cart){
                     var sizes=item.selected_size;
                     document.querySelector('.cart_product').insertAdjacentHTML("beforeend",
                     `   <div class="cart_product_side cart_product_img_${i}">
-                            <img src="../../images/women/afisare_produse/high-waist-1.jpg">
+                            <img src="/getImage/${item._id}">
                         </div>
                         <div class="cart_product_main cart_product_main_${i}">                        
                             <div class="cart_product_details">
@@ -133,7 +133,7 @@ function setUpOrderProducts(cart){
           
                 <div class="order_product">
                     <div class="order_product_img order_img_${i}">
-                        <img src="../../images/women/afisare_produse/high-waist-1.jpg">
+                        <img src="/getImage/${item._id}">
                     </div>
                     <div class="order_product_details">
                         <div class="order_product_details_side">

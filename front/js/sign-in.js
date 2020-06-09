@@ -82,7 +82,7 @@ function submitSignIn(event){
                                 //change user icon 
                                 if(localStorage.getItem('logged') === "true"){
                                     user_si.style.display="none";
-                                    if(em === "admin_cristina@mail.ro" || em === "admin_madaline@mail.ro"){
+                                    if(em === "admin_cristina@mail.ro" || em === "admin_madalina@mail.ro"){
                                         admin_si.style.display = "block";
                                     }
                                     else{

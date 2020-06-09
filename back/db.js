@@ -1,6 +1,7 @@
 var mongoose = require('mongoose');
 mongoose.connect('mongodb+srv://admin_cristina:doinoua@ataradb-xxrbg.mongodb.net/tw?retryWrites=true&w=majority', {useNewUrlParser: true, useUnifiedTopology: true});
 var db = mongoose.connection;
+const { mongo: { ObjectId } } = require('mongoose');
 db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', function() {
 });
@@ -14,7 +15,7 @@ var userSchema = new mongoose.Schema({
 var User = mongoose.model("users", userSchema);
 
 var prodSchema = new mongoose.Schema({
-    img: String,
+    img: Object,
     for: String,
     category: String,
     name: String,
@@ -35,7 +36,7 @@ var favSchema = new mongoose.Schema({
     user_id: String,
     product_id: String,
     product_name: String,
-    img: String,
+    img: Object,
     price: Number,
     selected_color: String,
     selected_size: String
@@ -46,7 +47,7 @@ var cartSchema = new mongoose.Schema({
     user_id: String,
     product_id: String,
     product_name: String,
-    img: String,
+    img: Object,
     price: Number,
     pieces: Number,
     selected_color: Array,
@@ -145,7 +146,7 @@ function addProduct(product){
                 }
                 else{
                     if( cat_list.find(cat=>cat.name === product.category) === undefined){
-                        cat_list.push({name:product.category, img:product.img});
+                        cat_list.push({name:product.category, img:product.img, cat_id: product._id});
                     }
                 }
                 Category.updateOne({for:product.for},{categories_list:cat_list}).then(()=>{}).catch(e=>console.log(e));
@@ -177,9 +178,25 @@ function findProduct(name){
     });
 }
 
+function findProductById(id){
+    return new Promise((resolve)=>{
+        Product.findOne({_id:ObjectId(id)}).then((doc)=>{
+            resolve(doc);
+        }).catch(e=>resolve(e));
+    });
+}
+
 function updateProduct(name, updatedProduct){
     return new Promise((resolve)=>{
-        Product.updateOne({name:name},{$set:updatedProduct}).then(()=>{
+        Product.updateOne({name:name},{for:updatedProduct.for, category:updatedProduct.category, name: updatedProduct.name, price: updatedProduct.price, hex_colors: updatedProduct.hex_colors, string_colors:updatedProduct.string_colors,sizes:updatedProduct.sizes}).then(()=>{
+            resolve();
+        }).catch(e=>resolve(e));
+    });
+}
+
+function updateProductImage(name, image){
+    return new Promise((resolve)=>{
+        Product.updateOne({name:name},{img:image}).then(()=>{
             resolve();
         }).catch(e=>resolve(e));
     });
@@ -229,9 +246,7 @@ function addProductToFavorites(user,product,color,size){
         }
         findUser(user).then((res)=>{
             favToAdd.user_id = res._id;
-            console.log(product.toLowerCase());
             findProduct(product.toLowerCase()).then((result)=>{
-                console.log(result);
                 favToAdd.product_id = result._id;
                 favToAdd.product_name = result.name;
                 favToAdd.img = result.img;
@@ -461,13 +476,24 @@ module.exports = {
             return "updated";
         }).catch(e=>{return e;});
     },
+    updateProductImage: function(productName, image){
+        updateProductImage(productName,image).then(()=>{
+            return "updated";
+        }).catch(e=>{return e;});
+    },
     findProduct: function(productName){
         return new Promise((resolve)=>{
             findProduct(productName).then((res)=>{
                 resolve(res);
             }).catch(e=>{resolve(e);});
         });
-        
+    },
+    findProductById: function(id){
+        return new Promise((resolve)=>{
+            findProductById(id).then((res)=>{
+                resolve(res);
+            }).catch(e=>{resolve(e);});
+        });
     },
     getProducts: async function(){
         return new Promise((resolve)=>{
@@ -492,7 +518,6 @@ module.exports = {
     getCategories: function(forWho){
         return new Promise((resolve)=>{
             getCategories(forWho).then((res)=>{
-                console.log(res);
                 resolve(res);
             }).catch(e=>{resolve(e);});
         });

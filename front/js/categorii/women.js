@@ -10,7 +10,7 @@ function getCategories(){
                 if(xhttp.status == 200){// SUCCES
                     const cat = JSON.parse(xhttp.responseText);
                     console.log(cat);
-                      setUpWCat(cat);
+                    setUpWCat(cat);
                 } 
                 else{
                     console.log("somenthing went wrong");
@@ -33,7 +33,7 @@ function setUpWCat(cat){
         `<div class="wc-product">
         <div>
           <a  href="/atara/${forWho}/products/${item.name}.html">
-           <img class="wc-img" src="${item.img}">
+           <img class="wc-img" src="/getImage/${item.cat_id}">
           </a>
         </div> 
         <div>
@@ -42,3 +42,6 @@ function setUpWCat(cat){
        </div>`);
     }
 };
+
+
+

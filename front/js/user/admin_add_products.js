@@ -6,7 +6,7 @@ var add_p_hex_string = document.querySelector('#adm_add_prod_hs_txt');
 var add_p_all_fields = document.querySelector('#adm_add_prod_all_fields');
 var add_p_done = document.querySelector('#adm_add_prod_done');
 var photoChanged = 0;
-
+const data = new FormData();
 add_p_img_btn.addEventListener('change',readAddPropImg);
 
 function convertDataURIToBinary(dataURI) {
@@ -25,15 +25,7 @@ function convertDataURIToBinary(dataURI) {
 
 function readAddPropImg(evt){
     var file = evt.target.files[0];
-    const data = new FormData();
-    data.append('my-image',file);
-
-    fetch('postImage',{
-        method: 'POST',
-        data: data
-    }).then((res)=>{
-        console.log("nn");
-    }).catch(e=>console.log(e));
+    data.append('image',file);
 
     if(file){
         if( /(jpe?g|png|gf)$/i.test(file.type)){
@@ -97,27 +89,23 @@ add_p_btn.addEventListener('click',()=>{
                 else{
                     add_p_done.style.display="block";
                     document.querySelector('#adm_prod_not_hex').style.display="none";
-                    var xhttp = new XMLHttpRequest();
-                    xhttp.onreadystatechange = ()=>{
-                        if(xhttp.readyState == 4){
-                            if(xhttp.status != 200){
-                                console.log("somenthing went wrong");
-                            }
-                        }
-                    } 
-                    xhttp.open("POST","addProduct",true);
-                    xhttp.resposnseType='application/json';
-                    var dataToPost = {
-                        "img":"image", 
-                        "for":add_p_people, 
-                        "category":add_p_cat, 
-                        "name":add_p_name, 
-                        "price":add_p_price, 
-                        "hex_colors":add_p_hex, 
-                        "string_colors":add_p_string, 
-                        "size":add_p_size
-                    };
-                    xhttp.send(JSON.stringify(dataToPost));
+                    data.append("for",add_p_people);
+                    data.append("category",add_p_cat);
+                    data.append("name",add_p_name);
+                    data.append("price",add_p_price);
+                    data.append("hex_colors",add_p_hex);
+                    data.append("string_colors",add_p_string);
+                    data.append("size",add_p_size);
+
+                    fetch('/addProduct',{
+                            method: "POST",
+                            body: data
+                    }).then((res)=>{
+                        return res.text();
+                    }).then((res)=>{
+                        console.log("FETCH - DATA ");
+                        console.log(res);
+                    });
 
                     sleep(2000).then(()=>{
                         add_p_done.style.display="none";

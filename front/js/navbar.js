@@ -186,3 +186,41 @@ function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
 }
 
+
+//____________________________________
+
+document.querySelector('.logo_txt').addEventListener('click',()=>{
+  window.location.href = "http://localhost:2902/";
+});
+
+document.querySelector('.admin').addEventListener('click',()=>{
+  window.location.href = "http://localhost:2902/user/admin.html";
+});
+
+document.querySelector('.logged_user').addEventListener('click',()=>{
+  window.location.href = "http://localhost:2902/user/user.html";
+});
+
+document.querySelector('.wishlist').addEventListener('click',()=>{
+  window.location.href = "http://localhost:2902/favorites/favorites.html";
+});
+
+document.querySelector('.cart').addEventListener('click',()=>{
+  window.location.href = "http://localhost:2902/cart/cart.html";
+});
+
+document.querySelector('.opt_women').addEventListener('click',()=>{
+  window.location.href = "http://localhost:2902/atara/women/categories.html";
+});
+
+document.querySelector('.opt_men').addEventListener('click',()=>{
+  window.location.href = "http://localhost:2902/atara/men/categories.html";
+});
+
+document.querySelector('.opt_girl').addEventListener('click',()=>{
+  window.location.href = "http://localhost:2902/atara/girl/categories.html";
+});
+
+document.querySelector('.opt_boy').addEventListener('click',()=>{
+  window.location.href = "http://localhost:2902/atara/boy/categories.html";
+});
