@@ -1,0 +1,1 @@
+Folder destinat gestionarii imaginilor
