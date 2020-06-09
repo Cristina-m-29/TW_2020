@@ -2,7 +2,6 @@ var http = require('http');
 var fs = require('fs');
 var path = require('path');
 var PORT = 2902 || process.env.PORT;
-// var db = require('./mongo');
 var db = require('./db');
 var prod = require('./createProduct');
 var usr = require('./createUser');
@@ -11,13 +10,14 @@ const {parse} = require('querystring');
 var categoriesReceiveURL = ["/atara/women/categories.html","/atara/men/categories.html","/atara/boy/categories.html","/atara/girl/categories.html"];
 var productsReceiveURL = ["/atara/women/products/","/atara/men/products/","/atara/boy/products/","/atara/girl/products"];
 var otherCounter = 0;
+var prodCounter = 0;
 var needMongo = 0;
 
 const forWho = ['women','men','boy','girl'];
 
 http.createServer(async function (request, response) {    
     var filePath = '.' + request.url;   
-    console.log(`BEFORE: ${request.url}`);
+    // console.log(`BEFORE: ${request.url}`);
     // console.log(request.method);
 
     if(request.method == "GET"){
@@ -37,7 +37,7 @@ http.createServer(async function (request, response) {
             if(request.url.search("getCartProducts") > 0){
                 needMongo = 1;
                 var email = request.url.split("/");
-                email = email[email.length-1];
+                email = email[email.length-1];=
                 db.getCart(email).then((res)=>{
                     response.writeHead(200, { 'Content-Type': 'application/json' }); 
                     response.write(JSON.stringify(res), 'utf-8');
@@ -211,7 +211,6 @@ http.createServer(async function (request, response) {
                                                             prodCounter = 0;
                                                         } 
                                                         else{
-                                                            console.log("PATH - NORMAL");
                                                             if(path.extname(filePath) == '.html'){
                                                                 var ok = 0;
     
@@ -332,7 +331,7 @@ http.createServer(async function (request, response) {
                             body += chunk;
                         });                
                         request.on("end", ()=>{
-                            body = JSON.parse(body);
+                            body = JSON.parse(body);=
                             db.addProductToFavorites(body.email,body.productName,body.color,body.size);
                             response.writeHead(200, { 'Content-Type': 'application/json' });
                             response.write("added to fav");
@@ -376,7 +375,7 @@ http.createServer(async function (request, response) {
                                         response.write(JSON.stringify(product));
                                         response.end();
                                     });                    
-                                });               
+                                });        
                             }
                             else{
                                 if(request.url.search("updateProduct")>=0){

@@ -12,11 +12,10 @@ p{
     border: solid 1px;
 }
 
-.main-container{
-   
-        
+
+.main_container{
         background-color: white;
-       
+  font-family: Inter,sans-serif;
     }
 
 .women-jeans{
@@ -30,7 +29,6 @@ p{
      margin: 10em 3em 1em 3em;
 }
     .wj-product{
-
         display: flex;
         flex-direction: column;
         position: relative;
@@ -43,138 +41,213 @@ p{
       background-size: cover; 
       position: relative;
       display: block;
-     
   }
-
   
   .text{
-    opacity: 1;
+    z-index: 10;
+    display: none;
     height: 10%;
     width: 90%;
     background-color: whitesmoke;
     position: absolute;
+    top:70%;
+    margin-left: 1.3em;
+    border-radius: 3px;
+    box-shadow:0 0 10px rgba(0,0,0,0.5) ;
+  }
+  .text-positioning{
     display: grid;
     grid-template-columns: 45% 45%;
     column-gap: 0.5em;
     align-items: center;
-    top:70%;
-    margin-left: 1.5em;
-    border-radius: 3px;
-    box-shadow:0 0 10px rgba(0,0,0,0.5) ;
-    
+  }
+  /* .arrows{
+    position: relative;
+  }   */
+
+  #previous-info-initial{
+    top:60%;
+    left:5%;
+    display: none;
+    position: absolute;
+    z-index: 10;
+  } 
+  #previous-info-colors{
+    top:60%;
+    left:5%;
+    display: none;
+    position: absolute;
+    z-index: 10;
+  } 
+  #previous-info-size{
+    top:60%;
+    left:5%;
+    display: none;
+    position: absolute;
+    z-index: 10;
+  } 
+  
+  #previous-info-cart{
+    top:60%;
+    left:5%;
+    display: none;
+    position: absolute;
+    z-index: 10;
+  } 
+  
+  #next-info-initial{
+    top:60%;
+    left:90%;
+    display: none;
+    position: absolute;
+    z-index: 10;
+  }
+  #next-info-colors{
+    top:60%;
+    left:90%;
+    display: none;
+    position: absolute;
+    z-index: 10;
+  }
+  #next-info-size{
+    top:60%;
+    left:90%;
+    display: none;
+    position: absolute;
+    z-index: 10;
   }
   
+  
   .wj-cart, .wj-more-info{
-    opacity: 1;
     width: auto;
     text-align: center;
     color: black;
     overflow: hidden;
     text-decoration: none;
-    margin-left: 1.5em;
+    margin-left: 2em;
+    margin-top: 1em;
     letter-spacing: 0.1em;
-    font-size: 1.2vw;
+    font-size: 1vw;
+    font-family: Arial, sans-serif;
+    display:flex;
     }
     .wj-cart{
       float: left;
+      
     }
     .wj-more-info{
       float: right;
     }
     
     .wj-product-color{ 
-      display: flex;
+      display:none;
       letter-spacing: 0.1em;
-      font-size: 1.2vw;
-    font-weight: bold;
-    float:left;
-    margin-left: 1.5em;
-    margin-top: 1em;
+      font-size: 1vw;
+      font-family: Arial, sans-serif;
+      font-weight: normal;
+      margin-left: 3em;
+      margin-top: 1em;
     }
-    #wj-color-product{
+    /* #wj-color-product{
       padding-left: 0.5em;
-    font-weight: normal;
-    padding-bottom: 2em;
-    }
+      font-size: 1vw;
+      font-weight: normal;
+      display:none;
+   } */
     .wj-product-color-list{
-      float:right;
-      display: flex;
-      margin-bottom: 2em; 
+      /* display: flex;  */
+      display: none;
     }
     .wj-product-color-list > div{
-      border: solid 0.1em #000000;
+      border: solid 0.08em #000000;
       border-radius: 50%;
       height: 1em;
       width: 1em;
       margin-left: 2em;
       margin-top: 1em;
     }
-
+  
     .wj-size{
-      text-align: center;
       color: black;
-      overflow: hidden;
       text-decoration: none;
-      margin-left: 1.5em;
+      display:none;
+      align-items: center;
       letter-spacing: 0.1em;
-      font-size: 1.2vw;
+      font-size: 1vw;
+      font-family: Arial, sans-serif;
+      font-weight: normal;
+      margin-left: 3em;
+      margin-top: 1em;
     }
     .wj-size-list{
-      display:flex;
-      color:#6d6d6d;
-      margin-left: 1.5em;
-      letter-spacing: 0.1em;
+      display:none;
+      align-items: center;
+      color:#775a5a;
+      margin-left: 2em;
+      margin-top: 1em;
       font-size: 1.2vw;
-      border-bottom: solid 0.02em #b3b3b3;
+      
     }
     .wj-size-list > p:hover{
+      
       color: #000000;
       font-weight: bold;
     }
    
     .wj-size-list > p {
+      /* display:none; */
       padding-right: 1.2em;
+      margin-left: 0.3em;
+      margin-right: 0.3em;
+      
+    }
+    .add-now{
+      display:none;
+      text-align: center;
+      letter-spacing: 0.1em;
+      font-size: 1.1vw;
+      font-family: Arial, sans-serif;
+      font-weight: normal;
+      margin-bottom: 1.5em;
+      margin-left: 3em;
+    }
+   
+    #check{
+        top:10%;
+        left:70%;
+        font-size: 2em;
+        display: none;
+        position: absolute;
+    }
+    .added-to-cart{
+      display:none;
+      align-items: center;
+      letter-spacing: 0.1em;
+      font-size: 1.1vw;
+      font-family: Arial, sans-serif;
+      font-weight: normal;
+      top:35%;
+      left: 20%;
+      position: absolute;
     }
 
-    .added-to-cart{
-      background-image: url(../../../images/check/check.svg);
-    background-position: 0.8em 0.6em;
-    background-repeat: no-repeat;
-    background-size: 0.8em;
-    position: absolute;
-    top: 12%;
-    left: 40%;
-    transform: translate(-50%,-50%);
-    margin: 1em 0;
-    padding: 0.5em 1em 0.5em 2.3em;
-    background-color: yellow;
-    text-align: center;
-    color: #000000;
-    font-weight: bold;
-    display: none;
-}
-  .price1{
-
+  .price{
     display: block;
-    align-items: center;
-    text-align: center;
+    text-align: left;
     color: black;
     letter-spacing: 0.3em;
     font-weight: bold;
     font-size: 1.4vw;
-    margin-top: 1em;
-       
-        
+    margin-top: 1em;  
     }
 
-  .name1{
+  .name{
         display: block;
-        align-items: center;
-        text-align: center;
+        text-align: left;
         color: black;
         font-family: "Segoe UI", Roboto;
         letter-spacing: 0.2em;
-        font-size: 1.2vw;
+        font-size: 1.5 vw;
         margin-top: 1em;
     }  
       
@@ -200,13 +273,15 @@ p{
         display: block;
       }
 
-img{
+.wj-img{
+    z-index: 9;
     height: 100%;
     width: 100%;
     object-fit: cover;
     padding:0;
     position: relative;
 }
+
 /*.footer{
     border: solid 1px;
 }*/
