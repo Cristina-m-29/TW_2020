@@ -1,6 +1,7 @@
-function product(img, cat, name, price, hex, strigs, size){
+function product(img, forWho,cat, name, price, hex, strigs, size){
     var prod = {
         img:`${img}`,
+        for:`${forWho}`,
         category:`${cat}`,
         name:`${name}`,
         price:price,
@@ -56,8 +57,8 @@ function createFavorite(userId, cat, prodId, color, size){
 }
 
 module.exports ={
-    createProduct: function(img, cat, name, price, hex, strigs, size){        
-        const prod = product(img, cat, name, price, hex, strigs, size);
+    createProduct: function(img, forWho, cat, name, price, hex, strigs, size){        
+        const prod = product(img, forWho, cat, name, price, hex, strigs, size);
         return prod;
     },
     createUpdateProduct: function(product,img, name, price, hex, strings, size){        

@@ -61,7 +61,7 @@ function setProductCategories(prod){
          console.log(catName);
         //  var curent_size = item.sizes;
         wj_categories.insertAdjacentHTML("beforeEnd",`<div class= "wj-product"> 
-        <img class="wj-img wj-img-${i}" id="wj-img-id" src="../../../images/women/afisare_produse/wj-img-0.jpg">
+        <img class="wj-img wj-img-${i}" id="wj-img-id" src="../../../images/women/afisare_produse/high-waist-1.jpg">
        
         <div class="text text-${i}">
           
@@ -123,8 +123,8 @@ function setProductCategories(prod){
         </div>
 
        <div>
-        <p class="price wj-product-price-${i}">Price</p>
-        <p class="name wj-product-name-${i}">Name</p>
+        <p class="price wj-product-price-${i}">${item.price} RON</p>
+        <p class="name wj-product-name-${i}">${item.name}</p>
        
       </div>
      </div>`);

@@ -18,7 +18,7 @@ const forWho = ['women','men','boy','girl'];
 
 http.createServer(async function (request, response) {    
     var filePath = '.' + request.url;   
-    // console.log(`BEFORE: ${request.url}`);
+    console.log(`BEFORE: ${request.url}`);
     // console.log(request.method);
 
     if(request.method == "GET"){
@@ -26,7 +26,6 @@ http.createServer(async function (request, response) {
             needMongo = 1;
             var forWho = request.url.split("/");
             forWho=forWho[forWho.length-1];
-            console.log(forWho);
             db.getCategories(forWho).then((res)=>{
                 response.writeHead(200, { 'Content-Type': 'application/json' }); 
                 response.end(JSON.stringify(res));
@@ -40,7 +39,6 @@ http.createServer(async function (request, response) {
                 needMongo = 1;
                 var email = request.url.split("/");
                 email = email[email.length-1];
-                console.log(email);
                 db.getCart(email).then((res)=>{
                     response.writeHead(200, { 'Content-Type': 'application/json' }); 
                     response.write(JSON.stringify(res), 'utf-8');
@@ -214,6 +212,7 @@ http.createServer(async function (request, response) {
                                                             prodCounter = 0;
                                                         } 
                                                         else{
+                                                            console.log("PATH - NORMAL");
                                                             if(path.extname(filePath) == '.html'){
                                                                 var ok = 0;
     
@@ -314,7 +313,7 @@ http.createServer(async function (request, response) {
                 }); 
             }
             else{
-                if(request.url.search("addProductToCart")>=0){ //!!!!!!!!!!!!
+                if(request.url.search("addProductToCart")>=0){ 
                     var body = '';
                     request.on('data', function (chunk) {
                         body += chunk;
@@ -335,7 +334,6 @@ http.createServer(async function (request, response) {
                         });                
                         request.on("end", ()=>{
                             body = JSON.parse(body);
-                            console.log(body);
                             db.addProductToFavorites(body.email,body.productName,body.color,body.size);
                             response.writeHead(200, { 'Content-Type': 'application/json' });
                             response.write("added to fav");
@@ -350,8 +348,6 @@ http.createServer(async function (request, response) {
                             });                
                             request.on("end", ()=>{
                                 body = JSON.parse(body);
-                                console.log(body);
-                                //MONGO CALL   
                                 db.addProductToCart(body.email, body.name, body.color, body.size); 
                                 response.writeHead(200, { 'Content-Type': 'application/json' });
                                 response.write(JSON.stringify(body));
@@ -381,7 +377,7 @@ http.createServer(async function (request, response) {
                                         response.write(JSON.stringify(product));
                                         response.end();
                                     });                    
-                                }); 
+                                });               
                             }
                             else{
                                 if(request.url.search("updateProduct")>=0){
@@ -474,7 +470,6 @@ http.createServer(async function (request, response) {
                                                         response.write("no user found");
                                                         response.end();
                                                     });
-                                                    
                                                 });
                                             }
                                             else{
@@ -517,7 +512,6 @@ http.createServer(async function (request, response) {
                                                                 payment_method:body.payment_method,
                                                                 price:parseInt(body.price)                       
                                                             }
-                                                            console.log(ord);
                                                             db.addOrder(body.email,body.address_name,ord);
                                                             response.writeHead(200, { 'Content-Type': 'application/json' });
                                                             response.write(JSON.stringify(body));
@@ -540,8 +534,6 @@ http.createServer(async function (request, response) {
                                                                     postal_code: body.postal_code,
                                                                     phone_number: body.phone_number
                                                                 }
-                                                                console.log(body.email);
-                                                                console.log(adr);
                                                                 db.addAddress(body.email,adr);
                                                                 response.writeHead(200, { 'Content-Type': 'application/json' });
                                                                 response.write("address addeed");
@@ -591,7 +583,6 @@ http.createServer(async function (request, response) {
                         });                
                         request.on("end", ()=>{ 
                             body = JSON.parse(body);
-                            console.log(body);
                             db.deleteFromCart(body.email,body.name);               
                             response.writeHead(200, { 'Content-Type': 'application/json' });
                             response.write("deleted product");

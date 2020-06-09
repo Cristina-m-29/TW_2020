@@ -16,7 +16,33 @@ profile_cancel.addEventListener('click', ()=>{
 });
 
 profile_save.addEventListener('click', ()=>{
-    //change data in the db
+    var fn = document.querySelector('#profile_first').value;
+    var ln = document.querySelector('#profile_last').value;
+    userData.email_before = userData.email;
+    if(fn != "") {
+        document.querySelector(`#user_firstName`).innerHTML = fn;
+        userData.first_name = fn;
+    }
+    if(ln != ""){
+        document.querySelector(`#user_lastName`).innerHTML = ln;
+        userData.last_name = ln;
+    }
+    if(fn != "" || ln !=""){
+        var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = ()=>{
+        if(xhttp.readyState == 4){
+            if(xhttp.status == 200){// SUCCES
+            console.log(xhttp.responseText);
+            } 
+            else{
+            console.log("somenthing went wrong");
+            }            
+        }
+        } 
+        xhttp.open("POST",`updateUser`,true);
+        xhttp.resposnseType='application/json';
+        xhttp.send(JSON.stringify(userData));
+    }
     profile_edit.style.display="none";
     profile.style.display="block";
     profile_resetfields();

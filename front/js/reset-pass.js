@@ -9,7 +9,6 @@ const show_pass_r = document.querySelector('.reset-view-pass');
 /* RESET PASS______________________________________________________*/
 
 close_r.addEventListener('click', () => {
-    console.log('Close reset');
     r.style.opacity="0";
     r.style.zIndex="9";
     r.style.top="47%";
@@ -33,7 +32,6 @@ show_pass_r.addEventListener('click', () => {
 });
 
 sign_r.addEventListener('click', () => {
-    console.log('Reset pass -> sign in');
     r.style.opacity="0";
     r.style.zIndex="9";
     r.style.top="47%";
@@ -43,6 +41,39 @@ sign_r.addEventListener('click', () => {
         si_r.style.top="50%";
     });
 });
+
+function submitResetPass(event){
+    const em = document.querySelector('#email-r').value;
+    const pass = document.querySelector('#pass-r').value;
+    const newUser = {
+        email: em,
+        password: pass
+    }
+    var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = ()=>{
+            if(xhttp.readyState == 4){
+                if(xhttp.status == 200){
+                    const res = xhttp.responseText;
+                    if(res === "no user") alert("No user found for this email address!");
+                    else{
+                        r.style.opacity="0";
+                        r.style.zIndex="9";
+                        r.style.top="47%";
+                        nav_r.style.filter="blur(0px)";
+                        cont_r.style.filter="blur(0px)";
+                        popUp = 0;
+                        document.querySelector('.wishlist').style.display="block";
+                    }
+                }
+                else{
+                    console.log("somenthing went wrong");
+                }
+            }
+        } 
+        xhttp.open("POST",`resetPassword`,true);
+        xhttp.resposnseType='application/json';
+        xhttp.send(JSON.stringify(newUser));
+}
 
 /*SLEEP____________________________________________________________ */
 function sleep(ms) {

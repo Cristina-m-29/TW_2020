@@ -1,7 +1,8 @@
 
 const MongoClient = require('mongodb').MongoClient;
 const uri = "mongodb+srv://admin_cristina:doinoua@ataradb-xxrbg.mongodb.net/test?retryWrites=true&w=majority";
-const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
+const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true});
+
 
 async function findProductByCatandName(client, forWho, productCat, productName) {
     try {
@@ -47,7 +48,7 @@ function findProductByName(client, productName) {
                     if (searchInBoy) found(searchInBoy);
                     else notFound();
                 })
-                .catch(e => console.log(e));
+                .catch(e => console.log(e));z
         } catch (e) {
             console.error(e);
         } finally {
@@ -56,10 +57,23 @@ function findProductByName(client, productName) {
     });
 }
 
+async function findProductByCatandId(client,cat,productId){
+    try{
+        await client.connect();
+        const res = await client.db("tw").collection(`${cat}`).findOne({
+            _id: productId
+        });
+        return res;
+    } catch(e){
+        console.error(e);
+    } finally{
+        await client.close();
+    }
+}
+
 async function addProduct(client, forWho, product) {
     try {
         await client.connect();
-        console.log(product.category);
         const categ = await client.db("tw").collection("categories").findOne({ forWho: forWho });
         var ok = 0;
         for (i = 0; i < categ.categories_list.length; i++) {
@@ -72,7 +86,6 @@ async function addProduct(client, forWho, product) {
                 img: product.img
             }
             toAdd.categories_list.push(catToAdd);
-            console.log(toAdd);
             const addCat = await client.db("tw").collection("categories").updateOne({ forWho: forWho }, { $set: toAdd });
             if (addCat)
                 console.log(`Category ${product.category} added to categories.${forWho}`);
@@ -84,10 +97,15 @@ async function addProduct(client, forWho, product) {
         }
         else {
             const res = await client.db("tw").collection(`${forWho}`).insertOne(product);
+            // const res2 = await client.db("tw").collection("products").insertOne(product);
             if (res) {
                 console.log(`${res.insertedCount} document was inserted into tw.${forWho}`);
             }
             else console.log(`No document was inserted into tw.${forWho}`);
+            // if (res2) {
+            //     console.log(`${res2.insertedCount} document was inserted into tw.products`);
+            // }
+            // else console.log(`No document was inserted into tw.products`);
         }
     } catch (e) {
         console.error(e);
@@ -96,7 +114,7 @@ async function addProduct(client, forWho, product) {
     }
 }
 
-async function updateProduct(client, forWho, product, updatedProduct, hex, strings, sizes) {
+async function updateProduct(client, forWho, product, updatedProduct) {
     try {
         console.log('Connecting..');
         await client.connect();
@@ -118,7 +136,29 @@ async function updateProduct(client, forWho, product, updatedProduct, hex, strin
     }
 }
 
-function getProducts(client, forWho) {
+async function deleteColor(client, forWho, product, productWithoutOneColor){
+    try {
+        console.log('Connecting..');
+        await client.connect();
+        const res = await client.db("tw").collection(`${forWho}`).updateOne(
+            { category: product.category, name: product.name },
+            { $set: productWithoutOneColor }
+        );
+        console.log(`${res.matchedCount} document(s) match the query`);
+        if (res.modifiedCount > 0) {
+            console.log(`${res.modifiedCount} document(s) was/were updated`);
+        }
+        else
+            console.log('Not updated');
+        return res.modifiedCount;
+    } catch (e) {
+        console.error(e);
+    } finally {
+        await client.close();
+    }
+}
+
+async function getProducts(client, forWho) {
     return new Promise((found, notFound) => {
         try {
             client.connect()
@@ -135,6 +175,18 @@ function getProducts(client, forWho) {
             client.close();
         }
     });
+}
+
+async function getProductsNoPromise(client,forWho){
+    try {
+        await client.connect();
+        const res = await client.db("tw").collection(`${forWho}`).find().toArray();
+        return res;
+    } catch (e) {
+        console.error(e);
+    } finally {
+        await client.close();
+    }
 }
 
 function getCategories(client, forWho) {
@@ -309,16 +361,26 @@ async function deleteUser(client, email) {
     }
 }
 
+async function getUsers(client){
+    try{
+        await client.connect();
+        const res = await client.db("tw").collection("users").find().toArray();
+        return res;
+    } catch(e){
+        console.error(e);
+    } finally{
+        await client.close();
+    }
+}
+
 async function getFromFavorites(client, user) {
     return new Promise((resolveFav, rejectFav) => {
         try {
             client.connect()
                 .then(() => {
-                    console.log(`User email: ${user}`);
                     return client.db("tw").collection("users").findOne({ email: user });
                 }, () => { console.log("error"); })
                 .then((userFound) => {
-                    console.log(`User id: ${userFound._id}`);
                     return client.db("tw").collection("favorites").find({ user_id: userFound._id }).toArray();
                 }, () => { console.log("no user found"); })
                 .then((favFound) => {
@@ -375,6 +437,8 @@ async function addProductToFavorites(client, email, forWho, cat, name, selected_
             user_id: user._id,
             for: forWho,
             product_id: prod._id,
+            product_name: prod.name,
+            price: prod.price,
             selected_color: selected_color,
             selected_size: selected_size
         }
@@ -639,11 +703,15 @@ async function addOrder(client, userId, addressUserName, payMethod, price, submi
                         if (productsList[i].product_id = productsList[j].product_id)
                             counter++;
                     }
+                    console.log(productsList[i].product_id);
+                    const prodMore = await client.db("tw").collection(`${productsList[i].for}`).findOne({ _id:productsList[i].product_id });
                     var prod = {
                         product_id: productsList[i].product_id,
+                        product_name: prodMore.name,
                         color: productsList[i].selected_color,
                         size: productsList[i].selected_size,
-                        pieces: counter
+                        pieces: counter,
+                        price: prodMore.price
                     }
                     products.push(prod);
                 }
@@ -695,7 +763,75 @@ function getOrders(client, user) {
     });
 }
 
+async function getAllOrders(client){
+    try{
+        await client.connect();
+        const res = await client.db("tw").collection("orders").find().toArray();
+        return res;
+    } catch(e){
+        console.error(e);
+    } finally{
+        await client.close();
+    }
+}
+
+async function getOrdersNoPromise(client, user){
+    try{
+        await client.connect();
+        const res = await client.db("tw").collection("orders").find({user_id:user}).toArray();
+        return res;
+    } catch(e){
+        console.error(e);
+    } finally{
+        await client.close();
+    }
+}
+
+async function getFromFavoritesNoPromise(client, user){
+    try{
+        await client.connect();
+        const res = await client.db("tw").collection("favorites").find({user_id:user}).toArray();
+        return res;
+    } catch(e){
+        console.error(e);
+    } finally{
+        await client.close();
+    }
+}
+
+async function addToProducts(client,product){
+    try {
+        await client.connect();
+        const ext = await client.db("tw").collection("products").find({name: product.name, category: product.category, forWho: product.forWho});
+        if (ext.matchedCount > 0) {
+            console.log(`The product already exists`);
+        }
+        else {
+            const res2 = await client.db("tw").collection("products").insertOne(product);
+            if (res2) {
+                console.log(`${res2.insertedCount} document was inserted into tw.products`);
+            }
+            else console.log(`No document was inserted into tw.products`);
+        }
+    } catch (e) {
+        console.error(e);
+    } finally {
+        await client.close();
+    }
+} 
+
 module.exports = {
+    getClient: function (){
+        return client;
+    },
+    connectMongo: async function(){
+        await client.connect();
+        console.log("connected to MongoDB");
+    },
+    disconnectMongo: async function(){
+        await client.close();
+        console.log("disconnected from MongoDB");
+    },
     addMongoProduct: function (forWho, product) {
         addProduct(client, forWho, product);
     },
@@ -709,10 +845,15 @@ module.exports = {
             res.then((product) => found(product), () => notFound());
         });
     },
+    findProductByCatandId: function(cat, productId){
+        console.log(cat);
+        console.log(productId);
+        const res = findProductByCatandId(client, cat, productId);
+        console.log(res);
+    },
     getProducts: function (forWho) {
         return new Promise((resolve, reject) => {
             const res = getProducts(client, forWho);
-
             res.then((prodList) => { resolve(prodList); }, () => { reject(); });
         });
     },
@@ -722,11 +863,14 @@ module.exports = {
             res.then((catList) => {resolve(catList); }, () => { reject(); });
         });
     },
-    updateProduct: function (forWho, product, updatedProduct, hex, strings, sizes) {
-        const res = updateProduct(client, forWho, product, updatedProduct, hex, strings, sizes);
+    updateProduct: function (forWho, product, updatedProduct) {
+        const res = updateProduct(client, forWho, product, updatedProduct);
     },
     deleteProduct: function (forWho, cat, name) {
         deleteProduct(client, forWho, cat, name);
+    },
+    deleteColor: function(forWho,product, productWithoutOneColor){
+        deleteColor(client, forWho, product, productWithoutOneColor);
     },
     findUserByEmail: function (email) {
         return new Promise((found, notFound) => {
@@ -735,8 +879,8 @@ module.exports = {
                 .catch(e => console.log(e));
         });
     },
-    findUser: function (email) {
-        const res = findUserByEmailAsync(client, email);
+    findUser: async function (email) {
+        const res = await findUserByEmailAsync(client, email);
         return res;
     },
     addMongoUser: function (user) {
@@ -751,8 +895,12 @@ module.exports = {
     updateUserPass(email, pass) {
         editUserPass(client, email, pass);
     },
-    deleteUser: function (email) {
-        deleteUser(client, email);
+    deleteUser: async function (email) {
+        await deleteUser(client, email);
+    },
+    getUsers: async function(){
+        const res = await getUsers(client);
+        return res;
     },
     getProductsFromFavorites: async function (user) {
         return new Promise((resolve, reject) => {
@@ -812,8 +960,51 @@ module.exports = {
     getOrders: function (user) {
         return new Promise((resolve, reject) => {
             const res = getOrders(client, user);
-            res.then((ordList) => { resolve(ordList); }, () => { reject(); });
+            res.then((ordList) => { resolve(ordList); }, () => { reject(); }).catch(e=>console.log(e));
         });
+    },
+    getAllOrders: async function(){
+        const res = await getAllOrders(client);
+        return res;
+    },
+    addToProducts: function(product){
+        addToProducts(client,product);
+    },
+    getAllProducts: async function(){
+        
+        return "fuck you"
+    },
+    getUsersAndTheirInfo: async function(){
+        const usrs = await getUsers(client);
+        if(usrs.length > 0){
+            var info = [];
+            for(i=0;i<usrs.length;i++){      
+                var infoUser = {};          
+                var ords = await getOrdersNoPromise(client, usrs[i]._id);
+                infoUser.name = usrs[i].first_name + ' ' + usrs[i].last_name;
+                infoUser.email = usrs[i].email;
+                infoUser.password = usrs[i].password;   
+                infoUser.nr_orders = 0;
+                infoUser.orders = [];
+                if(ords){
+                    infoUser.nr_orders = ords.length;
+                    for(j=0;j<ords.length;j++){
+                        infoUser.orders.push(ords[j]);
+                    }     
+                }
+                var fav = await getFromFavoritesNoPromise(client, usrs[i]._id);infoUser.nr_favorites = 0;
+                infoUser.favorites = [];
+                if(fav){
+                    infoUser.nr_favorites = fav.length;
+                    for(k=0;k<fav.length;k++){
+                        infoUser.favorites.push(fav[k]);
+                    }
+                }
+                info.push(infoUser);
+            }
+            return info;         
+        }
+        else
+            return "no users";
     }
 }
-

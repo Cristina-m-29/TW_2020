@@ -5,16 +5,18 @@ const si_su = document.querySelector('.sign-in');
 const close_su = document.querySelector('#close-sign-up');
 const sign_su = document.querySelector('.sign-in-su');
 const show_pass_su = document.querySelector('.sign-up-view-pass');
+const logged_user_su = document.querySelector('.logged_user');
+const user_su = document.querySelector('.user');
 
-const fname = document.querySelector('#fname');
-const lname = document.querySelector('#lname');
+//change ids and classes
+const fname = document.querySelector('.fname_su');
+const lname = document.querySelector('.lname_su');
 const email_su = document.querySelector('#email-su');
 const pass_su = document.querySelector('#pass-su');
 
 /* SIGN UP ______________________________________________________*/
 
 close_su.addEventListener('click', () => {
-    console.log('Close sign up');
     su.style.opacity="0";
     su.style.zIndex="9";
     su.style.top="47%";
@@ -26,7 +28,6 @@ close_su.addEventListener('click', () => {
     email_su.value = "";
     pass_su.value = "";
 
-    popUp = 0;
     document.querySelector('.wishlist').style.display="block";
 });
 
@@ -44,7 +45,6 @@ show_pass_su.addEventListener('click', () => {
 });
 
 sign_su.addEventListener('click',() => {
-    console.log('Sign up -> sign in');
     su.style.opacity="0";
     su.style.zIndex="9";
     su.style.top="47%";
@@ -58,6 +58,59 @@ sign_su.addEventListener('click',() => {
         si_su.style.top="50%";
     });
 });
+
+function submitSignUp(event){
+    const fn = fname.value;
+    const ln = lname.value;
+    const em = email_su.value;
+    const ps = pass_su.value;
+    if(fn == "" || ln == "" || em == "" || ps == "") alert("All fields must be completed!");
+    else{
+        var newUser = {
+            first_name: fn,
+            last_name: ln,
+            email: em,
+            password: ps
+        }
+
+        var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = ()=>{
+            if(xhttp.readyState == 4){
+                if(xhttp.status == 200){
+                    const res = xhttp.responseText;
+                    if(res === "exists") alert("An account for this address already exists!");
+                    else{
+                        if(res === "added user"){
+                            //close pop up
+                            su.style.opacity = "0";
+                            su.style.zIndex = "0";
+                            su.style.top = "47%";
+                            nav_si.style.filter="blur(0px)";
+                            cont_si.style.filter="blur(0px)";
+
+                            localStorage.setItem('email',`${em}`);
+                            localStorage.setItem('logged','true');
+
+                            //change user icon 
+                            if(localStorage.getItem("logged")==="true"){
+                                user_su.style.display="none";
+                                logged_user_su.style.display="block";   
+                            }
+
+                            document.querySelector('.wishlist').style.display="block";
+                        }
+                    }
+                }
+                else{
+                    console.log("somenthing went wrong");
+                }
+            }
+        } 
+        xhttp.open("POST",`addUser`,true);
+        xhttp.resposnseType='application/json';
+        xhttp.send(JSON.stringify(newUser));
+    }
+}
 
 /*SLEEP____________________________________________________________ */
 function sleep(ms) {

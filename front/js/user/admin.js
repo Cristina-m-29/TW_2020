@@ -9,8 +9,13 @@ var admin_products_main = document.querySelector('.main_products');
 var admin_add_products_side = document.querySelector('.add_products');
 var admin_add_products_main = document.querySelector('.main_add_products');
 
-admin_data_side.addEventListener('click',()=>{
-    console.log("Personal data");
+document.querySelector('#log_out').addEventListener('click',()=>{
+    window.location.href = "/";
+    localStorage.setItem('logged','false');
+    localStorage.setItem('email','');
+});
+
+admin_data_side.addEventListener('click',()=>{ 
     //reset others    
     admin_users_side.style.fontWeight="normal";
     admin_users_main.style.display = "none";
@@ -40,7 +45,6 @@ admin_data_side.addEventListener('click',()=>{
 });
 
 admin_users_side.addEventListener('click',()=>{
-    console.log("Store users");
     //reset others    
     admin_data_side.style.fontWeight="normal";
     admin_data_main.style.display = "none";
@@ -70,7 +74,6 @@ admin_users_side.addEventListener('click',()=>{
 });
 
 admin_orders_side.addEventListener('click',()=>{
-    console.log("Users orders");
     //reset others
     admin_data_side.style.fontWeight="normal";
     admin_data_main.style.display = "none";
@@ -96,11 +99,10 @@ admin_orders_side.addEventListener('click',()=>{
     admin_orders_side.style.fontWeight="bold";
     admin_orders_main.style.display = "block";
     admin_orders_side.style.color = "#000000";
-    admin_orders_side.style.backgroundImage="url('../../images/user/box-dark.svg')";
+    admin_orders_side.style.backgroundImage="url('../../images/user/box-black.svg')";
 });
 
 admin_products_side.addEventListener('click',()=>{
-   console.log("Products");
     //reset others
     admin_data_side.style.fontWeight="normal";
     admin_data_main.style.display = "none";
@@ -130,7 +132,6 @@ admin_products_side.addEventListener('click',()=>{
 });
 
 admin_add_products_side.addEventListener('click',()=>{
-    console.log("Add products");
     //reset others
     admin_data_side.style.fontWeight="normal";
     admin_data_main.style.display = "none";

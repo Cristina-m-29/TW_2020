@@ -362,3 +362,18 @@ p{
     padding: 0.25em;
     font-size: 0.9vw;
 }
+
+.cart_prod_size{
+    display: flex;
+}
+.cart_prod_color{
+    display: flex;
+}
+.order_placed{
+    display: none;
+    font-size: 1.1vw;
+    color:red;
+    font-weight: bold;
+    margin:1em 1em 1em 1em;
+    
+}

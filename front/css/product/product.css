@@ -157,7 +157,7 @@ p{
     padding-right: 1.5em;
 }
 
-.select_size, .select_size_for_cart{
+.select_size, .select_size_for_cart, .prod_login_req{
     padding-bottom: 1em;
     font-size: 0.9vw;
     font-weight: bold;

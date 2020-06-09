@@ -49,8 +49,8 @@ var cartSchema = new mongoose.Schema({
     img: String,
     price: Number,
     pieces: Number,
-    selected_color: String,
-    selected_size: String
+    selected_color: Array,
+    selected_size: Array
 });
 var Cart = mongoose.model("cart",cartSchema);
 
@@ -166,7 +166,6 @@ function addProduct(product){
                 }).catch(e=>resolve(e));
             }
         });
-        
     });
 } 
 
@@ -230,21 +229,18 @@ function addProductToFavorites(user,product,color,size){
         }
         findUser(user).then((res)=>{
             favToAdd.user_id = res._id;
-            findProduct(product).then((result)=>{
+            console.log(product.toLowerCase());
+            findProduct(product.toLowerCase()).then((result)=>{
+                console.log(result);
                 favToAdd.product_id = result._id;
                 favToAdd.product_name = result.name;
                 favToAdd.img = result.img;
                 favToAdd.price = result.price;
                 Favorites.findOne({user_id:favToAdd.user_id, product_id:favToAdd.product_id}).then((found)=>{
-                    if(found){
-                        resolve("exists");
-                    }
-                    else{
-                        const favorites = new Favorites(favToAdd);
-                        favorites.save().then((doc)=>{
-                            resolve(doc);
-                        }).catch(e=>resolve(e));
-                    }
+                    const favorites = new Favorites(favToAdd);
+                    favorites.save().then((doc)=>{
+                        resolve(doc);
+                    }).catch(e=>resolve(e));
                 }).catch(e=>resolve(e));
             }).catch(e=>resolve(e));
         }).catch(e=>resolve(e));
@@ -280,23 +276,24 @@ function deleteFromFavorites(user,product){
 
 function addProductToCart(user,product,color,size){
     return new Promise((resolve)=>{
-        var cartToAdd = {
-            selected_color: color,
-            selected_size: size
-        }
+        var cartToAdd = {};
         findUser(user).then((res)=>{
             cartToAdd.user_id = res._id;
-            console.log(res);
             findProduct(product).then((result)=>{
-                console.log(result);
                 cartToAdd.product_id = result._id;
                 cartToAdd.product_name = result.name;
                 cartToAdd.img = result.img;
                 cartToAdd.price = result.price;
+                cartToAdd.selected_color = [];
+                cartToAdd.selected_size = [];
                 Cart.findOne({user_id:cartToAdd.user_id, product_id:cartToAdd.product_id}).then((found)=>{
+                    cartToAdd.selected_color = found.selected_color;
+                    cartToAdd.selected_size = found.selected_size;
+                    cartToAdd.selected_color.push(color);
+                    cartToAdd.selected_size.push(size);
                     if(found){
                         cartToAdd.pieces = found.pieces + 1;
-                        Cart.updateOne({user_id:cartToAdd.user_id, product_id:cartToAdd.product_id},{pieces: cartToAdd.pieces}).then(()=>{}).catch(e=>resolve(e));
+                        Cart.updateOne({user_id:cartToAdd.user_id, product_id:cartToAdd.product_id},{pieces: cartToAdd.pieces,selected_color:cartToAdd.selected_color,selected_size:cartToAdd.selected_size}).then(()=>{}).catch(e=>resolve(e));
                     }
                     else{
                         cartToAdd.pieces = 1;
@@ -305,7 +302,15 @@ function addProductToCart(user,product,color,size){
                             resolve(doc);
                         }).catch(e=>resolve(e));
                     }
-                }).catch(e=>resolve(e));
+                }).catch(e=>{
+                    cartToAdd.pieces = 1;
+                    cartToAdd.selected_color.push(color);
+                    cartToAdd.selected_size.push(size);
+                    const cart = new Cart(cartToAdd);
+                    cart.save().then((doc)=>{
+                        resolve(doc);
+                    }).catch(e=>resolve(e));
+                });
             }).catch(e=>resolve(e));
         }).catch(e=>resolve(e));
     });
@@ -377,7 +382,6 @@ function addOrder(user, addressName, order){
                 order.user_id = res._id;
                 order.address_id = found._id;
                 const ord = new Order(order);
-                console.log(ord);
                 ord.save().then((doc)=>{
                     resolve(doc);
                 }).catch(e=>resolve(e));
@@ -471,6 +475,7 @@ module.exports = {
                 resolve(res);
             }).catch(e=>{resolve(e);});
         });
+
     },
     getProductsByPeopleAndCategory: function(forWho,category){
         return new Promise((resolve)=>{
