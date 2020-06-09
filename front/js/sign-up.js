@@ -73,7 +73,7 @@ function submitSignUp(event){
             email: em,
             password: ps
         }
-
+        console.log(newUser);
         var xhttp = new XMLHttpRequest();
         xhttp.onreadystatechange = ()=>{
             if(xhttp.readyState == 4){

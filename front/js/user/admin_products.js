@@ -30,7 +30,6 @@ function setUpProducts(){
                         document.querySelector('#admin_nr_products').style.display="none";
                     }
                     else{
-                        console.log(JSON.parse(xhttp.responseText));
                         showAdminProducts(JSON.parse(xhttp.responseText));
                     }
                 } 
@@ -89,7 +88,7 @@ function showAdminProducts(products){
                 <form class="adm_prod_form">
                     <div class="adm_prod_form_header">                  
                     <div>
-                        <img src="../../images/women/extra/geaca.jpg" class="adm_prod_new_img new_img_${prod}">
+                        <img src="" class="adm_prod_new_img new_img_${prod}">
                     </div>
                     <div class="adm_prod_form_side"> 
                         <div><input type="file" class="image_selector image_selector_${prod}"></div>
@@ -172,15 +171,19 @@ function addAdmProdDeleteEvent(prod){
         var xhttp = new XMLHttpRequest();
         xhttp.onreadystatechange = ()=>{
             if(xhttp.readyState == 4){
-                if(xhttp.status != 200){ 
+                if(xhttp.status == 200){
+                    console.log("deleted");
+                }
+                else{ 
                     console.log("somenthing went wrong");
                 }            
             }
         } 
         xhttp.open("DELETE",`deleteProduct`,true);
-        var name = document.querySelector(`.adm_prod_name_${prod}`).innerHTML;
-        xhttp.send(name);
-        totalProducts--;
+        var nameProd = document.querySelector(`.adm_prod_name_${prod}`).innerHTML;
+        console.log(nameProd);
+        xhttp.send(nameProd);
+        if(totalProducts > 0) totalProducts--;
         document.querySelector(`.adm_prod_${prod}`).style.display="none";
         document.querySelector("#adm_number_prod").innerHTML = totalProducts;
         if(totalProducts == 0){
@@ -393,6 +396,7 @@ function readImage(evt){
             r.onload = function(e){
                 base64 = e.target.result;
                 document.querySelector(`.new_img_${current_prod}`).src=base64;
+                document.querySelector(`#adm_prod_img_${current_prod}`).src= base64;
             }
         }
         else 

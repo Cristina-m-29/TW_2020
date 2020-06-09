@@ -3,11 +3,9 @@ var fs = require('fs');
 var path = require('path');
 var {getBody} = require('./bodyParser');
 var PORT = 2902 || process.env.PORT;
-// var db = require('./mongo');
 var db = require('./db');
 var prod = require('./createProduct');
 var usr = require('./createUser');
-const {parse} = require('querystring');
 
 var categoriesReceiveURL = ["/atara/women/categories.html","/atara/men/categories.html","/atara/boy/categories.html","/atara/girl/categories.html"];
 var productsReceiveURL = ["/atara/women/products/","/atara/men/products/","/atara/boy/products/","/atara/girl/products"];
@@ -401,7 +399,6 @@ http.createServer(async function (request, response) {
                             else{
                                 if(request.url.search("updateProductImage")>=0){
                                     getBody(request).then((res)=>{
-                                        console.log(res);
                                         db.updateProductImage(res.name,res.image);
                                         response.writeHead(200, { 'Content-Type': 'application/json' });
                                         response.write("updated");
@@ -528,7 +525,8 @@ http.createServer(async function (request, response) {
                                                                     date: body.date,
                                                                     product_list : body.products_list,
                                                                     payment_method:body.payment_method,
-                                                                    price:parseInt(body.price)                       
+                                                                    price:parseInt(body.price),
+                                                                    submision_date: body.submision_date                     
                                                                 }
                                                                 db.addOrder(body.email,body.address_name,ord);
                                                                 response.writeHead(200, { 'Content-Type': 'application/json' });
@@ -558,14 +556,6 @@ http.createServer(async function (request, response) {
                                                                     response.end();
                                                                 });
                                                             }
-                                                            else{
-                                                                if(request.url.search("postImage")){
-    
-                                                                    response.writeHead(200, { 'Content-Type': 'application/json' });
-                                                                    response.write("got em");
-                                                                    response.end();
-                                                                }
-                                                            }
                                                         }
                                                     }
                                                 }
@@ -581,27 +571,30 @@ http.createServer(async function (request, response) {
         }
         else{
             if(request.method == "DELETE"){
+                console.log(filePath);
                 needMongo = 1;
-                if(request.url.search("deleteProductFromFavorites")>=0){
+                if(request.url === "/user/deleteProduct"){     
                     var body = '';
                     request.on('data', function (chunk) {
                         body += chunk;
                     });                
                     request.on("end", ()=>{ 
-                        body = JSON.parse(body);  
-                        db.deleteFromFavorites(body.email, body.name);              
+                        console.log("STERGEM PRODUS");
+                        console.log(body);
+                        db.deleteProduct(body);                 
                         response.writeHead(200, { 'Content-Type': 'application/json' });
                         response.write("deleted product");
                         response.end();
                     });   
                 }
                 else{
-                    if(request.url.search("deleteProductFromCart">=0)){
+                    if(request.url === "/cart/deleteProductFromCart"){
                         var body = '';
                         request.on('data', function (chunk) {
                             body += chunk;
                         });                
                         request.on("end", ()=>{ 
+                            console.log("plm");
                             body = JSON.parse(body);
                             db.deleteFromCart(body.email,body.name);               
                             response.writeHead(200, { 'Content-Type': 'application/json' });
@@ -609,14 +602,17 @@ http.createServer(async function (request, response) {
                             response.end();
                         }); 
                     }
+                    
                     else{
-                        if(request.url.search("deleteProduct")>=0){
+                        if(request.url === "/user.deleteProductFromFavorites"){
                             var body = '';
                             request.on('data', function (chunk) {
                                 body += chunk;
                             });                
                             request.on("end", ()=>{ 
-                                db.deleteProduct(body);                 
+                                console.log("plm 2");
+                                body = JSON.parse(body);  
+                                db.deleteFromFavorites(body.email, body.name);              
                                 response.writeHead(200, { 'Content-Type': 'application/json' });
                                 response.write("deleted product");
                                 response.end();

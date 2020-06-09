@@ -1,0 +1,27 @@
+
+.main_container{
+    position: relative;    
+    padding-top: 1em;   
+    margin-right:3em;
+    font-family: "Open Sans",sans-serif,serif; 
+    align-items: center;
+}
+
+.references_tw_info, .references_mongo_doc, .references_rgb_hex,.references_empty_obj, .references_input_style, .references_scroll, .references_server, .references_navbar_resize, .references_sleep, .references_pexels, .references_slideshow{
+
+    color: black;
+    text-decoration: none;
+}
+
+.creately, .mongo, .trello {
+color: black;
+text-decoration: none;
+font-weight: bold;
+}
+
+.uml_diagram{
+    margin-top:2em;
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+}

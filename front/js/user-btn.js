@@ -16,7 +16,7 @@ user.addEventListener('click', () =>{
         }
         else{
                 popUp = 0;
-                if(localStorage.getItem('email') === "admin_cristina@mail.ro" || localStorage.getItem('email') === "admin_madaline@mail.ro"){
+                if(localStorage.getItem('email') === "admin_cristina@mail.ro" || localStorage.getItem('email') === "admin_madalina@mail.ro"){
                     window.location.href = "/user/admin.html";
                 }
                 else{

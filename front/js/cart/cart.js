@@ -1,24 +1,12 @@
 var cartBody = document.querySelector('.cart_body');
-var totalCart = 3;
-var totalPrice= "390.50 RON";
+var totalCart;
+var totalPrice = 0;
 var checkPayment=null;
 var productDetails=[];
 var productAdress = -1;
 var products_list = [];
 var nrOfAddresses;
-
 var days = ["Monday", "Thursday","Wednesday","Thursday","Friday","Saturday","Sunday"];
-// make addr check variable =-1 sau i  --ok
-//make payment check variable   --ok
-
-//array de produse in care sa le am pt submit -- ok
-//data de azi var date=new Date --ok
-//email
-//payment 
-//pretul total
-
-
-//make "no products in cart" txt center
 
 window.addEventListener('onload',setUpForCart());
 
@@ -34,7 +22,6 @@ function setUpForCart(){
             if(xhttp.readyState == 4){
                 if(xhttp.status == 200){// SUCCES
                     const cart = JSON.parse(xhttp.responseText);
-                    console.log(cart);
                     //paseaza cart + afisare in fct de prod
                     productDetails = cart;
                     setUpCart(cart);
@@ -51,47 +38,42 @@ function setUpForCart(){
 }
 
 function setUpCart(cart){
-    // if(setat == 0){
-    //     setat = 1;
-     
-        if(totalCart == 0){
-            cartBody.insertAdjacentHTML('beforeend',"<p> No products in cart");
-            document.querySelector('.cart_body_head').style.display="none";
-        }
-
-        //http://localhost:2902/atara/girl/jeans/get/product/Jacket_One.html
-
-        else{                   
-                for(i=0;i<cart.length;i++){
-                    item = cart[i];
-                    var colors=item.selected_color;
-                    var sizes=item.selected_size;
-                    document.querySelector('.cart_product').insertAdjacentHTML("beforeend",
-                    `   <div class="cart_product_side cart_product_img_${i}">
-                            <img src="/getImage/${item._id}">
+    totalCart = cart.length;
+    if(cart.length == 0){
+        cartBody.insertAdjacentHTML('beforeend',"<p> No products in cart");
+        document.querySelector('.cart_body_head').style.display="none";
+    }
+    else{                   
+        for(i=0;i<cart.length;i++){
+            item = cart[i];
+            console.log(item);
+            var colors=item.selected_color;
+            var sizes=item.selected_size;
+            document.querySelector('.cart_product').insertAdjacentHTML("beforeend",
+            `   <div class="cart_product_side cart_product_img_${i}">
+                   <img src="/getImage/${item.product_id}">
+                </div>
+                <div class="cart_product_main cart_product_main_${i}">                        
+                    <div class="cart_product_details">
+                        <p id="product_name" class="product_name_${i}">${item.product_name}</p>
+                        <p id="product_color" class="cart_prod_color product_color_${i}" >${colors}</p>
+                        <p id="product_size" class="cart_prod_size product_size_${i}" >${sizes}</p>
+                            
+                        <p id="product_price" class="cart_prod_price product_price_${i}">${item.price}</p>
+                    </div>
+                    <div class="cart_product_footer">
+                        <div class="cart_delete_btn cart_delete_btn_${i}" id="">
+                            <p>Delete</p>
                         </div>
-                        <div class="cart_product_main cart_product_main_${i}">                        
-                            <div class="cart_product_details">
-                                <p id="product_name" class="product_name_${i}">${item.product_name}</p>
-                                <p id="product_color" class="cart_prod_color product_color_${i}" >${colors}</p>
-                                <p id="product_size" class="cart_prod_size product_size_${i}" >${sizes}</p>
-                                 
-                                <p id="product_price" class="cart_prod_price product_price_${i}">${item.price}</p>
-                            </div>
-                            <div class="cart_product_footer">
-                                <div class="cart_delete_btn cart_delete_btn_${i}" id="">
-                                    <p>Delete</p>
-                                </div>
-                            </div>
-                        </div>`
-                    );
-                    document.querySelector(`.cart_delete_btn_${i}`).addEventListener('click',addCartDeleteEvent(i));
-                } 
-                cartBody.insertAdjacentHTML("beforeend",`<div class="orderBtn"> Finish order </div>`);  
+                    </div>
+                </div>`
+            );
+            document.querySelector(`.cart_delete_btn_${i}`).addEventListener('click',addCartDeleteEvent(i));
+        } 
+        cartBody.insertAdjacentHTML("beforeend",`<div class="orderBtn"> Finish order </div>`);  
 
-                document.querySelector('.orderBtn').addEventListener('click', finishOrder);
-            } 
-    // }
+        document.querySelector('.orderBtn').addEventListener('click', finishOrder);
+    } 
 }
 var add_adr_final=document.querySelector('.add_address_btn_final');
 
@@ -127,34 +109,36 @@ function finishOrder(){
 function setUpOrderProducts(cart){
     for(i=0;i<cart.length;i++){
         var item=cart[i];
+        totalPrice += item.price;
         var colors=item.selected_color;
-         var sizes=item.selected_size;
-            document.querySelector('.order_all_products').insertAdjacentHTML('afterbegin',`
-          
-                <div class="order_product">
-                    <div class="order_product_img order_img_${i}">
-                        <img src="/getImage/${item._id}">
+        var sizes=item.selected_size;
+        document.querySelector('.order_all_products').insertAdjacentHTML('afterbegin',`
+            <div class="order_product">
+                <div class="order_product_img order_img_${i}">
+                    <img src="/getImage/${item.product_id}">
+                </div>
+                <div class="order_product_details">
+                    <div class="order_product_details_side">
+                        <p class="prod_name_${i}">Name</p>
+                        <p class="prod_color_${i}">Color</p>
+                        <p class="prod_size_${i}">Size </p>
+                        <p class="prod_peaces_${i}">Peaces</p>
+                        <p class="prod_price_${i}">Price</p>
                     </div>
-                    <div class="order_product_details">
-                        <div class="order_product_details_side">
-                            <p class="prod_name_${i}">Name</p>
-                            <p class="prod_color_${i}">Color</p>
-                            <p class="prod_size_${i}">Size </p>
-                            <p class="prod_peaces_${i}">Peaces</p>
-                            <p class="prod_price_${i}">Price</p>
-                        </div>
-                        <div class="order_product_details_main">
-                        <p class="product_name_${i}">${item.product_name}</p>
-                        <p class="product_color_${i}">${colors}</p>
-                        <p class="product_size_${i}">${sizes} </p>
-                        <p class="product_peaces_${i}">${item.pieces}</p>
-                        <p class="product_price_${i}">${item.price}</p>
-                        </div>
+                    <div class="order_product_details_main">
+                    <p class="product_name_${i}">${item.product_name}</p>
+                    <p class="product_color_${i}">${colors}</p>
+                    <p class="product_size_${i}">${sizes} </p>
+                    <p class="product_peaces_${i}">${item.pieces}</p>
+                    <p class="product_price_${i}">${item.price}</p>
                     </div>
                 </div>
-            `);
-            //  productDetails.push(`product_name_${i}`, `product_color_${i}`,`product_size_${i}`,`product_peaces_${i}`,`product_price_${i}`);
+            </div>
+        `);
     }
+    document.querySelector(`.products_price`).innerHTML = totalPrice + ' RON';
+    totalPrice += 12;
+    document.querySelector(`.order_price`).innerHTML = totalPrice + ' RON';
 
     document.querySelector('.cart_order').style.display = "block"; 
 
@@ -185,28 +169,24 @@ function setUpOrderProducts(cart){
 }
 
 function setUpOrderAddresses(adr){
-//     //adrese
-    // for ul pana la adr.length
-        for(i=0;i<adr.length;i++){
-            item = adr[i];
-            console.log(item);
-            document.querySelector(`.user_all_addresses`).insertAdjacentHTML("beforeend",`
-            <div class="user_address">
-                <div class="address_check">
-                  <input type="checkbox" class="check-adr check-adr-${i}" name="address" id="check-adress">
-                </div>
-                <div class="address_check_details">
-                  <div class="address_user_name address_user_name_${i}">${item.user_name}</div>
-                  <div class="address_user"> ${item.street} ${item.postal_code} ${item.city} ${item.country}</div>
-                </div> 
-            </div>`);
-            document.querySelector(`.check-adr-${i}`).addEventListener('click', checkAdrrBox(i));
-        }
-
-        
-        document.querySelector(`.user_all_addresses`).insertAdjacentHTML("beforeend",`<div class="add_address_btn add-new-adress" id="">Add new address</div> `);
-        document.querySelector(`.user_all_addresses`).style.display = "block";
-        document.querySelector('.add-new-adress').addEventListener('click', addNewAdress());
+    for(i=0;i<adr.length;i++){
+        item = adr[i];
+        console.log(item);
+        document.querySelector(`.user_all_addresses`).insertAdjacentHTML("beforeend",`
+        <div class="user_address">
+            <div class="address_check">
+                <input type="checkbox" class="check-adr check-adr-${i}" name="address" id="check-adress">
+            </div>
+            <div class="address_check_details">
+                <div class="address_user_name address_user_name_${i}">${item.user_name}</div>
+                <div class="address_user"> ${item.street} ${item.postal_code} ${item.city} ${item.country}</div>
+            </div> 
+        </div>`);
+        document.querySelector(`.check-adr-${i}`).addEventListener('click', checkAdrrBox(i));
+    }
+    document.querySelector(`.user_all_addresses`).insertAdjacentHTML("beforeend",`<div class="add_address_btn add-new-adress" id="">Add new address</div> `);
+    document.querySelector(`.user_all_addresses`).style.display = "block";
+    document.querySelector('.add-new-adress').addEventListener('click', addNewAdress());
 }
 
 document.querySelector(`.no_adress_btn`).addEventListener('click',()=>{
@@ -220,23 +200,22 @@ function checkAdrrBox(i){
     document.querySelector(`.check-adr-${i}`).addEventListener('click',()=>{
         if(document.querySelector(`.check-adr-${i}`).checked){  
             productAdress = i;    
-                for(j=0;j<nrOfAddresses;j++){
-                    if(i!=j){
-                        document.querySelector(`.check-adr-${j}`).checked = false;
-                    }
-                    else{
-                        document.querySelector(`.check-adr-${j}`).checked = true;
-                        checkValidAdr=j;
-                        document.querySelector('.order_other').style.display="block";
-                    } 
+            for(j=0;j<nrOfAddresses;j++){
+                if(i!=j){
+                    document.querySelector(`.check-adr-${j}`).checked = false;
                 }
+                else{
+                    document.querySelector(`.check-adr-${j}`).checked = true;
+                    checkValidAdr=j;
+                    document.querySelector('.order_other').style.display="block";
+                } 
             }
-            else {
-                productAdress = -1;
-                console.log("nu");
-            }
+        }
+        else {
+            productAdress = -1;
+            console.log("nu");
+        }
     });
-    
 }
 
 var checkBoxCard=document.getElementById('check-card');
@@ -246,31 +225,28 @@ checkBoxCard.addEventListener('click', checkCard);
 checkBoxCash.addEventListener('click', checkCash);
 
 function checkCard(){
-        if(checkBoxCard.checked){
-            // console.log("ai apasat card");
-            checkBoxCash.checked=false;
-            checkPayment="Card";
-          }
-        else if(checkBoxCash.checked){
-            // console.log("cashhh");
-            checkBoxCard.checked=false;
-            checkBoxCash.checked=true;
-            checkPayment="Cash";
-         }
-         console.log(checkPayment);
+    if(checkBoxCard.checked){
+        checkBoxCash.checked=false;
+        checkPayment="Card";
+    }
+    else if(checkBoxCash.checked){
+        checkBoxCard.checked=false;
+        checkBoxCash.checked=true;
+        checkPayment="Cash";
+    }
 }
 
 function checkCash(){
     if(checkBoxCash.checked){
-         checkPayment="Cash";
-         checkBoxCard.checked=false;
+        checkPayment="Cash";
+        checkBoxCard.checked=false;
     }
     else if(checkBoxCard.checked){
-          checkPayment="Card";
-          checkBoxCash.checked=false;
+        checkPayment="Card";
+        checkBoxCash.checked=false;
     }
-    console.log(checkPayment);
 }
+
 function addNewAdress(){
     document.querySelector('.add-new-adress').addEventListener('click',()=>{
         adr_first_name.value="";
@@ -286,9 +262,7 @@ function addNewAdress(){
         document.querySelector('.user_all_addresses').style.display="none";
         document.querySelector(`.add_address_form`).style.display = "block";
         document.querySelector(`.add_address_btn_final`).style.display = "block";
-
     });
-    
 }
 
 add_adr_final.addEventListener('click', addFinalAdress);
@@ -398,11 +372,10 @@ function insertPhone(e){
 
 function addFinalAdress(){
     if((adr_first_name.value!="") && (adr_last_name.value!="" ) && (adr_street.value!="") && (adr_number.value!="") && (adr_country.value!="") && (adr_city.value!="") && (adr_postal.value!="") && (adr_phone.value!="")){
-        // document.querySelector('.order_other').style.display="block";
         
         const toSend = {
             email: localStorage.getItem('email'),
-            user_name: adr_last_name.value + ' ' + adr_last_name.value,
+            user_name: adr_first_name.value + ' ' + adr_last_name.value,
             street: adr_street.value,
             country: adr_country.value,
             city: adr_city.value,
@@ -425,7 +398,6 @@ function addFinalAdress(){
         xhttp.resposnseType='application/json';
         xhttp.send(JSON.stringify(toSend));
 
-        // for(i=nrOfAddresses;i<=nrOfAddresses+2;i++){
             document.querySelector('.user_all_addresses').insertAdjacentHTML('afterbegin', `
             <div class="user_address">
             <div class="address_check address_check_${i}">
@@ -438,39 +410,15 @@ function addFinalAdress(){
             </div>`);
             
             document.querySelector(`.check-adr-${i}`).addEventListener('click', checkAdrrBox(i));
-                //   document.querySelector('.user_address').style.display="block";
-                //  document.querySelector('.address_check').style.display="block";
-                //  document.querySelector('.address_user_name_new').style.display="block";
-                //  document.querySelector('.address_user_adress_new').styledisplay="block";
-
-
-               
-        // }
         
         nrOfAddresses += 1;
         document.querySelector(`.add_address_form`).style.display = "none";
         document.querySelector(`.add_address_btn_final`).style.display = "none";
         document.querySelector(`.user_all_addresses`).style.display = "block";
-
+        document.querySelector('.add-new-adress').style.display = "block";
     }
     else alert("Introduceti toate datele");
  }
-
-// function addNewAddressUser(i){
-//     document.querySelector('.user_address').insertAdjacentHTML('afterbegin', `<div class="address_check">
-//     <input type="checkbox" class="check-adr" name="address" id="check-adress">
-//   </div>
-//   <div class="address_check_details-new">
-//     <div class="address_user_name_new"> ${adr_first_name.value} ${adr_last_name.value}</div>
-//     <div class="address_user_adress_new"> ${adr_street.value} nr. ${adr_number.value} ${adr_postal.value} ${adr_city} ${adr_country}</div>
-//   </div> `);
-// //   document.querySelector('.user_address').style.display="block";
-//   document.querySelector('.address_check').style.display="block";
-//   document.querySelector('.address_user_name_new').style.display="block";
-//   document.querySelector('.address_user_adress_new').style.display="block";
-
-// }
-//delete btn
 
 function addCartDeleteEvent(i){
     document.querySelector(`.cart_delete_btn_${i}`).addEventListener('click',()=>{
@@ -510,36 +458,34 @@ function submitOrder(){
    var date = new Date();
    if(checkPayment!=null && productDetails!=null && productAdress!=-1 && checkValidAdr!=-1)
    {
-       //send with post
-       var xhttp = new XMLHttpRequest();
-            xhttp.onreadystatechange = ()=>{
-                if(xhttp.readyState == 4){
-                    if(xhttp.status == 200){// SUCCES
-                        console.log(xhttp.responseText);
-                        document.querySelector('.order_placed').style.display="block";
-                        setTimeout(()=>{
-                            document.querySelector('.order_placed').style.display="none";
-                            window.location.href = "http://localhost:2902/cart/cart.html";
-                        },3000);
-                    } 
-                    else{
-                        console.log("somenthing went wrong");
-                        }
+        //send with post
+        var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = ()=>{
+            if(xhttp.readyState == 4){
+                if(xhttp.status == 200){// SUCCES
+                    console.log(xhttp.responseText);
+                    document.querySelector('.order_placed').style.display="block";
+                    setTimeout(()=>{
+                        document.querySelector('.order_placed').style.display="none";
+                        window.location.href = "http://localhost:2902/cart/cart.html";
+                    },3000);
+                } 
+                else{
+                    console.log("somenthing went wrong");
                     }
-            } 
-            xhttp.open("POST", "addNewOrder", true);
-            const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
-            var pr = totalPrice.split(" ");
-            pr = pr[0];
-            var dataToPost={
-                email: localStorage.getItem('email'),
-                address_name: document.querySelector(`.address_user_name_${productAdress}`).innerHTML,
-                date: months[date.getMonth()] + ' ' + date.getDate() + ' ' + date.getFullYear(),
-                products_list : productDetails,
-                payment_method:checkPayment,
-                price:pr
-            }
-            xhttp.send(JSON.stringify(dataToPost));
-        
-   }
+                }
+        } 
+        xhttp.open("POST", "addNewOrder", true);
+        const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+        var pr = totalPrice;
+        var dataToPost={
+            email: localStorage.getItem('email'),
+            address_name: document.querySelector(`.address_user_name_${productAdress}`).innerHTML,
+            submision_date: `${months[date.getMonth()]} ${date.getDate()} ${date.getFullYear()}`,
+            products_list : productDetails,
+            payment_method:checkPayment,
+            price:pr
+        }
+        xhttp.send(JSON.stringify(dataToPost));
+    }
 }

@@ -16,7 +16,6 @@ p{
 .main_container{
       background-color: white;
       font-family: Inter,sans-serif;
-     
   }
 
 .women-jeans{
@@ -27,7 +26,7 @@ p{
    grid-column-gap: 3em;
    border-style: hidden;
    align-items: center;
-   margin-top: 22em;
+   margin-top: 10em;
    margin-bottom:  1em;
    margin-right:  1em;
    margin-left:  2.5em;
@@ -39,7 +38,8 @@ p{
       position: relative;
   }
   .wj-img{
-    height: auto;
+    z-index: 9;
+    height: 650px;
     width: 100%;
     overflow: hidden;
     object-fit: cover;
@@ -275,14 +275,6 @@ p{
       display: block;
     }
 
-.wj-img{
-  z-index: 9;
-  height: 100%;
-  width: 100%;
-  object-fit: cover;
-  padding:0;
-  position: relative;
-}
 
 /*.footer{
   border: solid 1px;

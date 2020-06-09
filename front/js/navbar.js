@@ -224,3 +224,7 @@ document.querySelector('.opt_girl').addEventListener('click',()=>{
 document.querySelector('.opt_boy').addEventListener('click',()=>{
   window.location.href = "http://localhost:2902/atara/boy/categories.html";
 });
+
+document.querySelector('.opt_documentation').addEventListener('click',()=>{
+  window.location.href = "http://localhost:2902/scholarly.html";
+});

@@ -1,0 +1,17 @@
+{
+  "name": "tw",
+  "version": "1.0.0",
+  "description": "",
+  "main": "bodyParser.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "formidable": "^1.2.2",
+    "mongodb": "^3.5.8",
+    "mongoose": "^5.9.18"
+  }
+}

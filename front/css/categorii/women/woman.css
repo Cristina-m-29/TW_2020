@@ -12,7 +12,7 @@ p{
     border: solid 1px;
 }
 
-.main-container{
+.main_container{
     background-color: white;
 }
 
@@ -39,16 +39,19 @@ p{
 .wc-img{
     max-width:100%;
     display: block;
-    height: auto;
+    height: 650px;
     width: 100%;
     overflow: hidden;
     object-fit: cover;
     background-size: cover; 
-
+    padding:0;
+    z-index: 9;
+    position: relative;
 }
+
 .wc-name{
         position: absolute;
-        
+        z-index: 10;
         text-align: center;
         color: white;
         letter-spacing: 0.8em;
@@ -75,13 +78,7 @@ a:link {
     text-decoration: none;
   }
 
-  .wc-img{
-    max-width:100%;
-    height: auto;
-    object-fit: cover;
-    padding:0;
-    position: relative;
-}
+
 
 /* @media screen and (min-width:500px ) and (max-width: 1100px ){
   .women-categories{

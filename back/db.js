@@ -88,7 +88,12 @@ function createUser(user){
                     resolve(doc);
                 }).catch(e=>resolve(e));
             }
-        }).catch(()=>resolve("exists"));
+        }).catch(()=>{
+            const newUser = new User(user);
+            newUser.save().then((doc)=>{
+                resolve(doc);
+            }).catch(e=>resolve(e));
+        });
     });
 }
 

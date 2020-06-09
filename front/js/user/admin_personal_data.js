@@ -32,6 +32,11 @@ function setAdminData(user){
     admin_password.innerHTML=user.password;
 }
 
+document.querySelector('.edit_user_data').addEventListener('click', ()=>{
+  document.querySelector(`.main_data_profile`).style.display="none";
+  document.querySelector(`.main_data_profile_edit`).style.display="block";
+});
+
 document.querySelector(".profile_save").addEventListener("click",()=>{
   var fn = document.querySelector('#profile_first').value;
   var ln = document.querySelector('#profile_last').value;
@@ -58,6 +63,8 @@ document.querySelector(".profile_save").addEventListener("click",()=>{
     xhttp.resposnseType='application/json';
     xhttp.send(JSON.stringify(userData));
   }
+  document.querySelector(`.main_data_profile`).style.display="block";
+  document.querySelector(`.main_data_profile_edit`).style.display="none";
 });
 
 document.querySelector(".email_save").addEventListener("click",()=>{

@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Scholarly</title>
+  <link rel="stylesheet" type="text/css" href="https://w3c.github.io/scholarly-html/css/scholarly.min.css"/>
+  <link rel="stylesheet" type="text/css" href="../css/scholarly.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+
+<body>
+   <header>
+       <h1>Scholarly Documentation</h1>
+   </header>
+    <section typeof="sa:Authors" class="main_container">
+        <h2>1. Team information</h2>
+        <ul>
+            <li>
+                <h3>Authors</h3>
+                <ul>
+                    <li>Mititelu Ioana-Cristina</li>
+                    <li>Plugariu Madalina-Gabriela</li>
+                </ul>
+            </li>
+            <li>
+                <h3>Faculty</h3>
+                <p>Faculty of Computer Science Iasi, Romania</p>
+            </li>
+            <li>
+                <h3>Year and group</h3>
+                <p>Year 2, group A1</p>
+            </li>
+        </ul>
+        
+    </section>
+    <section typeof="sa:Abstract" class="main_container">
+        <h2>2. Abstract</h2>
+        <p>
+            Scholarly HTML is a domain-specific rich document format built entirely on open standards that enables the interoperable exchange of scholarly articles in a manner that is compatible with off-the-shelf browsers. This document describes how Scholarly HTML works and how it is encoded.
+        </p>
+    </section>
+    <section typeof="sa:Introduction" class="main_container">
+        <h2>3. Project </h2>
+        <ul>
+            <li>
+                <h3> Title </h3>
+                <p>FES (Fashion E-Shop) </p>
+            </li>
+            <li>
+                <h3> Description</h3>
+                <p>Create a Web application that manages clothing collections and related properties: category, materials, types of cut, price, size, images, recipients (children, young people, adults), context (casual wardrobe, sports, for various occasions: prom masked, anniversaries, ...), special collections and others. The system will provide support for the purchase / auction of these clothes, including the administration of users. Various statistics will be generated that can be exported in open formats - minimal, CSV and PDF. There will also be a ranking of the most popular products, also available as an RSS feed.</p>
+            </li>
+        </ul>
+        
+        
+    </section>
+    <section typeof="sa:Structure" class="main_container">
+        <h2>4. Structure </h2>
+        <ul>
+            <li>
+                <h3> Frontend </h3>
+                <ul>
+                    <li>
+                        <h4></h4>
+                        <article>We created a HTML5 web application which simulates a real fashion store, using CSS3 for styling the pages and JavaScript Vanilla for making them more atractive to users. 
+                        </article>
+                    </li>
+                    <li>
+                        <h4>Pages</h4>
+                        <ul>
+                            <li>Index</li>
+                            <li>Categories per person</li>
+                            <li>Products per category and person</li>
+                            <li>User account</li>
+                            <li>Admin account</li>
+                            <li>Favorites for user</li>
+                            <li>Cart</li>
+                        </ul>
+                    </li>
+                </ul>
+                
+            </li>
+            <li>
+                <h3> Backend</h3>
+                <ul>
+                    <li>
+                        <h4>Technologies</h4>
+                        <p>
+                            For the development of the application we used NodeJS on the server side. 
+                        </p>
+                    </li>
+                    <li>
+                        <h4>NodeJS Modules</h4>
+                        <ul>
+                            <li>HTTP for front to back connection</li>
+                            <li>FS for image managemnt</li>
+                            <li>PATH</li>
+                            <li>FORMIDABLE for image upload</li>
+                        </ul>
+                    </li>
+                    <li>
+                        <h4>Endpoints</h4>
+                        <p><a href="http://localhost:2902/scholarly_endpoints.html">Endpoints</a> on the server side</p>
+                    </li>
+                </ul>
+            </li>
+            <li>
+                <h3>Database</h3>
+                <ul>
+                    <li>
+                        <h4>Type</h4>
+                        <p>For the database we used MongoDB Atlas with Mongoose object modeling tool. </p>
+                    </li>
+                    <li>
+                        <h4>Database collections</h4>
+                        <ul>
+                            <li>Addresses</li>
+                            <li>Carts</li>
+                            <li>Categories</li>
+                            <li>Favorites</li>
+                            <li>Orders</li>
+                            <li>Products</li>
+                            <li>Users</li>
+                        </ul>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+    </section>
+    <section typeof="sa:Application-flow" class="main_container">
+        <h2>5. Application flow</h2>
+            <ul>
+                <li>
+                    <h3>Flow</h3>
+                    <article>
+
+                    </article>
+                </li>
+                <li>
+                    <h3>UML diagram</h3>
+                    <figure>
+                        <img class="uml_diagram" src="../images/documentation/diagrama-uml.png">
+                    </figure>
+                </li>
+
+            </ul>
+    </section>
+    <section typeof="sa:Functionalities" class="main_container">
+        <h2>6. Interactions</h2>
+        <ul>
+            <li>
+                <h3>Users</h3>
+                <ul>
+                    <li>Login</li>
+                    <li>SignUp</li>
+                    <li>Edit account data</li>
+                    <li>Add product to cart</li>
+                    <li>Delete product from cart</li>
+                    <li>Add product to favorites</li>
+                    <li>Delete product from favorites</li>
+                    <li>Send order</li>
+                    <li>Add delivery address</li>
+                </ul>
+            </li>
+            <li>
+                <h3>Admins</h3>
+                <ul>
+                    <li>Edit account data</li>
+                    <li>Delete user</li>
+                    <li>See all orders</li>
+                    <li>See all products added to favorites</li>
+                    <li>Add new product to database</li>
+                </ul>
+            </li>
+        </ul>
+    </section>
+    <section typeof="sa:Ajutor" class="main_container">
+        <h2>7. External help</h2>
+        <p>In carrying out the project we used the following external resources:</p>
+        <ul>
+            <li>
+                <a href="https://cloud.mongodb.com/v2/5ea15705599c886f87ae2d72#clusters/detail/AtaraDB">MongoBD Atlas</a>  for hosting the database.
+            </li>
+            <li>
+                <a href="https://trello.com/b/ZcvBo44v/tw2020">Trello</a> for the record of tasks per team member.
+            </li>
+            <li>
+                <a href="https://creately.com/">Creately</a> for making the diagrams.
+            </li>
+        </ul>
+    </section>
+    <section typeof="sa:Teamwork" class="main_container">
+        <h2>8. Teamwork</h2>
+        <p>In order to make the working time more efficient, we divided the work in the following way:</p>
+        <ul>
+            <li>
+                <h3>Plugariu Madalina-Gabriela</h3>
+                <a href="./scholarly_plugariu_madalina.html">http://localhost:2902/scholarly_plugariu_madalina.html</a>
+            </li>
+            <li>
+                <h3>Mititelu Ioana-Cristina</h3>
+                <a href="./scholarly_mititelu_cristina.html">http://localhost:2902/scholarly_mititelu_cristina.html</a>
+            </li>
+        </ul>
+    </section>
+    <section typeof="sa:References" class="main_container">
+        <h2>9. References</h2>
+        <ul>
+            <li>
+                <h3>For creating the slideshow on the index page </h3>
+                <a href="https://codepen.io/mushroom23/pen/NLjXqM">https://codepen.io/mushroom23/pen/NLjXqM</a>
+            </li>
+            <li>
+                <h3>Photos</h3>
+                <a href="https://www.pexels.com/">https://www.pexels.com/</a><br>
+                <a href="https://unsplash.com/">https://unsplash.com/</a>
+            </li>
+            <li>
+                <h3>Sleep function in js</h3>
+                <a href="https://www.sitepoint.com/delay-sleep-pause-wait/">https://www.sitepoint.com/delay-sleep-pause-wait/</a>
+            </li>
+            <li>
+                <h3>Creating animations in JavaScript</h3>
+                <a href="https://stackoverflow.com/questions/32915005/want-a-smooth-animation-when-resizing-div-javascript/32915045">https://stackoverflow.com/questions/32915005/want-a-smooth-animation-when-resizing-div-javascript/32915045</a>
+            </li>
+            <li>
+                <h3>Sleep function for animations</h3>
+                <a href="https://www.sitepoint.com/delay-sleep-pause-wait/">https://www.sitepoint.com/delay-sleep-pause-wait/</a>
+            </li>
+            <li>
+                <h3>NodeJS server without frameworks</h3>
+                <a href="https://developer.mozilla.org/en-US/docs/Learn/Server-side/Node_server_without_framework">https://developer.mozilla.org/en-US/docs/Learn/Server-side/Node_server_without_framework</a>
+            </li>
+            <li>
+                <h3>Prevent scroll when sidemenu is open</h3>
+                <a href="http://jsbin.com/teqoqib/6/edit?html,js,output">http://jsbin.com/teqoqib/6/edit?html,js,output</a>
+            </li>
+            <li>
+                <h3>Styling a input file button</h3>
+                <a href="https://css-tricks.com/snippets/css/custom-file-input-styling-webkitblink/">https://css-tricks.com/snippets/css/custom-file-input-styling-webkitblink/</a>
+            </li>
+            <li>
+                <h3>Object empty verification</h3>
+                <a href="https://flaviocopes.com/how-to-check-object-empty/">https://flaviocopes.com/how-to-check-object-empty/</a>
+            </li>
+            <li>
+                <h3>Transform RBG color to HEX</h3>
+                <a href="https://www.geeksforgeeks.org/how-to-get-hex-color-value-of-rgb-value/">https://www.geeksforgeeks.org/how-to-get-hex-color-value-of-rgb-value/</a>
+            </li>
+            <li>
+                <h3>Mongoose documentation</h3>
+                <a href=" https://mongoosejs.com/docs/">https://mongoosejs.com/docs/</a>
+            </li>
+            <li>
+                <h3>More web resourses</h3>
+                <a href="https://www.w3schools.com/">https://www.w3schools.com/</a>
+            </li>
+        </ul>
+    </section>
+</body>
+
+</html>

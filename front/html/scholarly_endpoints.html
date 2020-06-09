@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Scholarly endpoints</title>
+  <link rel="stylesheet" type="text/css" href="https://w3c.github.io/scholarly-html/css/scholarly.min.css"/>
+  <link rel="stylesheet" type="text/css" href="../css/scholarly.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+
+<body>
+   <header>
+       <h1>NodeJS endpoints</h1>
+   </header>
+
+    <section typeof="sa:Work" class="main_container">
+        <h2>Endpoints</h2>
+        <ul>
+            <li>
+                <h3>/getImage</h3>
+                <p>GET request to the server, sending a product id. The server gets the products with that ad and gets the corresponding image from /back/uploads.</p>
+            </li>
+            <li>
+                <h3>/getAllCategories</h3>
+                <p>GET request to the server, sending a people type(men/women/girl/boy). The server calls the getCategories() function from db.js with that type and gets the categories array which sends back to front.</p>
+            </li>
+            <li>
+                <h3>/getCartProducts</h3>
+                <p>GET request to the server, sending a user email. The server calls the getCart() function from db.js and gets cart products array for that user. </p>
+            </li>
+            <li>
+                <h3>getAllProductsForCategories</h3>
+                <p>GET request to the server, sending a category name and a people type. The server calls the getProductsByPeopleAndCategory() function from db.js and returns the products array.</p>
+            </li>
+            <li>
+                <h3>/getAllProducts</h3>
+                <p>GET request to the server. The server calls the getProducts() function from db.js and returns the products array.</p>
+                <li></li>
+            </li>
+            <li>
+                <h3>/getAllOrders</h3>
+                <p>GET request to the server. The server calls the getAllOrders() function from db.js and returns the orders array.</p>
+                </p>
+            </li>
+            <li>
+                <h3>/getProductData</h3>
+                <p>GET request to the server, sending a product name. The server calls the findProduct() function from db.js and returns the product as object.</p>
+            </li>
+            <li>
+                <h3>/getAllUsers</h3>
+                <p>GET request to the server. The server calls the getUsers() function from db.js and returns the users array.</p>
+            </li>
+            <li>
+                <h3>/getOrders</h3>
+                <p>GET request to the server, sending a user email. The server calls the getOrders() function from db.js and returns the orders array for that user.</p>
+            </li>
+            <li>
+                <h3>/getUserData</h3>
+                <p>GET request to the server, sending a user email. The server calls the findUser() function from db.js and returns the user as object.</p>
+            </li>
+            <li>
+                <h3>/getFavorites</h3>
+                <p>GET request to the server, sending a user email. The server calls the getFavorites() function from db.js and returns the favorites array for that user.</p>
+            </li>
+            <li>
+                <h3>/getAddresses</h3>
+                <p>GET request to the server, sending a user email. The server calls the getAddresses() function from db.js and returns the addresses array for that user.</p>
+            </li>
+            <li>
+                <h3>/addUser</h3>
+                <p>POST request to the server, sending a user object. The servers adds the user to the users collection by calling the createUser() function from db.js.</p>
+            </li>
+            <li>
+                <h3>/addProductToCart</h3>
+                <p>POST request to the server, sending a user email, product name and selected color and size for that product. The servers adds the product to the carts collection by calling the addProductToCart() function from db.js.</p>
+            </li>
+            <li>
+                <h3>/addProductToFavorites</h3>
+                <p>POST request to the server, sending a user email, product name and selected color and size for that product. The servers adds the product to the favorites collection by calling the addProductToFavorites() function from db.js.</p>
+            </li>
+            <li>
+                <h3>/addProductToCart</h3>
+                <p>POST request to the server, sending a user email, product name and selected color and size for that product. The servers adds the product to the carts collection by calling the addProductToCart() function from db.js.</p>
+            </li>
+            <li>
+                <h3>/addProductFromCategoriesToCart</h3>
+                <p>POST request to the server, sending a user email, product name and selected color and size for that product. The servers adds the product to the carts collection by calling the addProductToCart() function from db.js.</p>
+            </li>
+            <li>
+                <h3>/addProduct</h3>
+                <p>POST request to the server, sending a user product as object. The servers adds the product to the products collection by calling the createProduct() function from db.js.</p>
+            </li>
+            <li>
+                <h3>/updateProductImage</h3>
+                <p>POST request to the server, sending product name and image. The servers updates the product image in products collection by calling the updateProductImage() function from db.js.</p>
+            </li>
+            <li>
+                <h3>/updateProduct</h3>
+                <p>POST request to the server, sending product name and changes for that product. The servers updates the product in products collection by calling the updateProductNoImage() function from db.js.</p>
+            </li>
+            <li>
+                <h3>/updateUser</h3>
+                <p>POST request to the server, sending a user email and changes for that user. The servers updates the user in users collection by calling the updateUser() function from db.js.</p>
+            </li>
+            <li>
+                <h3>/updateAddress</h3>
+                <p>POST request to the server, sending a user email, an address name and changes for that address. The servers updates the address in addresses collection by calling the updateAddress() function from db.js.</p>
+            </li>
+            <li>
+                <h3>/checkUser</h3>
+                <p>POST request to the server, sending a user email and password. The servers checks if the user with that email and password exists by calling the findUser() function from db.js.</p>
+            </li>
+            <li>
+                <h3>/resetPassword</h3>
+                <p>POST request to the server, sending a user email and a new password. The servers checks if the user exists and changes the password by calling the resetPassword() function from db.js.</p>
+            </li>
+            <li>
+                <h3>/addNewOrder</h3>
+                <p>POST request to the server, sending a user email and a order as object. The servers adds that order for that user in the orders collection by calling the addOrder() function from db.js</p>
+            </li>
+            <li>
+                <h3>/addNewAddress</h3>
+                <p>POST request to the server, sending a user email and a address as object. The servers adds that address for that user in the addresses collection by calling the addAddress() function from db.js</p>
+            </li>
+            <li>
+                <h3>/deleteProductFromFavorites</h3>
+                <p>DELETE request to the server, sending a user email and a product to delete from favorites. The server deletes that product for that user from the favorites collection by calling the deleteFromFavorites() function from db.js.</p>
+            </li>
+            <li>
+                <h3>/deleteProductFromCart</h3>
+                <p>DELETE request to the server, sending a user email and a product to delete from cart. The server deletes that product for that user from the carts collection by calling the deleteFromCart() function from db.js.</p>
+            </li>
+            <li>
+                <h3>/deleteProduct</h3>
+                <p>DELETE request to the server, sending a product name to delete that product from the db. The server deletes that product from the products collection by calling the deleteProduct() function from db.js.</p>
+            </li>
+            <li>
+                <h3>/deleteUser</h3>
+                <p>DELETE request to the server, sending a user email to delete that user from the db. The server deletes that user from the users collection by calling the deleteUser() function from db.js.</p>
+            </li>
+        </ul>
+    </section>
+    
+</body>
+
+</html>
