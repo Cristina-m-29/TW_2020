@@ -473,7 +473,6 @@ module.exports = {
                 resolve(res);
             }).catch(e=>{resolve(e);});
         });
-
     },
     getProductsByPeopleAndCategory: function(forWho,category){
         return new Promise((resolve)=>{
