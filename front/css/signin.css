@@ -3,7 +3,7 @@
 .sign-in{
     position: fixed;
     opacity: 0;
-    z-index: 9;
+    z-index: 9; 
     width: 22%;
     height: 45%;
     top:47%;

@@ -140,6 +140,7 @@ function setUpOrderProducts(cart){
                             <p class="product_size_${i}">M</p>
                             <p class="product_peaces_${i}">1</p>
                             <p class="product_price_${i}">129.99</p>
+
                         </div>
                     </div>
                 </div>
@@ -489,12 +490,11 @@ function addCartDeleteEvent(i){
             document.querySelector('.cart_body_head').style.display="none";
             document.querySelector('.orderBtn').style.display="none";
             document.querySelector('.cart_product').style.borderStyle="none";
+
             cartBody.insertAdjacentHTML('beforeend','<p id="noCartProdMsg"> No products in cart');
         }
     });
 }
-
-
 
 document.querySelector('.submit_order').addEventListener('click',submitOrder);
 

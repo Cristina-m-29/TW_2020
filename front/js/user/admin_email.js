@@ -36,7 +36,6 @@ email_cancel.addEventListener('click',()=>{
 });
 
 email_save.addEventListener('click',()=>{
-    //change data in db
     email_edit.style.display="none";
     email.style.display="block";
     email_resetfields();

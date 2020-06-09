@@ -36,7 +36,35 @@ pass_cancel.addEventListener('click',()=>{
 });
 
 pass_save.addEventListener('click',()=>{
-    //change data in db
+    var oldPass = document.querySelector("#pass_edit_form_oldpass").value;
+    var newPass = document.querySelector("#pass_edit_form_newpass").value;
+    userData.email_before = userData.email;
+    if(oldPass != userData.password){
+        alert("Wrong password! Try again!");
+    }
+    else{
+        if(newPass === ""){
+        alert("Please enter a new password!");
+        }
+        else{
+        document.querySelector(`.pass_view`).innerHTML = newPass;
+        userData.password = newPass;
+        var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = ()=>{
+            if(xhttp.readyState == 4){
+            if(xhttp.status == 200){// SUCCES
+                console.log(xhttp.responseText);
+            } 
+            else{
+                console.log("somenthing went wrong");
+            }            
+            }
+        } 
+        xhttp.open("POST",`updateUser`,true);
+        xhttp.resposnseType='application/json';
+        xhttp.send(JSON.stringify(userData));
+        }
+    }
     pass_edit.style.display="none";
     pass.style.display="block";
     pass_resetfields();

@@ -308,3 +308,8 @@
     text-align: center;
     display: none;
 }
+
+.adm_prod_data_id{
+    width: 6.9em;
+    overflow: hidden;
+}

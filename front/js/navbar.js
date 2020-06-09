@@ -14,8 +14,19 @@ const userBtn = document.querySelector('.user');
 var setat = 0; //IMPORTANT PENTRU CART
 
 let contorSideMenu = 0;
-var popUp = 0;
 var windowWidth;
+
+window.addEventListener('onload',()=>{
+  if(localStorage.getItem('logged') === "true"){
+    document.querySelector('.user').style.display = "none";
+    if(localStorage.getItem('email') === "admin_cristina@mail.ro" || localStorage.getItem('email') === "admin_madaline@mail.ro"){
+      admin_si.style.display = "block";
+    }
+    else{
+        logged_user_si.style.display="block"; 
+    }
+  }
+});
 
 sideMenuOpen.addEventListener('click',navBarReduceWidth);
 sideMenuOpen.addEventListener('click',sideMenuChangeHeight);

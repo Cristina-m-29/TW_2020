@@ -1,22 +1,38 @@
-// var orders = document.querySelector('.main_orders');
-var product_name;
-var size;
-var color;
-var number_pieces;
+orders_side.addEventListener('click',setUpOrders());
 
-var numberOfOrders = 2;
+function setUpOrders(){
+    orders_side.addEventListener('click',()=>{
+        document.querySelector('.main_orders').innerHTML = `<p>My orders</p>`;
+        var xhttp = new XMLHttpRequest();
+            xhttp.onreadystatechange = ()=>{
+                if(xhttp.readyState == 4){
+                    if(xhttp.status == 200){// SUCCES
+                        var ord = JSON.parse(xhttp.responseText);
+                        showOrders(ord);
+                } 
+                else{
+                    console.log("somenthing went wrong");
+                }            
+            }
+        } 
+        var email = document.querySelector(".email_view").innerHTML;
+        xhttp.open("GET",`getOrders/${email}`,true);
+        xhttp.resposnseType='application/json';
+        xhttp.send();
+    });
 
-orders_main.addEventListener('onload',showOrders());
+}
 
-function showOrders(){    
-    if(numberOfOrders == 0)
+function showOrders(orders){    
+    if(orders.length == 0)
     {
         orders_main.insertAdjacentHTML("beforeEnd",'<p id="no_orders_msg"> No orders found</p>'
         );
     }
     else{
         //parcurcere in bd
-        for(order_number=1; order_number<=numberOfOrders;order_number++){
+        for(order_number=0; order_number<orders.length;order_number++){
+            item = orders[order_number];
             orders_main.insertAdjacentHTML("beforeEnd",
             `<div class="order_main">
                 <div class="order_main_header">
@@ -32,8 +48,8 @@ function showOrders(){
                         </div>
                         <div class="order_main_data"> 
                             <p> ${order_number}</p>
-                            <p> 1-May-2020</p>
-                            <p> 286 lei</p>
+                            <p> ${item.submision_date}</p>
+                            <p> ${item.price}</p>
                             <div class="order_main_summary_prop">
                                 <p> Product name </p>
                                 <p> Size</p>
@@ -48,20 +64,19 @@ function showOrders(){
                     </div>            
                 </div>
             </div>`);
-            showItems(order_number);
+            showItems(order_number, item.product_list);
         }
     }
 }
 
-function showItems(order_number){
-    //get data prom db
-    numberOfItems=3;
-    for(item_nr=1; item_nr <= numberOfItems; item_nr++){     
+function showItems(order_number, products){
+    for(item_nr=0; item_nr < products.length; item_nr++){  
+        var item = products[item_nr];  
         document.querySelector(`.order_item_${order_number}`).insertAdjacentHTML("beforeEnd",
-        `<p>Dress</p>
-        <p>XS</p>
-        <p>Blue</p>
-        <p>1</p>`
+        `<p>${item.product_name}</p>
+        <p>${item.size}</p>
+        <p>${item.color}</p>
+        <p>${item.pieces}</p>`
         );
     }
 }

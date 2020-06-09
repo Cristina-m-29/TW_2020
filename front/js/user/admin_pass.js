@@ -36,7 +36,6 @@ pass_cancel.addEventListener('click',()=>{
 });
 
 pass_save.addEventListener('click',()=>{
-    //change data in db
     pass_edit.style.display="none";
     pass.style.display="block";
     pass_resetfields();

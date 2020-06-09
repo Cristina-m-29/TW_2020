@@ -35,7 +35,39 @@ email_cancel.addEventListener('click',()=>{
 });
 
 email_save.addEventListener('click',()=>{
-    //change data in db
+    var emailValue = document.querySelector("#email_edit_form_email").value;
+    var pass = document.querySelector("#email_edit_form_pass").value;
+    userData.email_before = userData.email;
+    if(pass != userData.password){
+        alert("Wrong password! Try again!");
+        email.style.display="block";
+    }
+    else{
+        if(emailValue != ""){
+            if(emailValue.search("@")>=0){
+                document.querySelector(`.email_view`).innerHTML = emailValue;
+                userData.email = emailValue;
+                var xhttp = new XMLHttpRequest();
+                xhttp.onreadystatechange = ()=>{
+                    if(xhttp.readyState == 4){
+                        if(xhttp.status == 200){// SUCCES
+                            console.log(xhttp.responseText);
+                        } 
+                        else{
+                            console.log("somenthing went wrong");
+                        }            
+                    }
+                } 
+                xhttp.open("POST",`updateUser`,true);
+                xhttp.resposnseType='application/json';
+                xhttp.send(JSON.stringify(userData));
+            }
+            else{
+                alert("Please enter a valid email!");
+                email.style.display="block";
+            }
+        }
+    }
     email_edit.style.display="none";
     email.style.display="block";
     email_resetfields();

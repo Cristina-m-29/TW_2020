@@ -5,8 +5,13 @@ var orders_main = document.querySelector('.main_orders');
 var address_side = document.querySelector('.address');
 var address_main = document.querySelector('.main_address');
 
+document.querySelector('#log_out').addEventListener('click',()=>{
+    window.location.href = "/";
+    localStorage.setItem('logged','false');
+    localStorage.setItem('email','');
+});
+
 data_side.addEventListener('click',()=>{
-    console.log("Personal data");
     //reset others    
     orders_side.style.fontWeight="normal";    
     orders_main.style.display = "none";
@@ -28,7 +33,6 @@ data_side.addEventListener('click',()=>{
 
 
 orders_side.addEventListener('click',()=>{
-    console.log("Orders");
     //reset others
     data_side.style.fontWeight="normal";
     data_main.style.display = "none";
@@ -44,11 +48,10 @@ orders_side.addEventListener('click',()=>{
     orders_side.style.fontWeight="bold";
     orders_main.style.display = "block";
     orders_side.style.color = "#000000";
-    orders_side.style.backgroundImage="url('../../images/user/box-dark.svg')";
+    orders_side.style.backgroundImage="url('../../images/user/box-black.svg')";
 });
 
 address_side.addEventListener('click',()=>{
-    console.log("Addresses");
     //reset others
     data_side.style.fontWeight="normal";
     data_main.style.display = "none";

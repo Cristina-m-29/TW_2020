@@ -111,33 +111,33 @@
   <!--SIGN UP-->
   <div class="sign-up">
     <div class="main-sign-up">
-      <div id="close-sign-up"><img src="../../images/navbar/smallclose.png"></div>
-      <p id="msg-1-su">Join Atara!</h1>
-      <p id="msg-2-su">Sign up to get more power.</p>
-      <form id="sign-up-form">
+    <div id="close-sign-up"><img src="../images/navbar/smallclose.png"></div>
+    <p id="msg-1-su">Join Atara!</h1>
+        <p id="msg-2-su">Sign up to get more power.</p>
+        <form id="sign-up-form" onsubmit="submitSignUp(event.preventDefault())">
         <div class="name">
-          <input id="fname" type="text" name="fname" placeholder="First name">
-          <input id="lname" type="text" name="lname" placeholder="Last name">
+            <input id="fname" class="fname_su" type="text" name="fname" placeholder="First name">
+            <input id="lname" class="lname_su" type="text" name="lname" placeholder="Last name">
         </div>
         <div class="email-input">
-          <input id="email-su" type="email" name="email" placeholder="Email / Username">
+            <input id="email-su" type="email" name="email" placeholder="Email / Username">
         </div>
         <div class="sign-up-pass-input">
-          <div class="sign-up-view-pass">
+            <div class="sign-up-view-pass">
             <p id="p_su">Show</p>
-          </div>
-          <input id="pass-su" type="password" name="password" placeholder="Password">
+            </div>
+            <input id="pass-su" type="password" name="password" placeholder="Password">
         </div>
         <input type="submit" value="Sign up">
-      </form>
+        </form>
     </div>
     <div class="other-sign-up">
-      <div class="other-sign-up-options">
+    <div class="other-sign-up-options">
         <p>Already registered? </p>
         <p class="sign-up-a sign-in-su">Sign in</p>
-      </div>
     </div>
-  </div>
+    </div>
+</div>
 
   <!--RESET PASSWORD-->
   <div class="reset-pass">
@@ -146,7 +146,7 @@
       <p>Reset password</p>
     </div>
     <div class="main-reset-pass"> 
-      <form id="reset-pass-form"> 
+      <form id="reset-pass-form" onsubmit="submitResetPass(event.preventDefault())"> 
         <div class="email-input">
           <p class="rp">Email</p>
           <input id="email-r" type="email" name="email" placeholder="Email / Username">
@@ -211,13 +211,11 @@
               <p> First Name</p>
               <p> Last name </p>
               <p> Account type </p>
-              <p> Birthday </p>
             </div>
             <div class="user_data">
               <p id="admin_firstName"> </p>
               <p id="admin_lastName">  </p>
               <p id="admin_accountType">  </p>
-              <p id="admin_birthday"> </p>
             </div>
           </div>
         </div>
@@ -442,6 +440,7 @@
               <label>Add sizes</label>
               <input id="adm_add_prod_size" type="text" placeholder="XS,S,M">            
             </div>
+            <div id="adm_add_prod_change_photo">Photo needed</div>
             <div id="adm_add_prod_all_fields">All fields must be completed</div>
             <div id="adm_add_prod_done">Product added</div>
             <div id="adm_add_prod_btn">Add product</div>
