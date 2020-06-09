@@ -26,7 +26,7 @@ p{
     font-family: "Open Sans",sans-serif,serif;
 }
 
-/*cart________________________________________________________________*/
+/*CART______________________________________________________________________*/
 
 .cart{
     display: flex;
@@ -118,7 +118,6 @@ p{
     font-family:Inter,sans-serif;
     color: #000000;
 }
-
 .cart_product_footer{
     width: 100%;
     position: absolute;
@@ -196,7 +195,6 @@ p{
     display: grid;
     grid-template-columns: 40% 60%;
     margin: 1em;
-
 }
 
 .order_product_img > img{
@@ -228,13 +226,12 @@ p{
 .order_footer{
     display: grid;
     grid-template-columns: 50% 50%;
-    border-bottom: solid 0.02em #b3b3b3; 
+    border-bottom: solid 0.02em #b3b3b3;
     padding: 1em 0;
 }
 
 .order_address{
     padding: 2em 1em 1em 1em;    
-    /* border-right: solid 0.02em #b3b3b3; //il vei da in js */
 }
 
 .order_address > p{
@@ -291,7 +288,6 @@ p{
 .add_address_form{
     display: none;
 }
-
 .add_address_form_input > p{
     font-size: 0.8vw;
     padding-bottom: 0.5em;

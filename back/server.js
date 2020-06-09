@@ -2,7 +2,6 @@ var http = require('http');
 var fs = require('fs');
 var path = require('path');
 var PORT = 2902 || process.env.PORT;
-// var db = require('./mongo');
 var db = require('./db');
 var prod = require('./createProduct');
 var usr = require('./createUser');
@@ -376,8 +375,8 @@ http.createServer(async function (request, response) {
                                         response.writeHead(200, { 'Content-Type': 'application/json' });
                                         response.write(JSON.stringify(product));
                                         response.end();
-                                    });                    
-                                });               
+                                    });
+                                });        
                             }
                             else{
                                 if(request.url.search("updateProduct")>=0){

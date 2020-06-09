@@ -498,12 +498,11 @@ function addCartDeleteEvent(i){
             document.querySelector('.cart_body_head').style.display="none";
             document.querySelector('.orderBtn').style.display="none";
             document.querySelector('.cart_product').style.borderStyle="none";
+
             cartBody.insertAdjacentHTML('beforeend','<p id="noCartProdMsg"> No products in cart');
         }
     });
 }
-
-
 
 document.querySelector('.submit_order').addEventListener('click',submitOrder);
 

@@ -229,9 +229,7 @@ function addProductToFavorites(user,product,color,size){
         }
         findUser(user).then((res)=>{
             favToAdd.user_id = res._id;
-            console.log(product.toLowerCase());
             findProduct(product.toLowerCase()).then((result)=>{
-                console.log(result);
                 favToAdd.product_id = result._id;
                 favToAdd.product_name = result.name;
                 favToAdd.img = result.img;
