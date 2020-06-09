@@ -7,11 +7,9 @@ const women = document.querySelector('.opt_women');
 const men = document.querySelector('.opt_men');
 const boy = document.querySelector('.opt_boy');
 const girl = document.querySelector('.opt_girl');
-const sideMenuImg = document.querySelector('.sidemenu_img');
+const sideMenuImg = document.querySelector('.sidemenu_img');  
 
 const userBtn = document.querySelector('.user');
-
-var setat = 0; //IMPORTANT PENTRU CART
 
 let contorSideMenu = 0;
 var windowWidth;
@@ -187,3 +185,4 @@ function navBarUndoWidth(){
 function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
 }
+

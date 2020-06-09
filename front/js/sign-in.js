@@ -20,6 +20,7 @@ var user_state = "not logged";
 /* SIGN IN ______________________________________________________*/
 
 close_si.addEventListener('click', () => {
+    popUp = 0;
     si.style.opacity="0";
     si.style.zIndex="9";
     si.style.top="47%";
@@ -74,7 +75,7 @@ function submitSignIn(event){
                                 si.style.top = "47%";
                                 nav_si.style.filter="blur(0px)";
                                 cont_si.style.filter="blur(0px)";
-
+                                popUp = 0;
                                 localStorage.setItem('email',`${em}`);
                                 localStorage.setItem('logged','true');
 

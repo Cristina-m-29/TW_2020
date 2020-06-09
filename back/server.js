@@ -2,6 +2,7 @@ var http = require('http');
 var fs = require('fs');
 var path = require('path');
 var PORT = 2902 || process.env.PORT;
+// var db = require('./mongo');
 var db = require('./db');
 var prod = require('./createProduct');
 var usr = require('./createUser');
@@ -37,7 +38,7 @@ http.createServer(async function (request, response) {
             if(request.url.search("getCartProducts") > 0){
                 needMongo = 1;
                 var email = request.url.split("/");
-                email = email[email.length-1];=
+                email = email[email.length-1];
                 db.getCart(email).then((res)=>{
                     response.writeHead(200, { 'Content-Type': 'application/json' }); 
                     response.write(JSON.stringify(res), 'utf-8');
@@ -106,12 +107,12 @@ http.createServer(async function (request, response) {
                                 }
                                 db.findProduct(productName).then((res)=>{
                                     response.writeHead(200, { 'Content-Type': 'application/json' }); 
-                                    response.write(JSON.stringify(res));
-                                    response.end();
+                                    response.end(JSON.stringify(res));
+                                    // response.end();
                                 }).catch(e=>{
                                     response.writeHead(200, { 'Content-Type': 'application/json' }); 
-                                    response.write("error");
-                                    response.end();
+                                    response.end("error");
+                                    // response.end();
                                 });
                             }
                             else{
@@ -211,6 +212,7 @@ http.createServer(async function (request, response) {
                                                             prodCounter = 0;
                                                         } 
                                                         else{
+                                                            
                                                             if(path.extname(filePath) == '.html'){
                                                                 var ok = 0;
     
@@ -220,6 +222,7 @@ http.createServer(async function (request, response) {
                                                                     ok = 1;
                                                                     prodCounter = 1;
                                                                 }
+                                                                
                                                                 //categories
                                                                 for(i=0;i<categoriesReceiveURL.length;i++){
                                                                     if(request.url == categoriesReceiveURL[i]){
@@ -229,6 +232,7 @@ http.createServer(async function (request, response) {
                                                                         break;
                                                                     }
                                                                 }
+
                                                                 //afisare produse
                                                                 for(i=0;i<productsReceiveURL.length;i++){
                                                                     var poz = 0;
@@ -331,7 +335,7 @@ http.createServer(async function (request, response) {
                             body += chunk;
                         });                
                         request.on("end", ()=>{
-                            body = JSON.parse(body);=
+                            body = JSON.parse(body);
                             db.addProductToFavorites(body.email,body.productName,body.color,body.size);
                             response.writeHead(200, { 'Content-Type': 'application/json' });
                             response.write("added to fav");
@@ -375,7 +379,7 @@ http.createServer(async function (request, response) {
                                         response.write(JSON.stringify(product));
                                         response.end();
                                     });                    
-                                });        
+                                });               
                             }
                             else{
                                 if(request.url.search("updateProduct")>=0){
@@ -645,23 +649,23 @@ http.createServer(async function (request, response) {
     var contentType = mimeTypes[extname] || 'application/octet-stream';
 
     fs.readFile(filePath, function(error, content) {
-        if(needMongo == 0){
-        if (error) {
-            if(error.code == 'ENOENT') {
-                fs.readFile('./404.html', function(error, content) {
-                    response.writeHead(404, { 'Content-Type': 'text/html' });
-                    response.end(content, 'utf-8');
-                });
+        if(needMongo == 0){            
+            if (error) {
+                if(error.code == 'ENOENT') {
+                    fs.readFile('./404.html', function(error, content) {
+                        response.writeHead(404, { 'Content-Type': 'text/html' });
+                        response.end(content, 'utf-8');
+                    });
+                }
+                else {
+                    response.writeHead(500);
+                    response.end('Sorry, check with the site admin for error: '+error.code+' ..\n');
+                }
             }
             else {
-                response.writeHead(500);
-                response.end('Sorry, check with the site admin for error: '+error.code+' ..\n');
+                response.writeHead(200, { 'Content-Type': contentType });
+                response.end(content, 'utf-8');
             }
-        }
-        else {
-            response.writeHead(200, { 'Content-Type': contentType });
-            response.end(content, 'utf-8');
-        }
         }
     });
 
