@@ -22,6 +22,7 @@ close_su.addEventListener('click', () => {
     su.style.top="47%";
     nav_su.style.filter="blur(0px)";
     cont_su.style.filter="blur(0px)";
+    popUp = 0;
 
     fname.value = "";
     lname.value = "";
@@ -87,7 +88,7 @@ function submitSignUp(event){
                             su.style.top = "47%";
                             nav_si.style.filter="blur(0px)";
                             cont_si.style.filter="blur(0px)";
-
+                            popUp = 0;
                             localStorage.setItem('email',`${em}`);
                             localStorage.setItem('logged','true');
 
