@@ -18,7 +18,7 @@ const forWho = ['women','men','boy','girl'];
 
 http.createServer(async function (request, response) {    
     var filePath = '.' + request.url;   
-    // console.log(`BEFORE: ${request.url}`);
+    console.log(`BEFORE: ${request.url}`);
     // console.log(request.method);
 
     if(request.method == "GET"){
@@ -212,7 +212,6 @@ http.createServer(async function (request, response) {
                                                             prodCounter = 0;
                                                         } 
                                                         else{
-                                                            
                                                             if(path.extname(filePath) == '.html'){
                                                                 var ok = 0;
     
@@ -379,7 +378,7 @@ http.createServer(async function (request, response) {
                                         response.write(JSON.stringify(product));
                                         response.end();
                                     });                    
-                                });               
+                                });     
                             }
                             else{
                                 if(request.url.search("updateProduct")>=0){

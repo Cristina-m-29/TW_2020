@@ -53,23 +53,30 @@ function setUpForCart(){
 function setUpCart(cart){
     // if(setat == 0){
     //     setat = 1;
+     
         if(totalCart == 0){
             cartBody.insertAdjacentHTML('beforeend',"<p> No products in cart");
             document.querySelector('.cart_body_head').style.display="none";
         }
-        else{                    
-                for(i=0;i<totalCart;i++){
-                    // item = cart[i];
+
+        //http://localhost:2902/atara/girl/jeans/get/product/Jacket_One.html
+
+        else{                   
+                for(i=0;i<cart.length;i++){
+                    item = cart[i];
+                    var colors=item.selected_color;
+                    var sizes=item.selected_size;
                     document.querySelector('.cart_product').insertAdjacentHTML("beforeend",
                     `   <div class="cart_product_side cart_product_img_${i}">
-                            <img src="../../images/women/afisare_produse/wj-img-${i}.jpg">
+                            <img src="../../images/women/afisare_produse/high-waist-1.jpg">
                         </div>
                         <div class="cart_product_main cart_product_main_${i}">                        
                             <div class="cart_product_details">
-                                <p id="product_name" class="product_name_${i}">Jeans Dark</p>
-                                <p id="product_color" class="cart_prod_color product_color_${i}">cart_color_${i}</p>
-                                <p id="product_size" class="cart_prod_size product_size_${i}">cart_size_${i}</p>
-                                <p id="product_price" class="cart_prod_price product_price_${i}">cart_price_${i}</p>
+                                <p id="product_name" class="product_name_${i}">${item.product_name}</p>
+                                <p id="product_color" class="cart_prod_color product_color_${i}" >${colors}</p>
+                                <p id="product_size" class="cart_prod_size product_size_${i}" >${sizes}</p>
+                                 
+                                <p id="product_price" class="cart_prod_price product_price_${i}">${item.price}</p>
                             </div>
                             <div class="cart_product_footer">
                                 <div class="cart_delete_btn cart_delete_btn_${i}" id="">
@@ -118,13 +125,15 @@ function finishOrder(){
 }
 
 function setUpOrderProducts(cart){
-    //for{  //!!!!!!!!!!!!
-        i=2;
-    document.querySelector('.finish_order').insertAdjacentHTML('afterbegin',`
-            <div class="order_all_products">
+    for(i=0;i<cart.length;i++){
+        var item=cart[i];
+        var colors=item.selected_color;
+         var sizes=item.selected_size;
+            document.querySelector('.order_all_products').insertAdjacentHTML('afterbegin',`
+          
                 <div class="order_product">
                     <div class="order_product_img order_img_${i}">
-                        <img src="../../images/women/afisare_produse/wj-img-${i}.jpg">
+                        <img src="../../images/women/afisare_produse/high-waist-1.jpg">
                     </div>
                     <div class="order_product_details">
                         <div class="order_product_details_side">
@@ -135,18 +144,17 @@ function setUpOrderProducts(cart){
                             <p class="prod_price_${i}">Price</p>
                         </div>
                         <div class="order_product_details_main">
-                            <p class="product_name_${i}">Slouchy jeans</p>
-                            <p class="product_color_${i}">White</p>
-                            <p class="product_size_${i}">M</p>
-                            <p class="product_peaces_${i}">1</p>
-                            <p class="product_price_${i}">129.99</p>
-
+                        <p class="product_name_${i}">${item.product_name}</p>
+                        <p class="product_color_${i}">${colors}</p>
+                        <p class="product_size_${i}">${sizes} </p>
+                        <p class="product_peaces_${i}">${item.pieces}</p>
+                        <p class="product_price_${i}">${item.price}</p>
                         </div>
                     </div>
                 </div>
-            </div>`);
+            `);
             //  productDetails.push(`product_name_${i}`, `product_color_${i}`,`product_size_${i}`,`product_peaces_${i}`,`product_price_${i}`);
-    //}
+    }
 
     document.querySelector('.cart_order').style.display = "block"; 
 
@@ -179,19 +187,19 @@ function setUpOrderProducts(cart){
 function setUpOrderAddresses(adr){
 //     //adrese
     // for ul pana la adr.length
-        for(i=0;i<3;i++){
-            //item = address[i]
+        for(i=0;i<adr.length;i++){
+            item = adr[i];
+            console.log(item);
             document.querySelector(`.user_all_addresses`).insertAdjacentHTML("beforeend",`
             <div class="user_address">
                 <div class="address_check">
                   <input type="checkbox" class="check-adr check-adr-${i}" name="address" id="check-adress">
                 </div>
                 <div class="address_check_details">
-                  <div class="address_user_name address_user_name_${i}">Raluca Plugariu</div>
-                  <div class="address_user"> Aleea Pacurari nr.6 700537 Iasi, Romania</div>
+                  <div class="address_user_name address_user_name_${i}">${item.user_name}</div>
+                  <div class="address_user"> ${item.street} ${item.postal_code} ${item.city} ${item.country}</div>
                 </div> 
             </div>`);
-            
             document.querySelector(`.check-adr-${i}`).addEventListener('click', checkAdrrBox(i));
         }
 
@@ -417,7 +425,7 @@ function addFinalAdress(){
         xhttp.resposnseType='application/json';
         xhttp.send(JSON.stringify(toSend));
 
-        for(i=nrOfAddresses;i<=nrOfAddresses+2;i++){
+        // for(i=nrOfAddresses;i<=nrOfAddresses+2;i++){
             document.querySelector('.user_all_addresses').insertAdjacentHTML('afterbegin', `
             <div class="user_address">
             <div class="address_check address_check_${i}">
@@ -437,9 +445,9 @@ function addFinalAdress(){
 
 
                
-        }
+        // }
         
-        nrOfAddresses += 2;
+        nrOfAddresses += 1;
         document.querySelector(`.add_address_form`).style.display = "none";
         document.querySelector(`.add_address_btn_final`).style.display = "none";
         document.querySelector(`.user_all_addresses`).style.display = "block";
@@ -508,6 +516,11 @@ function submitOrder(){
                 if(xhttp.readyState == 4){
                     if(xhttp.status == 200){// SUCCES
                         console.log(xhttp.responseText);
+                        document.querySelector('.order_placed').style.display="block";
+                        setTimeout(()=>{
+                            document.querySelector('.order_placed').style.display="none";
+                            window.location.href = "http://localhost:2902/cart/cart.html";
+                        },3000);
                     } 
                     else{
                         console.log("somenthing went wrong");
