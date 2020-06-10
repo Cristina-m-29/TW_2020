@@ -9,7 +9,6 @@ function getCategories(){
         if(xhttp.readyState == 4){
                 if(xhttp.status == 200){// SUCCES
                     const cat = JSON.parse(xhttp.responseText);
-                    console.log(cat);
                     setUpWCat(cat);
                 } 
                 else{
@@ -24,7 +23,6 @@ function getCategories(){
 
 function setUpWCat(cat){
     var forWho = window.location.href.split("/");
-    console.log(forWho);
     forWho = forWho[4];
     var wcategories=document.querySelector('.women-categories');
     for(i=0;i<cat.length;i++){

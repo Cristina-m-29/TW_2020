@@ -571,7 +571,6 @@ http.createServer(async function (request, response) {
         }
         else{
             if(request.method == "DELETE"){
-                console.log(filePath);
                 needMongo = 1;
                 if(request.url === "/user/deleteProduct"){     
                     var body = '';
@@ -579,8 +578,6 @@ http.createServer(async function (request, response) {
                         body += chunk;
                     });                
                     request.on("end", ()=>{ 
-                        console.log("STERGEM PRODUS");
-                        console.log(body);
                         db.deleteProduct(body);                 
                         response.writeHead(200, { 'Content-Type': 'application/json' });
                         response.write("deleted product");
@@ -594,7 +591,6 @@ http.createServer(async function (request, response) {
                             body += chunk;
                         });                
                         request.on("end", ()=>{ 
-                            console.log("plm");
                             body = JSON.parse(body);
                             db.deleteFromCart(body.email,body.name);               
                             response.writeHead(200, { 'Content-Type': 'application/json' });
@@ -610,7 +606,6 @@ http.createServer(async function (request, response) {
                                 body += chunk;
                             });                
                             request.on("end", ()=>{ 
-                                console.log("plm 2");
                                 body = JSON.parse(body);  
                                 db.deleteFromFavorites(body.email, body.name);              
                                 response.writeHead(200, { 'Content-Type': 'application/json' });

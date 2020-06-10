@@ -40,13 +40,11 @@ function showAdminOrders(orders){
     else{
         for(adm_order=0;adm_order<orders.length;adm_order++){
           var d = orders[adm_order].submision_date;
-          d = d.split(" ");
-          var date = d[1] + ' ' + d[2] + ' ' + d[3];
           document.querySelector('.admin_orders_body').insertAdjacentHTML("beforeend",
             `<div class="adm_order adm_order_${adm_order}">
             <div><p style="overflow:hidden;">${orders[adm_order]._id}</p></div>
             <div><p>${orders[adm_order].user_id}</p></div>
-            <div><p>${date}</p></div>
+            <div><p>${d}</p></div>
             <div class="adm_order_prod adm_ord_prod_${adm_order}">            
             </div>
             <div><p>${orders[adm_order].price} RON</p></div>
@@ -56,8 +54,8 @@ function showAdminOrders(orders){
           for(ord_prod=0;ord_prod<products_list.length;ord_prod++){
             document.querySelector(`.adm_ord_prod_${adm_order}`).insertAdjacentHTML("beforeend",`
             <p>${products_list[ord_prod].product_name}</p>
-            <p class="ord_right">${products_list[ord_prod].size}</p>
-            <p class="ord_right">${products_list[ord_prod].color}</p>
+            <p class="ord_right">${products_list[ord_prod].selected_size}</p>
+            <p class="ord_right">${products_list[ord_prod].selected_color}</p>
             <p class="ord_right">${products_list[ord_prod].pieces}</p>
             <p class="ord_right">${products_list[ord_prod].price} RON</p>`);
           }

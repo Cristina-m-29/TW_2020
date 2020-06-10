@@ -48,7 +48,6 @@ function setProductCategories(prod){
     forWho = forWho[4];
      for(i=0;i<prod.length;i++){
          var item=prod[i];
-         console.log(item);
          colors = item.hex_colors;
          colors_hex = item.hex_colors;
          sizes = item.sizes;
@@ -59,8 +58,6 @@ function setProductCategories(prod){
             if(k == cat.length - 1) catName += cat[k];
             else catName += cat[k] + '_';
          }
-         console.log(catName);
-        //  var curent_size = item.sizes;
         wj_categories.insertAdjacentHTML("beforeEnd",`<div class= "wj-product"> 
         <img class="wj-img wj-img-${i}" id="wj-img-id" src="/getImage/${item._id}">
        
@@ -134,7 +131,6 @@ function setProductCategories(prod){
      for(j=0;j<colors.length;j++){
         document.querySelector(`.wj-product-color-list-${i}`).insertAdjacentHTML("beforeend",
         `<div class="color_list_${i}${j}" style="background-color:${colors[j]}"></div>`);
-        console.log(colors[j]);
         document.querySelector(`.color_list_${i}${j}`).addEventListener('click',addEventColor(i,j));
     }
     for(j=0;j<sizes.length;j++){
@@ -173,8 +169,6 @@ function goToProduct(i){
         cat = cat.split(".");
         cat = cat[0];
         forWho = forWho[4];
-        console.log(forWho);
-        console.log(cat);
         var nameProd = document.querySelector(`.wj-product-name-${i}`).innerHTML;
         nameProd = nameProd.split(" ");
         var pn = "";
@@ -260,7 +254,6 @@ function addEventSize(i,j){
 function hideTextShowColor(i){
     document.querySelector(`#wj-cart-id-${i}`).addEventListener('click',()=>{
         document.querySelector(`.wj-product-color-list-${i}`).style.display="flex";
-        console.log(i);
         document.querySelector(`#wj-cart-id-${i}`).style.display = "none";
         document.querySelector(`.more-info-${i}`).style.display = "none";
         document.querySelector(`.wj-product-color-${i}`).style.display = "flex";
@@ -274,7 +267,6 @@ function hideTextShowColor(i){
 /*-----Stergerea sectiunii pentru size si afisarea sectiunii pentru culori----*/ 
 function hideSizeShowColor(i){
     document.querySelector(`.wj-product-color-list-${i}`).style.display="flex";
-        console.log(i);
         document.querySelector(`#wj-cart-id-${i}`).style.display = "none";
         document.querySelector(`.more-info-${i}`).style.display = "none";
         document.querySelector(`.wj-product-color-${i}`).style.display = "flex";
@@ -318,7 +310,7 @@ function sendDataFromCat(i){
                 xhttp.onreadystatechange = ()=>{
                     if(xhttp.readyState == 4){
                         if(xhttp.status == 200){// SUCCES
-                            console.log(xhttp.responseText);
+                            // console.log(xhttp.responseText);
                         } 
                         else{
                             console.log("somenthing went wrong");
@@ -426,7 +418,6 @@ function coverSize(i){
 
 /*----Functie ajutatoare pt a sterge sectiunea de colors--- */
 function coverColors(i){
-    console.log(i);
     document.querySelector(`.wj-product-color-${i}`).style.display = "none";
     document.querySelector(`.wj-product-color-list-${i}`).style.display = "none";
     for(j=0;j<colors_hex.length;j++)

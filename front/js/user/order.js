@@ -71,11 +71,17 @@ function showOrders(orders){
 
 function showItems(order_number, products){
     for(item_nr=0; item_nr < products.length; item_nr++){  
-        var item = products[item_nr];  
+        var c = '';
+        var s = '';
+        var item = products[item_nr];
+        for(k=0;k<item.selected_color.length;k++)  
+            c += item.selected_color[k];
+        for(k=0;k<item.selected_size.length;k++)  
+            s += item.selected_size[k];
         document.querySelector(`.order_item_${order_number}`).insertAdjacentHTML("beforeEnd",
         `<p>${item.product_name}</p>
-        <p>${item.size}</p>
-        <p>${item.color}</p>
+        <p>${s}</p>
+        <p>${c}</p>
         <p>${item.pieces}</p>`
         );
     }

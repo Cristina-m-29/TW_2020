@@ -36,7 +36,6 @@ function setUpFavorites(fav){
     else{    
         for(favorite=0;favorite<fav.length;favorite++){
             item = fav[favorite];
-            console.log(item);
             favoritesBody.insertAdjacentHTML("beforeend",
             `<div class="favorites_product fav_prod_${favorite}">
                 <div class="favorites_product_side">

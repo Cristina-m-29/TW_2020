@@ -46,7 +46,6 @@ function setUpCart(cart){
     else{                   
         for(i=0;i<cart.length;i++){
             item = cart[i];
-            console.log(item);
             var colors=item.selected_color;
             var sizes=item.selected_size;
             document.querySelector('.cart_product').insertAdjacentHTML("beforeend",
@@ -91,7 +90,6 @@ function finishOrder(){
         if(xhttp.readyState == 4){
             if(xhttp.status == 200){// SUCCES
                 const car = JSON.parse(xhttp.responseText);
-                console.log(car);
                 //!!!
                 productDetails = car;
                 setUpOrderProducts(car); 
@@ -148,7 +146,6 @@ function setUpOrderProducts(cart){
         if(xhttp.readyState == 4){
             if(xhttp.status == 200){// SUCCES
                 const adr = JSON.parse(xhttp.responseText);
-                console.log(adr);
                 nrOfAddresses = adr.length;
                 if(adr.length == 0){
                     document.querySelector(`#order_no_addresses`).style.display = "block";
@@ -171,7 +168,6 @@ function setUpOrderProducts(cart){
 function setUpOrderAddresses(adr){
     for(i=0;i<adr.length;i++){
         item = adr[i];
-        console.log(item);
         document.querySelector(`.user_all_addresses`).insertAdjacentHTML("beforeend",`
         <div class="user_address">
             <div class="address_check">
@@ -213,7 +209,6 @@ function checkAdrrBox(i){
         }
         else {
             productAdress = -1;
-            console.log("nu");
         }
     });
 }
@@ -281,11 +276,9 @@ var adr_phone=document.getElementById("add_address_phone");
 adr_number.addEventListener("keydown",insertNumber, false);
 function insertNumber(e){
     var x = e.keyCode;
-    if((x >= 48 && x <= 57 || x==13 || x==8 ||x==32 ))
-           console.log(x); 
+    if((x >= 48 && x <= 57 || x==13 || x==8 ||x==32 )){}
     else {
         alert("Introduceti doar numere");
-        console.log(x);
         return false;
     }
     return true;
@@ -296,11 +289,9 @@ function insertFirstName(e){
     var x = e.keyCode;
     if(x >= 48 && x <= 57){
         alert("Introduceti doar litere");
-        console.log(x); 
          return false;
     }
     else {
-        console.log(x);
     }
     return true;
 }
@@ -309,11 +300,9 @@ function insertLastName(e){
     var x = e.keyCode;
     if((x >= 48 && x <= 57)){
         alert("Introduceti doar litere");
-        console.log(x); 
          return false;
     }
     else {
-        console.log(x);
     }
     return true;
 }
@@ -322,11 +311,9 @@ function insertCountry(e){
     var x = e.keyCode;
     if((x >= 48 && x <= 57)){
         alert("Introduceti doar litere");
-        console.log(x); 
          return false;
     }
     else {
-        console.log(x);
     }
     return true;
 }
@@ -335,22 +322,18 @@ function insertCity(e){
     var x = e.keyCode;
     if((x >= 48 && x <= 57)){
         alert("Introduceti doar litere");
-        console.log(x); 
-         return false;
     }
     else {
-        console.log(x);
     }
     return true;
 }
 adr_postal.addEventListener("keydown",insertPostal, false);
 function insertPostal(e){
     var x = e.keyCode;
-    if(x >= 48 && x <= 57 || x==13 || x==8 || x==32)
-           console.log(x); 
-    else {
+    if(x >= 48 && x <= 57 || x==13 || x==8 || x==32){
+    }
+    else{
         alert("Introduceti doar numere");
-        console.log(x);
         return false;
     }
     return true;
@@ -359,11 +342,9 @@ function insertPostal(e){
 adr_phone.addEventListener("keydown",insertPhone, false);
 function insertPhone(e){
     var x = e.keyCode;
-    if((x >= 48 && x <= 57 || x==13 || x==8 ||x==32))
-           console.log(x); 
+    if((x >= 48 && x <= 57 || x==13 || x==8 ||x==32)){}
     else {
         alert("Introduceti doar numere");
-        console.log(x);
         return false;
     }
     return true;
@@ -382,12 +363,11 @@ function addFinalAdress(){
             postal_code: adr_postal.value,
             phone_number: adr_phone.value
         }
-        console.log(toSend);
         var xhttp = new XMLHttpRequest();
         xhttp.onreadystatechange = ()=>{
             if(xhttp.readyState == 4){
                 if(xhttp.status == 200){
-                    console.log(xhttp.responseText);
+                    // console.log(xhttp.responseText);
                 }
                 else{
                     console.log("somenthing went wrong");
@@ -463,7 +443,6 @@ function submitOrder(){
         xhttp.onreadystatechange = ()=>{
             if(xhttp.readyState == 4){
                 if(xhttp.status == 200){// SUCCES
-                    console.log(xhttp.responseText);
                     document.querySelector('.order_placed').style.display="block";
                     setTimeout(()=>{
                         document.querySelector('.order_placed').style.display="none";
