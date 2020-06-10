@@ -109,7 +109,7 @@ function finishOrder(){
 function setUpOrderProducts(cart){
     for(i=0;i<cart.length;i++){
         var item=cart[i];
-        totalPrice += item.price;
+        totalPrice += item.price * item.pieces;
         var colors=item.selected_color;
         var sizes=item.selected_size;
         document.querySelector('.order_all_products').insertAdjacentHTML('afterbegin',`
