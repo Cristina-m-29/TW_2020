@@ -72,31 +72,31 @@ p{
     text-decoration: none;
 }
 
-#w_btn{
+.w_btn{
     background-color: whitesmoke;
 }
 
-#m_btn{
+.m_btn{
     background-color: black;
     color:whitesmoke
 }
 
-#k_btn{
+.b_btn, .g_btn{
     background-color: #ff0000;
     color:whitesmoke
 }
 
-#w_btn:hover{
+.w_btn:hover{
     background-color: black;
     color:whitesmoke;
 }
 
-#m_btn:hover{
+.m_btn:hover{
     background-color: whitesmoke;
     color:black;
 }
 
-#k_btn:hover{
+.b_btn:hover, .g_btn:hover{
     background-color: whitesmoke;
     color: red;
 }
