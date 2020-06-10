@@ -62,7 +62,7 @@ function setUpCart(cart){
                         <p id="product_price" class="cart_prod_price product_price_${i}">${item.price}</p>
                     </div>
                     <div class="cart_product_footer">
-                        <div class="cart_delete_btn cart_delete_btn_${i}" id="">
+                        <div class="cart_delete_btn cart_delete_btn_${i}">
                             <p>Delete</p>
                         </div>
                     </div>
@@ -184,7 +184,7 @@ function setUpOrderAddresses(adr){
         </div>`);
         document.querySelector(`.check-adr-${i}`).addEventListener('click', checkAdrrBox(i));
     }
-    document.querySelector(`.user_all_addresses`).insertAdjacentHTML("beforeend",`<div class="add_address_btn add-new-adress" id="">Add new address</div> `);
+    document.querySelector(`.user_all_addresses`).insertAdjacentHTML("beforeend",`<div class="add_address_btn add-new-adress">Add new address</div> `);
     document.querySelector(`.user_all_addresses`).style.display = "block";
     document.querySelector('.add-new-adress').addEventListener('click', addNewAdress());
 }
